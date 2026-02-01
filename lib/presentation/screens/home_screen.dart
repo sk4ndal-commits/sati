@@ -3,12 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../application/home_state_provider.dart';
 import '../../application/notification_service.dart';
+import '../../application/budget_overview_provider.dart';
 import '../../domain/entities/transaction_entity.dart';
 import '../../l10n/app_localizations.dart';
 import '../../application/settings_controller.dart';
 import '../../application/transaction_controller.dart';
 import 'transaction_entry_screen.dart';
-import 'income_sources_screen.dart';
 import 'budget_overview_screen.dart';
 import 'settings_screen.dart';
 import 'weekly_review_screen.dart';
@@ -75,16 +75,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: AppBar(
         title: Text(l10n.appTitle),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.bar_chart),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const MonthlyOverviewScreen()),
-              );
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.visibility_outlined),
+            tooltip: l10n.reflect,
+            onSelected: (value) {
+              if (value == 'weekly') {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const WeeklyReviewScreen()),
+                );
+              } else if (value == 'monthly') {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const MonthlyOverviewScreen()),
+                );
+              }
             },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'weekly',
+                child: Text(l10n.weeklyReview),
+              ),
+              PopupMenuItem(
+                value: 'monthly',
+                child: Text(l10n.monthlyOverview),
+              ),
+            ],
           ),
           IconButton(
-            icon: const Icon(Icons.pie_chart),
+            icon: const Icon(Icons.pie_chart_outline),
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const BudgetOverviewScreen()),
@@ -93,25 +110,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             tooltip: l10n.budgets,
           ),
           IconButton(
-            icon: const Icon(Icons.wallet),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const IncomeSourcesScreen()),
-              );
-            },
-            tooltip: l10n.incomeSources,
-          ),
-          IconButton(
-            icon: const Icon(Icons.insights),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const WeeklyReviewScreen()),
-              );
-            },
-            tooltip: l10n.weeklyReview,
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings),
+            icon: const Icon(Icons.settings_outlined),
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const SettingsScreen()),
@@ -126,8 +125,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           data: (transactions) => CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
-                child: _StateCard(homeState: homeState),
+                child: _MoneyLeftLayer(moneyLeft: homeState.moneyLeft),
               ),
+              if (homeState.categorySnapshots.isNotEmpty)
+                SliverToBoxAdapter(
+                  child: _CategorySnapshotLayer(snapshots: homeState.categorySnapshots),
+                ),
               if (homeState.signals.isNotEmpty)
                 SliverToBoxAdapter(
                   child: Padding(
@@ -165,40 +168,117 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 }
 
-class _StateCard extends StatelessWidget {
-  final HomeState homeState;
+class _MoneyLeftLayer extends StatelessWidget {
+  final double moneyLeft;
 
-  const _StateCard({required this.homeState});
+  const _MoneyLeftLayer({required this.moneyLeft});
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Card(
-      margin: const EdgeInsets.all(16),
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
+      child: Column(
+        children: [
+          Text(
+            '${moneyLeft.toStringAsFixed(2)} €',
+            style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: -1.0,
+                ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            l10n.moneyLeft,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CategorySnapshotLayer extends StatelessWidget {
+  final List<CategoryBudgetStatus> snapshots;
+
+  const _CategorySnapshotLayer({required this.snapshots});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Column(
+      children: [
+        ...snapshots.map((status) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+              child: _CategorySnapshotItem(status: status),
+            )),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const BudgetOverviewScreen()),
+            );
+          },
+          child: Text(l10n.viewAllBudgets),
+        ),
+      ],
+    );
+  }
+}
+
+class _CategorySnapshotItem extends StatelessWidget {
+  final CategoryBudgetStatus status;
+
+  const _CategorySnapshotItem({required this.status});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${homeState.remainingTotalBudget.toStringAsFixed(2)} €',
-              style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              l10n.remainingTotalBudget,
-              style: Theme.of(context).textTheme.titleMedium,
+              _getCategoryName(status.categoryId, l10n),
+              style: Theme.of(context).textTheme.bodySmall,
             ),
             Text(
-              l10n.forThisMonth,
+              '${status.spentAmount.toStringAsFixed(0)} / ${status.budgetAmount.toStringAsFixed(0)} €',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
         ),
-      ),
+        const SizedBox(height: 4),
+        LinearProgressIndicator(
+          value: status.percentUsed.clamp(0.0, 1.0),
+          backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.6),
+          minHeight: 4,
+          borderRadius: BorderRadius.circular(2),
+        ),
+      ],
     );
+  }
+
+  String _getCategoryName(String id, AppLocalizations l10n) {
+    switch (id) {
+      case 'food':
+        return l10n.categoryFood;
+      case 'transport':
+        return l10n.categoryTransport;
+      case 'leisure':
+        return l10n.categoryLeisure;
+      case 'housing':
+        return l10n.categoryHousing;
+      case 'salary':
+        return l10n.categorySalary;
+      default:
+        return l10n.categoryOther;
+    }
   }
 }
 
@@ -306,7 +386,7 @@ class _TransactionList extends StatelessWidget {
                   child: Text(
                     l10n.noTransactionsToday,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.outline.withOpacity(0.7),
+                          color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.7),
                           fontStyle: FontStyle.italic,
                         ),
                   ),

@@ -233,6 +233,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get remainingTotalBudget => 'Remaining total budget';
 
   @override
+  String get moneyLeft => 'Money left';
+
+  @override
+  String get viewAllBudgets => 'View all budgets';
+
+  @override
   String get forThisMonth => 'for this month';
 
   @override
@@ -304,6 +310,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dataAndExport => 'Data & Export';
+
+  @override
+  String get reflect => 'Reflect';
 
   @override
   String get today => 'Today';

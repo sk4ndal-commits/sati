@@ -524,6 +524,18 @@ abstract class AppLocalizations {
   /// **'Remaining total budget'**
   String get remainingTotalBudget;
 
+  /// No description provided for @moneyLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Money left'**
+  String get moneyLeft;
+
+  /// No description provided for @viewAllBudgets.
+  ///
+  /// In en, this message translates to:
+  /// **'View all budgets'**
+  String get viewAllBudgets;
+
   /// No description provided for @forThisMonth.
   ///
   /// In en, this message translates to:
@@ -655,6 +667,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Data & Export'**
   String get dataAndExport;
+
+  /// No description provided for @reflect.
+  ///
+  /// In en, this message translates to:
+  /// **'Reflect'**
+  String get reflect;
 
   /// No description provided for @today.
   ///

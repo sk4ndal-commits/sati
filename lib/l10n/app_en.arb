@@ -87,6 +87,8 @@
         }
     },
     "remainingTotalBudget": "Remaining total budget",
+    "moneyLeft": "Money left",
+    "viewAllBudgets": "View all budgets",
     "forThisMonth": "for this month",
     "planned": "Planned",
     "unplanned": "Unplanned",
@@ -119,6 +121,7 @@
     "about": "About",
     "version": "Version",
     "dataAndExport": "Data & Export",
+    "reflect": "Reflect",
     "today": "Today",
     "noTransactionsToday": "No entries yet today",
     "remainingBudgetInfo": "{amount} € left this month",

@@ -87,6 +87,8 @@
         }
     },
     "remainingTotalBudget": "Verbleibendes Gesamtbudget",
+    "moneyLeft": "Geld übrig",
+    "viewAllBudgets": "Alle Budgets anzeigen",
     "forThisMonth": "für diesen Monat",
     "today": "Heute",
     "noTransactionsToday": "Heute noch keine Einträge",
@@ -126,5 +128,6 @@
     "newMonthGreeting": "Neuer Monat, frischer Start.",
     "about": "Über",
     "version": "Version",
-    "dataAndExport": "Daten & Export"
+    "dataAndExport": "Daten & Export",
+    "reflect": "Reflektieren"
 }

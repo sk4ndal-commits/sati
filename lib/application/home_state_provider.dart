@@ -7,12 +7,14 @@ import 'settings_controller.dart';
 part 'home_state_provider.g.dart';
 
 class HomeState {
-  final double remainingTotalBudget;
+  final double moneyLeft;
+  final List<CategoryBudgetStatus> categorySnapshots;
   final List<AttentionSignal> signals;
   final bool isNewMonthTransition;
 
   HomeState({
-    required this.remainingTotalBudget,
+    required this.moneyLeft,
+    required this.categorySnapshots,
     required this.signals,
     this.isNewMonthTransition = false,
   });
@@ -54,15 +56,27 @@ Future<HomeState> homeState(Ref ref) async {
     ref.read(settingsControllerProvider.notifier).updateLastSeenMonth(now.month, now.year);
   }
 
-  // 2. Calculate remaining total budget
-  double totalRemaining = 0;
-  for (final status in budgetOverviewAsync) {
-    totalRemaining += status.remainingAmount;
-  }
+  // 2. Calculate Money Left = income - expenses (current month)
+  final currentMonthTransactions = transactions.where((t) =>
+      t.date.month == now.month &&
+      t.date.year == now.year).toList();
+
+  final totalIncome = currentMonthTransactions
+      .where((t) => t.type == TransactionType.income)
+      .fold(0.0, (sum, t) => sum + t.amount);
+  
+  final totalExpenses = currentMonthTransactions
+      .where((t) => t.type == TransactionType.expense)
+      .fold(0.0, (sum, t) => sum + t.amount);
+
+  final moneyLeft = totalIncome - totalExpenses;
+
+  // 3. Category snapshot (Limit to 3-5)
+  final categorySnapshots = budgetOverviewAsync.take(5).toList();
 
   final signals = <AttentionSignal>[];
 
-  // 2. Attention signals
+  // 4. Attention signals
   // Signal: Budget near limit (>= 80%)
   // Priority 1: First category that is >= 80%
   for (final status in budgetOverviewAsync) {
@@ -77,7 +91,6 @@ Future<HomeState> homeState(Ref ref) async {
 
   // Priority 2: High unplanned spend this week (only if no budget signal)
   if (signals.isEmpty) {
-    final now = DateTime.now();
     final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
     final startOfRange = DateTime(startOfWeek.year, startOfWeek.month, startOfWeek.day);
 
@@ -99,7 +112,8 @@ Future<HomeState> homeState(Ref ref) async {
   }
 
   return HomeState(
-    remainingTotalBudget: totalRemaining,
+    moneyLeft: moneyLeft,
+    categorySnapshots: categorySnapshots,
     signals: signals,
     isNewMonthTransition: isNewMonthTransition,
   );
