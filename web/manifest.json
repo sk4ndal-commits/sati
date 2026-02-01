@@ -1,6 +1,6 @@
 {
-    "name": "moneytracker",
-    "short_name": "moneytracker",
+    "name": "moneyful",
+    "short_name": "moneyful",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

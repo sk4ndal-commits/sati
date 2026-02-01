@@ -54,20 +54,20 @@ class _SummaryCard extends StatelessWidget {
             _ValueRow(
               label: l10n.income,
               value: data.totalIncome,
-              color: Colors.green,
+              color: const Color(0xFF2E7D32),
             ),
             const SizedBox(height: 8),
             _ValueRow(
               label: l10n.expense,
               value: data.totalExpenses,
-              color: Colors.red,
+              color: const Color(0xFF965F5F),
             ),
             const Divider(height: 24),
             _ValueRow(
               label: l10n.savings,
               value: data.savings,
               valueStyle: theme.textTheme.titleLarge?.copyWith(
-                color: data.savings >= 0 ? Colors.green : Colors.red,
+                color: data.savings >= 0 ? const Color(0xFF2E7D32) : const Color(0xFF965F5F),
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -163,7 +163,7 @@ class _BudgetStatusCard extends StatelessWidget {
               label: l10n.remaining,
               value: data.remainingBudget,
               valueStyle: theme.textTheme.titleLarge?.copyWith(
-                color: data.remainingBudget >= 0 ? Colors.teal : Colors.red,
+                color: data.remainingBudget >= 0 ? theme.colorScheme.primary : const Color(0xFF965F5F),
                 fontWeight: FontWeight.bold,
               ),
             ),

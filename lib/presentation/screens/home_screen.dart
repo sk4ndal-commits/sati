@@ -38,11 +38,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final l10n = AppLocalizations.of(context)!;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(l10n.newMonthGreeting),
+        content: Text(
+          l10n.newMonthGreeting,
+          style: TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
+        ),
         behavior: SnackBarBehavior.floating,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         duration: const Duration(seconds: 4),
         action: SnackBarAction(
           label: 'OK',
+          textColor: Theme.of(context).colorScheme.primary,
           onPressed: () {
             // Just dismiss
           },
@@ -73,10 +78,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.appTitle),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Text(
+            l10n.appTitle,
+            style: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
+                  letterSpacing: 0.5,
+                ),
+          ),
+        ),
         actions: [
           PopupMenuButton<String>(
-            icon: const Icon(Icons.visibility_outlined),
+            icon: const Icon(Icons.visibility_outlined, size: 22),
             tooltip: l10n.reflect,
             onSelected: (value) {
               if (value == 'weekly') {
@@ -101,7 +114,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ],
           ),
           IconButton(
-            icon: const Icon(Icons.pie_chart_outline),
+            icon: const Icon(Icons.pie_chart_outline, size: 22),
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const BudgetOverviewScreen()),
@@ -110,7 +123,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             tooltip: l10n.budgets,
           ),
           IconButton(
-            icon: const Icon(Icons.settings_outlined),
+            icon: const Icon(Icons.settings_outlined, size: 22),
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const SettingsScreen()),
@@ -177,22 +190,25 @@ class _MoneyLeftLayer extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
+      padding: const EdgeInsets.only(top: 48.0, bottom: 40.0, left: 16.0, right: 16.0),
       child: Column(
         children: [
           Text(
             '${moneyLeft.toStringAsFixed(2)} €',
+            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.displayLarge?.copyWith(
                   color: Theme.of(context).colorScheme.onSurface,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: -1.0,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 56,
+                  letterSpacing: -1.5,
                 ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 8),
           Text(
             l10n.moneyLeft,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: Theme.of(context).colorScheme.outline,
+                  letterSpacing: 0.5,
                 ),
           ),
         ],
@@ -211,18 +227,33 @@ class _CategorySnapshotLayer extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
-        ...snapshots.map((status) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-              child: _CategorySnapshotItem(status: status),
-            )),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            children: snapshots
+                .map((status) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: _CategorySnapshotItem(status: status),
+                    ))
+                .toList(),
+          ),
+        ),
+        const SizedBox(height: 8),
         TextButton(
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => const BudgetOverviewScreen()),
             );
           },
-          child: Text(l10n.viewAllBudgets),
+          child: Text(
+            l10n.viewAllBudgets,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ),
+        const SizedBox(height: 16),
       ],
     );
   }
@@ -244,21 +275,33 @@ class _CategorySnapshotItem extends StatelessWidget {
           children: [
             Text(
               _getCategoryName(status.categoryId, l10n),
-              style: Theme.of(context).textTheme.bodySmall,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w500,
+                  ),
             ),
             Text(
               '${status.spentAmount.toStringAsFixed(0)} / ${status.budgetAmount.toStringAsFixed(0)} €',
-              style: Theme.of(context).textTheme.bodySmall,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
             ),
           ],
         ),
-        const SizedBox(height: 4),
-        LinearProgressIndicator(
-          value: status.percentUsed.clamp(0.0, 1.0),
-          backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.6),
-          minHeight: 4,
-          borderRadius: BorderRadius.circular(2),
+        const SizedBox(height: 8),
+        TweenAnimationBuilder<double>(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+          tween: Tween<double>(begin: 0, end: status.percentUsed.clamp(0.0, 1.0)),
+          builder: (context, value, child) {
+            return LinearProgressIndicator(
+              value: value,
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.6),
+              minHeight: 4,
+              borderRadius: BorderRadius.circular(2),
+            );
+          },
         ),
       ],
     );
@@ -298,13 +341,13 @@ class _SignalItem extends StatelessWidget {
     switch (signal.type) {
       case SignalType.budgetNearLimit:
         text = l10n.budgetNearLimitSignal(_getCategoryName(signal.categoryId, l10n));
-        icon = Icons.warning_amber_rounded;
-        color = Colors.orange;
+        icon = Icons.info_outline;
+        color = const Color(0xFF9E773B); // Desaturated/Neutral Gold/Ochre
         break;
       case SignalType.highUnplannedSpend:
         text = l10n.highUnplannedWeekly(signal.amount?.toStringAsFixed(2) ?? '0');
-        icon = Icons.bolt;
-        color = Colors.deepOrange;
+        icon = Icons.info_outline;
+        color = const Color(0xFF8A7A5F); // Muted Taupe/Neutral
         break;
     }
 
@@ -371,23 +414,23 @@ class _TransactionList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
+                padding: const EdgeInsets.fromLTRB(24, 32, 24, 12),
                 child: Text(
                   isToday ? l10n.today : DateFormat.yMMMMd().format(date),
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
                         color: Theme.of(context).colorScheme.outline,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 0.5,
                       ),
                 ),
               ),
               if (isToday && dayTransactions.isEmpty)
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                   child: Text(
                     l10n.noTransactionsToday,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.7),
-                          fontStyle: FontStyle.italic,
+                          color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.6),
                         ),
                   ),
                 )
@@ -412,44 +455,58 @@ class _TransactionTile extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final isExpense = transaction.type == TransactionType.expense;
 
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundColor: isExpense ? Colors.red[50] : Colors.green[50],
-        child: Icon(
-          isExpense ? Icons.remove : Icons.add,
-          color: isExpense ? Colors.red : Colors.green,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+        leading: CircleAvatar(
+          radius: 18,
+          backgroundColor: isExpense ? const Color(0xFFF2EDED) : const Color(0xFFEAF5EA),
+          child: Icon(
+            isExpense ? Icons.remove : Icons.add,
+            size: 18,
+            color: isExpense ? const Color(0xFF965F5F) : const Color(0xFF2E7D32),
+          ),
         ),
-      ),
-      title: Text(
-        '${transaction.amount.toStringAsFixed(2)} €',
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      ),
-      subtitle: Row(
-        children: [
-          Text(_getCategoryName(transaction.categoryId, l10n)),
-          if (transaction.planned != null) ...[
-            const SizedBox(width: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-              decoration: BoxDecoration(
-                color: transaction.planned! ? Colors.blue[50] : Colors.orange[50],
-                borderRadius: BorderRadius.circular(4),
+        title: Text(
+          '${transaction.amount.toStringAsFixed(2)} €',
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
-              child: Text(
-                transaction.planned! ? l10n.planned : l10n.unplanned,
-                style: TextStyle(
-                  fontSize: 10,
-                  color: transaction.planned! ? Colors.blue[800] : Colors.orange[800],
-                  fontWeight: FontWeight.bold,
+        ),
+        subtitle: Row(
+          children: [
+            Text(
+              _getCategoryName(transaction.categoryId, l10n),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
+            ),
+            if (transaction.planned != null) ...[
+              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+                decoration: BoxDecoration(
+                  color: transaction.planned! ? const Color(0xFFDDE6ED) : const Color(0xFFEBE5C5),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  transaction.planned! ? l10n.planned : l10n.unplanned,
+                  style: TextStyle(
+                    fontSize: 9,
+                    color: transaction.planned! ? const Color(0xFF5D7A8C) : const Color(0xFF8A7A5F),
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            ),
+            ],
           ],
-        ],
+        ),
+        trailing: transaction.feeling != null
+            ? _getFeelingIcon(transaction.feeling!)
+            : null,
       ),
-      trailing: transaction.feeling != null
-          ? _getFeelingIcon(transaction.feeling!)
-          : null,
     );
   }
 
@@ -457,12 +514,12 @@ class _TransactionTile extends StatelessWidget {
     IconData icon;
     Color color;
     switch (feeling) {
-      case 1: icon = Icons.sentiment_very_dissatisfied; color = Colors.red; break;
-      case 2: icon = Icons.sentiment_dissatisfied; color = Colors.orange; break;
-      case 3: icon = Icons.sentiment_neutral; color = Colors.amber; break;
-      case 4: icon = Icons.sentiment_satisfied; color = Colors.lightGreen; break;
-      case 5: icon = Icons.sentiment_very_satisfied; color = Colors.green; break;
-      default: icon = Icons.sentiment_neutral; color = Colors.grey;
+      case 1: icon = Icons.sentiment_very_dissatisfied; color = const Color(0xFF965F5F); break;
+      case 2: icon = Icons.sentiment_dissatisfied; color = const Color(0xFFB58D67); break;
+      case 3: icon = Icons.sentiment_neutral; color = const Color(0xFFC4B680); break;
+      case 4: icon = Icons.sentiment_satisfied; color = const Color(0xFF8BA670); break;
+      case 5: icon = Icons.sentiment_very_satisfied; color = const Color(0xFF4D8D8D); break;
+      default: icon = Icons.sentiment_neutral; color = const Color(0xFF9E9E9E);
     }
     return Icon(icon, color: color, size: 20);
   }

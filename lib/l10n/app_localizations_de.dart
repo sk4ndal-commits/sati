@@ -9,7 +9,7 @@ class AppLocalizationsDe extends AppLocalizations {
   AppLocalizationsDe([String locale = 'de']) : super(locale);
 
   @override
-  String get appTitle => 'Sati';
+  String get appTitle => 'moneyful';
 
   @override
   String get addTransaction => 'Eintrag hinzufügen';
@@ -159,19 +159,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get no => 'Nein';
 
   @override
-  String get feeling1 => 'Schrecklich';
+  String get feeling1 => 'Unangenehm';
 
   @override
-  String get feeling2 => 'Schlecht';
+  String get feeling2 => 'Eher unangenehm';
 
   @override
   String get feeling3 => 'Neutral';
 
   @override
-  String get feeling4 => 'Gut';
+  String get feeling4 => 'Eher angenehm';
 
   @override
-  String get feeling5 => 'Sehr gut';
+  String get feeling5 => 'Angenehm';
 
   @override
   String get reflection => 'Reflektion';
@@ -194,11 +194,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get suggestionHighUnplanned =>
-      'Deine ungeplanten Ausgaben sind diese Woche recht hoch. Versuche, mehr Ausgaben im Voraus zu planen.';
+      'Du hast diese Woche einige ungeplante Ausgaben getätigt. Ein Budget könnte helfen, diese besser einzuplanen.';
 
   @override
   String suggestionReduceTop(String category) {
-    return 'Du hast am meisten für $category ausgegeben. Findest du einen Weg, dies nächste Woche zu reduzieren?';
+    return 'Für $category wurde diese Woche am meisten ausgegeben. Möchtest du dir das für nächste Woche genauer ansehen?';
   }
 
   @override
@@ -209,15 +209,15 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get avgFeelingNegative =>
-      'Ungeplante Ausgaben fühlten sich im Schnitt eher negativ an.';
+      'Die ungeplanten Ausgaben waren eher mit unangenehmen Gefühlen verbunden.';
 
   @override
   String get avgFeelingNeutral =>
-      'Ungeplante Ausgaben fühlten sich im Schnitt neutral an.';
+      'Die ungeplanten Ausgaben fühlten sich neutral an.';
 
   @override
   String get avgFeelingPositive =>
-      'Ungeplante Ausgaben fühlten sich im Schnitt positiv an.';
+      'Die ungeplanten Ausgaben fühlten sich überwiegend angenehm an.';
 
   @override
   String get noUnplannedData => 'Keine ungeplanten Ausgaben zur Reflexion.';

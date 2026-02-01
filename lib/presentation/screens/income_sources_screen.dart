@@ -35,7 +35,7 @@ class IncomeSourcesScreen extends ConsumerWidget {
                   '${l10n.expected}: ${source.expectedAmount?.toStringAsFixed(2) ?? "-"} €',
                 ),
                 trailing: stats?.isUnderExpected == true
-                    ? const Icon(Icons.warning_amber_rounded, color: Colors.orange)
+                    ? const Icon(Icons.info_outline, color: Color(0xFF8A7A5F))
                     : null,
                 onLongPress: () {
                    ref.read(incomeSourceControllerProvider.notifier).deleteIncomeSource(source.id);

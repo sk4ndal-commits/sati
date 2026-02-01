@@ -58,7 +58,7 @@ class ExportService extends _$ExportService {
       csv.writeln('${b.id},${b.categoryId},${b.amount},${b.rollover},${b.month},${b.year}');
     }
 
-    await _shareFile(csv.toString(), 'sati_export.csv');
+    await _shareFile(csv.toString(), 'moneyful_export.csv');
   }
 
   Future<void> exportToJson() async {
@@ -107,7 +107,7 @@ class ExportService extends _$ExportService {
     };
 
     final String jsonString = const JsonEncoder.withIndent('  ').convert(data);
-    await _shareFile(jsonString, 'sati_export.json');
+    await _shareFile(jsonString, 'moneyful_export.json');
   }
 
   Future<void> _shareFile(String content, String fileName) async {
@@ -117,7 +117,7 @@ class ExportService extends _$ExportService {
       await file.writeAsString(content);
       debugPrint('[DEBUG_LOG] File written to: ${file.path}');
 
-      final result = await SharePlus.instance.share(ShareParams(files: [XFile(file.path)], text: 'Sati Data Export'));
+      final result = await SharePlus.instance.share(ShareParams(files: [XFile(file.path)], text: 'moneyful Data Export'));
       debugPrint('[DEBUG_LOG] Share result status: ${result.status}');
     } catch (e, stack) {
       debugPrint('[DEBUG_LOG] Export failed: $e');

@@ -142,14 +142,14 @@ class _BudgetCard extends ConsumerWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Icon(Icons.warning_amber_rounded, size: 14, color: Colors.orange),
+                            const Icon(Icons.info_outline, size: 14, color: Color(0xFF8A7A5F)),
                             const SizedBox(width: 4),
                             Text(
                               status.unplannedPercent > 0.6
                                   ? l10n.frequentlyUnplanned
                                   : l10n.percentUnplanned((status.unplannedPercent * 100).toInt()),
                               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: Colors.orange[800],
+                                    color: const Color(0xFF8A7A5F),
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
@@ -165,10 +165,18 @@ class _BudgetCard extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 8),
-            LinearProgressIndicator(
-              value: status.percentUsed.clamp(0.0, 1.0),
-              backgroundColor: Colors.grey[200],
-              color: status.percentUsed > 1.0 ? Colors.red : Colors.teal,
+            TweenAnimationBuilder<double>(
+              duration: const Duration(milliseconds: 250),
+              curve: Curves.easeInOut,
+              tween: Tween<double>(begin: 0, end: status.percentUsed.clamp(0.0, 1.0)),
+              builder: (context, value, child) {
+                return LinearProgressIndicator(
+                  value: value,
+                  minHeight: 8,
+                  borderRadius: BorderRadius.circular(4),
+                  color: status.percentUsed > 1.0 ? const Color(0xFF965F5F) : Theme.of(context).colorScheme.primary,
+                );
+              },
             ),
             const SizedBox(height: 8),
             Row(

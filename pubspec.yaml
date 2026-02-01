@@ -1,4 +1,4 @@
-name: moneytracker
+name: moneyful
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -61,6 +61,16 @@ dev_dependencies:
   drift_dev: ^2.30.1
   build_runner: ^2.4.15
   riverpod_generator: ^3.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/appicon.png"
+  min_sdk_android: 21 # flutter_launcher_icons requires this to be at least 21
+  remove_alpha_ios: true
+  adaptive_icon_background: "#008080" # Teal color matching the app seed color
+  adaptive_icon_foreground: "assets/appicon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

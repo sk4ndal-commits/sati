@@ -42,7 +42,7 @@ class WeeklyReviewScreen extends ConsumerWidget {
                     Text(
                       '${data.totalUnplannedSpend.toStringAsFixed(2)} €',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            color: data.totalUnplannedSpend > 0 ? Colors.orange : null,
+                            color: data.totalUnplannedSpend > 0 ? const Color(0xFF8A7A5F) : null,
                           ),
                     ),
                   ],
@@ -172,7 +172,7 @@ class _FeelingBarChart extends StatelessWidget {
               height: 60 * heightFactor,
               decoration: BoxDecoration(
                 color: _getFeelingColor(feeling),
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
             const SizedBox(height: 4),
@@ -186,17 +186,17 @@ class _FeelingBarChart extends StatelessWidget {
   Color _getFeelingColor(int feeling) {
     switch (feeling) {
       case 1:
-        return Colors.red.shade300;
+        return const Color(0xFFD3BDBD); // Muted Soft Red
       case 2:
-        return Colors.orange.shade300;
+        return const Color(0xFFE5D1B8); // Muted Soft Orange
       case 3:
-        return Colors.yellow.shade300;
+        return const Color(0xFFEBE5C5); // Muted Soft Yellow
       case 4:
-        return Colors.lightGreen.shade300;
+        return const Color(0xFFC7D3BC); // Muted Soft LightGreen
       case 5:
-        return Colors.green.shade300;
+        return const Color(0xFFA6C5C5); // Muted Soft Teal/Green
       default:
-        return Colors.grey.shade300;
+        return const Color(0xFFE0E0E0); // Soft Grey
     }
   }
 }
