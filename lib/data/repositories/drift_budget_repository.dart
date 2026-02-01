@@ -17,6 +17,12 @@ class DriftBudgetRepository implements BudgetRepository {
   }
 
   @override
+  Future<List<BudgetEntity>> getAllBudgets() async {
+    final rows = await _db.select(_db.budgetTable).get();
+    return rows.map((row) => _mapToEntity(row)).toList();
+  }
+
+  @override
   Future<void> saveBudget(BudgetEntity budget) async {
     await _db.into(_db.budgetTable).insertOnConflictUpdate(
           BudgetTableCompanion.insert(

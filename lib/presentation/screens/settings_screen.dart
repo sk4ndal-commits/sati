@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../application/settings_controller.dart';
 import '../../l10n/app_localizations.dart';
+import 'data_backup_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -44,6 +45,16 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                 ),
               ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.backup),
+              title: Text(l10n.dataAndBackup),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const DataBackupScreen()),
+                );
+              },
+            ),
           ],
         ),
         loading: () => const Center(child: CircularProgressIndicator()),

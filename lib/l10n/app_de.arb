@@ -108,5 +108,9 @@
     "savings": "Ersparnisse",
     "budgetStatus": "Budget-Status",
     "totalBudgeted": "Gesamt budgetiert",
-    "ofTotal": "{percent}% der Gesamtausgaben"
+    "ofTotal": "{percent}% der Gesamtausgaben",
+    "dataAndBackup": "Daten & Backup",
+    "exportCsv": "Als CSV exportieren",
+    "exportJson": "Als JSON exportieren",
+    "exportDescription": "Exportiere alle deine Transaktionen, Budgets und Einkommensquellen in ein menschenlesbares Format. Du behältst die volle Kontrolle über deine Daten."
 }

@@ -273,4 +273,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String ofTotal(Object percent) {
     return '$percent% of total';
   }
+
+  @override
+  String get dataAndBackup => 'Data & Backup';
+
+  @override
+  String get exportCsv => 'Export to CSV';
+
+  @override
+  String get exportJson => 'Export to JSON';
+
+  @override
+  String get exportDescription =>
+      'Export all your transactions, budgets, and income sources to a human-readable format. You keep full control over your data.';
 }

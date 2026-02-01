@@ -274,4 +274,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String ofTotal(Object percent) {
     return '$percent% der Gesamtausgaben';
   }
+
+  @override
+  String get dataAndBackup => 'Daten & Backup';
+
+  @override
+  String get exportCsv => 'Als CSV exportieren';
+
+  @override
+  String get exportJson => 'Als JSON exportieren';
+
+  @override
+  String get exportDescription =>
+      'Exportiere alle deine Transaktionen, Budgets und Einkommensquellen in ein menschenlesbares Format. Du behältst die volle Kontrolle über deine Daten.';
 }

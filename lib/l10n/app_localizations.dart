@@ -595,6 +595,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{percent}% of total'**
   String ofTotal(Object percent);
+
+  /// No description provided for @dataAndBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Data & Backup'**
+  String get dataAndBackup;
+
+  /// No description provided for @exportCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Export to CSV'**
+  String get exportCsv;
+
+  /// No description provided for @exportJson.
+  ///
+  /// In en, this message translates to:
+  /// **'Export to JSON'**
+  String get exportJson;
+
+  /// No description provided for @exportDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Export all your transactions, budgets, and income sources to a human-readable format. You keep full control over your data.'**
+  String get exportDescription;
 }
 
 class _AppLocalizationsDelegate
