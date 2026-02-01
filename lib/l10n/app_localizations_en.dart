@@ -175,4 +175,79 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reflection => 'Reflection';
+
+  @override
+  String get weeklyReview => 'Weekly Review';
+
+  @override
+  String get topCategories => 'Top Categories';
+
+  @override
+  String get unplannedSpend => 'Unplanned Spend';
+
+  @override
+  String get suggestions => 'Suggestion';
+
+  @override
+  String get suggestionGeneric =>
+      'Keep tracking your expenses to get better insights.';
+
+  @override
+  String get suggestionHighUnplanned =>
+      'Your unplanned spending is quite high this week. Try to plan more expenses in advance.';
+
+  @override
+  String suggestionReduceTop(String category) {
+    return 'You spent the most on $category. Can you find a way to reduce this next week?';
+  }
+
+  @override
+  String get weeklyReviewDescription => 'Your financial week at a glance.';
+
+  @override
+  String get feelingDistribution => 'Feeling Distribution';
+
+  @override
+  String get avgFeelingNegative =>
+      'Unplanned expenses felt rather negative on average.';
+
+  @override
+  String get avgFeelingNeutral => 'Unplanned expenses felt neutral on average.';
+
+  @override
+  String get avgFeelingPositive =>
+      'Unplanned expenses felt positive on average.';
+
+  @override
+  String get noUnplannedData => 'No unplanned expenses to reflect on.';
+
+  @override
+  String get frequentlyUnplanned => 'frequently unplanned';
+
+  @override
+  String percentUnplanned(int percent) {
+    return '$percent% unplanned';
+  }
+
+  @override
+  String get remainingTotalBudget => 'Remaining total budget';
+
+  @override
+  String get forThisMonth => 'for this month';
+
+  @override
+  String get planned => 'Planned';
+
+  @override
+  String get unplanned => 'Unplanned';
+
+  @override
+  String highUnplannedWeekly(String amount) {
+    return 'High unplanned spending this week: $amount €';
+  }
+
+  @override
+  String budgetNearLimitSignal(String category) {
+    return '$category budget is almost exhausted';
+  }
 }

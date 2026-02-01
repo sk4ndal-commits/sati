@@ -10,16 +10,19 @@ class CategoryBudgetStatus {
   final double budgetAmount;
   final double spentAmount;
   final bool rollover;
+  final double unplannedPercent;
 
   CategoryBudgetStatus({
     required this.categoryId,
     required this.budgetAmount,
     required this.spentAmount,
     required this.rollover,
+    required this.unplannedPercent,
   });
 
   double get remainingAmount => budgetAmount - spentAmount;
   double get percentUsed => budgetAmount > 0 ? spentAmount / budgetAmount : 0;
+  bool get isFrequentlyUnplanned => unplannedPercent > 0.4;
 }
 
 @riverpod
@@ -36,20 +39,35 @@ Future<List<CategoryBudgetStatus>> budgetOverview(Ref ref) async {
       t.date.month == now.month &&
       t.date.year == now.year).toList();
 
-  // Create a map of categoryId -> spentAmount
-  final spentByCategory = <String, double>{};
+  // Create a map of categoryId -> {spentAmount, unplannedAmount}
+  final statsByCategory = <String, _CategoryStats>{};
   for (final t in currentMonthTransactions) {
-    spentByCategory[t.categoryId] = (spentByCategory[t.categoryId] ?? 0.0) + t.amount;
+    final stats = statsByCategory.putIfAbsent(t.categoryId, () => _CategoryStats());
+    stats.totalSpent += t.amount;
+    if (t.planned == false) {
+      stats.unplannedSpent += t.amount;
+    }
   }
 
   // Map budgets to status, including categories that have spending but no budget
   // For MVP, we'll mostly focus on categories that HAVE a budget.
   return budgets.map((budget) {
+    final stats = statsByCategory[budget.categoryId];
+    final totalSpent = stats?.totalSpent ?? 0.0;
+    final unplannedSpent = stats?.unplannedSpent ?? 0.0;
+    final unplannedPercent = totalSpent > 0 ? unplannedSpent / totalSpent : 0.0;
+
     return CategoryBudgetStatus(
       categoryId: budget.categoryId,
       budgetAmount: budget.amount,
-      spentAmount: spentByCategory[budget.categoryId] ?? 0.0,
+      spentAmount: totalSpent,
       rollover: budget.rollover,
+      unplannedPercent: unplannedPercent,
     );
   }).toList();
+}
+
+class _CategoryStats {
+  double totalSpent = 0.0;
+  double unplannedSpent = 0.0;
 }

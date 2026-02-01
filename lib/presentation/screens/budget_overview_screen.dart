@@ -132,7 +132,32 @@ class _BudgetCard extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(categoryName, style: Theme.of(context).textTheme.titleMedium),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(categoryName, style: Theme.of(context).textTheme.titleMedium),
+                    if (status.unplannedPercent > 0.4)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.warning_amber_rounded, size: 14, color: Colors.orange),
+                            const SizedBox(width: 4),
+                            Text(
+                              status.unplannedPercent > 0.6
+                                  ? l10n.frequentlyUnplanned
+                                  : l10n.percentUnplanned((status.unplannedPercent * 100).toInt()),
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: Colors.orange[800],
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
                 IconButton(
                   icon: const Icon(Icons.edit, size: 20),
                   onPressed: () => BudgetOverviewScreen._showAddBudgetDialogStatic(context, ref, status),
@@ -149,8 +174,20 @@ class _BudgetCard extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('${l10n.spent}: ${status.spentAmount.toStringAsFixed(2)} €'),
-                Text('${l10n.remaining}: ${status.remainingAmount.toStringAsFixed(2)} €'),
+                Expanded(
+                  child: Text(
+                    '${l10n.spent}: ${status.spentAmount.toStringAsFixed(2)} €',
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    '${l10n.remaining}: ${status.remainingAmount.toStringAsFixed(2)} €',
+                    textAlign: TextAlign.end,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ],
             ),
             Text('${l10n.expected}: ${status.budgetAmount.toStringAsFixed(2)} €',

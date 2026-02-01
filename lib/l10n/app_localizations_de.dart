@@ -175,4 +175,80 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reflection => 'Reflektion';
+
+  @override
+  String get weeklyReview => 'Wochenrückblick';
+
+  @override
+  String get topCategories => 'Top Kategorien';
+
+  @override
+  String get unplannedSpend => 'Ungeplante Ausgaben';
+
+  @override
+  String get suggestions => 'Vorschlag';
+
+  @override
+  String get suggestionGeneric =>
+      'Erfasse weiterhin deine Ausgaben, um bessere Einblicke zu erhalten.';
+
+  @override
+  String get suggestionHighUnplanned =>
+      'Deine ungeplanten Ausgaben sind diese Woche recht hoch. Versuche, mehr Ausgaben im Voraus zu planen.';
+
+  @override
+  String suggestionReduceTop(String category) {
+    return 'Du hast am meisten für $category ausgegeben. Findest du einen Weg, dies nächste Woche zu reduzieren?';
+  }
+
+  @override
+  String get weeklyReviewDescription => 'Deine Finanzwoche im Überblick.';
+
+  @override
+  String get feelingDistribution => 'Gefühlsverteilung';
+
+  @override
+  String get avgFeelingNegative =>
+      'Ungeplante Ausgaben fühlten sich im Schnitt eher negativ an.';
+
+  @override
+  String get avgFeelingNeutral =>
+      'Ungeplante Ausgaben fühlten sich im Schnitt neutral an.';
+
+  @override
+  String get avgFeelingPositive =>
+      'Ungeplante Ausgaben fühlten sich im Schnitt positiv an.';
+
+  @override
+  String get noUnplannedData => 'Keine ungeplanten Ausgaben zur Reflexion.';
+
+  @override
+  String get frequentlyUnplanned => 'häufig ungeplant';
+
+  @override
+  String percentUnplanned(int percent) {
+    return '$percent% ungeplant';
+  }
+
+  @override
+  String get remainingTotalBudget => 'Verbleibendes Gesamtbudget';
+
+  @override
+  String get forThisMonth => 'für diesen Monat';
+
+  @override
+  String get planned => 'Geplant';
+
+  @override
+  String get unplanned => 'Ungeplant';
+
+  @override
+  String highUnplannedWeekly(String amount) {
+    return 'Hohe ungeplante Ausgaben diese Woche: $amount €';
+  }
+
+  @override
+  String budgetNearLimitSignal(String category) {
+    return 'Budget für $category fast aufgebraucht';
+  }
 }

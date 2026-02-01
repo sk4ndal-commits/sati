@@ -427,6 +427,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reflection'**
   String get reflection;
+
+  /// No description provided for @weeklyReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Review'**
+  String get weeklyReview;
+
+  /// No description provided for @topCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Categories'**
+  String get topCategories;
+
+  /// No description provided for @unplannedSpend.
+  ///
+  /// In en, this message translates to:
+  /// **'Unplanned Spend'**
+  String get unplannedSpend;
+
+  /// No description provided for @suggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestion'**
+  String get suggestions;
+
+  /// No description provided for @suggestionGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep tracking your expenses to get better insights.'**
+  String get suggestionGeneric;
+
+  /// No description provided for @suggestionHighUnplanned.
+  ///
+  /// In en, this message translates to:
+  /// **'Your unplanned spending is quite high this week. Try to plan more expenses in advance.'**
+  String get suggestionHighUnplanned;
+
+  /// No description provided for @suggestionReduceTop.
+  ///
+  /// In en, this message translates to:
+  /// **'You spent the most on {category}. Can you find a way to reduce this next week?'**
+  String suggestionReduceTop(String category);
+
+  /// No description provided for @weeklyReviewDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your financial week at a glance.'**
+  String get weeklyReviewDescription;
+
+  /// No description provided for @feelingDistribution.
+  ///
+  /// In en, this message translates to:
+  /// **'Feeling Distribution'**
+  String get feelingDistribution;
+
+  /// No description provided for @avgFeelingNegative.
+  ///
+  /// In en, this message translates to:
+  /// **'Unplanned expenses felt rather negative on average.'**
+  String get avgFeelingNegative;
+
+  /// No description provided for @avgFeelingNeutral.
+  ///
+  /// In en, this message translates to:
+  /// **'Unplanned expenses felt neutral on average.'**
+  String get avgFeelingNeutral;
+
+  /// No description provided for @avgFeelingPositive.
+  ///
+  /// In en, this message translates to:
+  /// **'Unplanned expenses felt positive on average.'**
+  String get avgFeelingPositive;
+
+  /// No description provided for @noUnplannedData.
+  ///
+  /// In en, this message translates to:
+  /// **'No unplanned expenses to reflect on.'**
+  String get noUnplannedData;
+
+  /// No description provided for @frequentlyUnplanned.
+  ///
+  /// In en, this message translates to:
+  /// **'frequently unplanned'**
+  String get frequentlyUnplanned;
+
+  /// No description provided for @percentUnplanned.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% unplanned'**
+  String percentUnplanned(int percent);
+
+  /// No description provided for @remainingTotalBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining total budget'**
+  String get remainingTotalBudget;
+
+  /// No description provided for @forThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'for this month'**
+  String get forThisMonth;
+
+  /// No description provided for @planned.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned'**
+  String get planned;
+
+  /// No description provided for @unplanned.
+  ///
+  /// In en, this message translates to:
+  /// **'Unplanned'**
+  String get unplanned;
+
+  /// No description provided for @highUnplannedWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'High unplanned spending this week: {amount} €'**
+  String highUnplannedWeekly(String amount);
+
+  /// No description provided for @budgetNearLimitSignal.
+  ///
+  /// In en, this message translates to:
+  /// **'{category} budget is almost exhausted'**
+  String budgetNearLimitSignal(String category);
 }
 
 class _AppLocalizationsDelegate

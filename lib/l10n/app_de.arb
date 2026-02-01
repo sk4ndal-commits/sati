@@ -60,5 +60,46 @@
     "feeling3": "Neutral",
     "feeling4": "Gut",
     "feeling5": "Sehr gut",
-    "reflection": "Reflektion"
+    "reflection": "Reflektion",
+    "weeklyReview": "Wochenrückblick",
+    "topCategories": "Top Kategorien",
+    "unplannedSpend": "Ungeplante Ausgaben",
+    "suggestions": "Vorschlag",
+    "suggestionGeneric": "Erfasse weiterhin deine Ausgaben, um bessere Einblicke zu erhalten.",
+    "suggestionHighUnplanned": "Deine ungeplanten Ausgaben sind diese Woche recht hoch. Versuche, mehr Ausgaben im Voraus zu planen.",
+    "suggestionReduceTop": "Du hast am meisten für {category} ausgegeben. Findest du einen Weg, dies nächste Woche zu reduzieren?",
+    "@suggestionReduceTop": {
+        "placeholders": {
+            "category": { "type": "String" }
+        }
+    },
+    "weeklyReviewDescription": "Deine Finanzwoche im Überblick.",
+    "feelingDistribution": "Gefühlsverteilung",
+    "avgFeelingNegative": "Ungeplante Ausgaben fühlten sich im Schnitt eher negativ an.",
+    "avgFeelingNeutral": "Ungeplante Ausgaben fühlten sich im Schnitt neutral an.",
+    "avgFeelingPositive": "Ungeplante Ausgaben fühlten sich im Schnitt positiv an.",
+    "noUnplannedData": "Keine ungeplanten Ausgaben zur Reflexion.",
+    "frequentlyUnplanned": "häufig ungeplant",
+    "percentUnplanned": "{percent}% ungeplant",
+    "@percentUnplanned": {
+        "placeholders": {
+            "percent": { "type": "int" }
+        }
+    },
+    "remainingTotalBudget": "Verbleibendes Gesamtbudget",
+    "forThisMonth": "für diesen Monat",
+    "planned": "Geplant",
+    "unplanned": "Ungeplant",
+    "highUnplannedWeekly": "Hohe ungeplante Ausgaben diese Woche: {amount} €",
+    "@highUnplannedWeekly": {
+        "placeholders": {
+            "amount": { "type": "String" }
+        }
+    },
+    "budgetNearLimitSignal": "Budget für {category} fast aufgebraucht",
+    "@budgetNearLimitSignal": {
+        "placeholders": {
+            "category": { "type": "String" }
+        }
+    }
 }

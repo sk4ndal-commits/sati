@@ -48,4 +48,4 @@ final class BudgetOverviewProvider
   }
 }
 
-String _$budgetOverviewHash() => r'45a2c27f4aba236a56c441aede96eea321598648';
+String _$budgetOverviewHash() => r'0bda9a16da5937d1df3f1fa4d6aa6f69324e4455';
