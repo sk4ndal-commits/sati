@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/app_localizations.dart';
-import 'presentation/screens/home_screen.dart';
+import 'presentation/screens/main_navigation_screen.dart';
 
 void main() {
   runApp(
@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [
         Locale('de'),
       ],
-      home: const HomeScreen(),
+      home: const MainNavigationScreen(),
     );
   }
 }

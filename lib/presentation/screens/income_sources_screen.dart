@@ -48,6 +48,7 @@ class IncomeSourcesScreen extends ConsumerWidget {
         error: (err, stack) => Center(child: Text(err.toString())),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'income_source_fab',
         onPressed: () => _showAddSourceDialog(context, ref),
         child: const Icon(Icons.add),
       ),

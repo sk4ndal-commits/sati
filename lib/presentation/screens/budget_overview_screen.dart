@@ -15,6 +15,7 @@ class BudgetOverviewScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.budgets),
+        automaticallyImplyLeading: false,
       ),
       body: budgetOverviewAsync.when(
         data: (budgets) {
@@ -34,6 +35,7 @@ class BudgetOverviewScreen extends ConsumerWidget {
         error: (err, stack) => Center(child: Text(err.toString())),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'budget_fab',
         onPressed: () => _showAddBudgetDialog(context, ref),
         child: const Icon(Icons.add),
       ),

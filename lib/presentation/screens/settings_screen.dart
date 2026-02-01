@@ -16,6 +16,7 @@ class SettingsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.settings),
+        automaticallyImplyLeading: false,
       ),
       body: settingsAsync.when(
         data: (settings) => ListView(

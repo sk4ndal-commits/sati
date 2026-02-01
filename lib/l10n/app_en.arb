@@ -132,6 +132,7 @@
     "reflect": "Reflect",
     "trends": "Trends",
     "trendsDescription": "Your spending patterns over time.",
+    "home": "Home",
     "spendingTrend": "Spending Trend",
     "spendingTrendDescription": "Monthly total expenses for the last few months.",
     "categoryTrend": "Category Trend",

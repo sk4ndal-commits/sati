@@ -704,6 +704,12 @@ abstract class AppLocalizations {
   /// **'Your spending patterns over time.'**
   String get trendsDescription;
 
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
   /// No description provided for @spendingTrend.
   ///
   /// In en, this message translates to:

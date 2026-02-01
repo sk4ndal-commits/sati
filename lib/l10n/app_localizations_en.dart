@@ -332,6 +332,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get trendsDescription => 'Your spending patterns over time.';
 
   @override
+  String get home => 'Home';
+
+  @override
   String get spendingTrend => 'Spending Trend';
 
   @override

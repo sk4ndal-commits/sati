@@ -24,6 +24,7 @@ class _TrendsScreenState extends ConsumerState<TrendsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.trends),
+        automaticallyImplyLeading: false,
       ),
       body: trendsDataAsync.when(
         data: (data) {

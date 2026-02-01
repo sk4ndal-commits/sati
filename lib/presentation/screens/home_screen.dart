@@ -9,11 +9,7 @@ import '../../l10n/app_localizations.dart';
 import '../../application/settings_controller.dart';
 import '../../application/transaction_controller.dart';
 import 'transaction_entry_screen.dart';
-import 'budget_overview_screen.dart';
-import 'settings_screen.dart';
-import 'weekly_review_screen.dart';
-import 'monthly_overview_screen.dart';
-import 'trends_screen.dart';
+import 'main_navigation_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -88,59 +84,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ),
           ),
         ),
-        actions: [
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.visibility_outlined, size: 22),
-            tooltip: l10n.reflect,
-            onSelected: (value) {
-              if (value == 'weekly') {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const WeeklyReviewScreen()),
-                );
-              } else if (value == 'monthly') {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const MonthlyOverviewScreen()),
-                );
-              } else if (value == 'trends') {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const TrendsScreen()),
-                );
-              }
-            },
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 'weekly',
-                child: Text(l10n.weeklyReview),
-              ),
-              PopupMenuItem(
-                value: 'monthly',
-                child: Text(l10n.monthlyOverview),
-              ),
-              PopupMenuItem(
-                value: 'trends',
-                child: Text(l10n.trends),
-              ),
-            ],
-          ),
-          IconButton(
-            icon: const Icon(Icons.pie_chart_outline, size: 22),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const BudgetOverviewScreen()),
-              );
-            },
-            tooltip: l10n.budgets,
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings_outlined, size: 22),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const SettingsScreen()),
-              );
-            },
-            tooltip: l10n.settings,
-          ),
-        ],
       ),
       body: homeStateAsync.when(
         data: (homeState) => transactionsAsync.when(
@@ -176,6 +119,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         error: (err, stack) => Center(child: Text('Error: $err')),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'home_fab',
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -226,13 +170,13 @@ class _MoneyLeftLayer extends StatelessWidget {
   }
 }
 
-class _CategorySnapshotLayer extends StatelessWidget {
+class _CategorySnapshotLayer extends ConsumerWidget {
   final List<CategoryBudgetStatus> snapshots;
 
   const _CategorySnapshotLayer({required this.snapshots});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
@@ -250,9 +194,7 @@ class _CategorySnapshotLayer extends StatelessWidget {
         const SizedBox(height: 8),
         TextButton(
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const BudgetOverviewScreen()),
-            );
+            ref.read(navigationIndexProvider.notifier).setIndex(1);
           },
           child: Text(
             l10n.viewAllBudgets,
