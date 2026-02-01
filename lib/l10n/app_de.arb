@@ -101,5 +101,12 @@
         "placeholders": {
             "category": { "type": "String" }
         }
-    }
+    },
+    "monthlyOverview": "Monatsübersicht",
+    "incomeVsExpenses": "Einnahmen vs. Ausgaben",
+    "categoryBreakdown": "Kategorien",
+    "savings": "Ersparnisse",
+    "budgetStatus": "Budget-Status",
+    "totalBudgeted": "Gesamt budgetiert",
+    "ofTotal": "{percent}% der Gesamtausgaben"
 }

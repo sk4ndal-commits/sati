@@ -11,6 +11,7 @@ import 'income_sources_screen.dart';
 import 'budget_overview_screen.dart';
 import 'settings_screen.dart';
 import 'weekly_review_screen.dart';
+import 'monthly_overview_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -42,6 +43,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: AppBar(
         title: Text(l10n.appTitle),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.bar_chart),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const MonthlyOverviewScreen()),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.pie_chart),
             onPressed: () {

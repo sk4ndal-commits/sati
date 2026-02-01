@@ -553,6 +553,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{category} budget is almost exhausted'**
   String budgetNearLimitSignal(String category);
+
+  /// No description provided for @monthlyOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Overview'**
+  String get monthlyOverview;
+
+  /// No description provided for @incomeVsExpenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Income vs Expenses'**
+  String get incomeVsExpenses;
+
+  /// No description provided for @categoryBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Category Breakdown'**
+  String get categoryBreakdown;
+
+  /// No description provided for @savings.
+  ///
+  /// In en, this message translates to:
+  /// **'Savings'**
+  String get savings;
+
+  /// No description provided for @budgetStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Status'**
+  String get budgetStatus;
+
+  /// No description provided for @totalBudgeted.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Budgeted'**
+  String get totalBudgeted;
+
+  /// No description provided for @ofTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% of total'**
+  String ofTotal(Object percent);
 }
 
 class _AppLocalizationsDelegate

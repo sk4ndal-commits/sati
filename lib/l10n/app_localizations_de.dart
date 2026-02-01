@@ -251,4 +251,27 @@ class AppLocalizationsDe extends AppLocalizations {
   String budgetNearLimitSignal(String category) {
     return 'Budget für $category fast aufgebraucht';
   }
+
+  @override
+  String get monthlyOverview => 'Monatsübersicht';
+
+  @override
+  String get incomeVsExpenses => 'Einnahmen vs. Ausgaben';
+
+  @override
+  String get categoryBreakdown => 'Kategorien';
+
+  @override
+  String get savings => 'Ersparnisse';
+
+  @override
+  String get budgetStatus => 'Budget-Status';
+
+  @override
+  String get totalBudgeted => 'Gesamt budgetiert';
+
+  @override
+  String ofTotal(Object percent) {
+    return '$percent% der Gesamtausgaben';
+  }
 }
