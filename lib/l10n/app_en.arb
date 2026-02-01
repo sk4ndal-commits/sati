@@ -112,5 +112,19 @@
     "dataAndBackup": "Data & Backup",
     "exportCsv": "Export to CSV",
     "exportJson": "Export to JSON",
-    "exportDescription": "Export all your transactions, budgets, and income sources to a human-readable format. You keep full control over your data."
+    "exportDescription": "Export all your transactions, budgets, and income sources to a human-readable format. You keep full control over your data.",
+    "adjustBudget": "Adjust budget",
+    "nothingToChange": "Nothing to change this week",
+    "newMonthGreeting": "New month, fresh start.",
+    "about": "About",
+    "version": "Version",
+    "dataAndExport": "Data & Export",
+    "today": "Today",
+    "noTransactionsToday": "No entries yet today",
+    "remainingBudgetInfo": "{amount} € left this month",
+    "@remainingBudgetInfo": {
+        "placeholders": {
+            "amount": { "type": "String" }
+        }
+    }
 }

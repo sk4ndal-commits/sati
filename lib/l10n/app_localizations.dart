@@ -619,6 +619,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Export all your transactions, budgets, and income sources to a human-readable format. You keep full control over your data.'**
   String get exportDescription;
+
+  /// No description provided for @adjustBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust budget'**
+  String get adjustBudget;
+
+  /// No description provided for @nothingToChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to change this week'**
+  String get nothingToChange;
+
+  /// No description provided for @newMonthGreeting.
+  ///
+  /// In en, this message translates to:
+  /// **'New month, fresh start.'**
+  String get newMonthGreeting;
+
+  /// No description provided for @about.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
+
+  /// No description provided for @version.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get version;
+
+  /// No description provided for @dataAndExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Data & Export'**
+  String get dataAndExport;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @noTransactionsToday.
+  ///
+  /// In en, this message translates to:
+  /// **'No entries yet today'**
+  String get noTransactionsToday;
+
+  /// No description provided for @remainingBudgetInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} € left this month'**
+  String remainingBudgetInfo(String amount);
 }
 
 class _AppLocalizationsDelegate

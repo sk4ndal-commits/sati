@@ -5,6 +5,7 @@ import '../../application/home_state_provider.dart';
 import '../../application/notification_service.dart';
 import '../../domain/entities/transaction_entity.dart';
 import '../../l10n/app_localizations.dart';
+import '../../application/settings_controller.dart';
 import '../../application/transaction_controller.dart';
 import 'transaction_entry_screen.dart';
 import 'income_sources_screen.dart';
@@ -33,11 +34,42 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     await notifier.requestPermissions();
   }
 
+  void _showNewMonthGreeting(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(l10n.newMonthGreeting),
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 4),
+        action: SnackBarAction(
+          label: 'OK',
+          onPressed: () {
+            // Just dismiss
+          },
+        ),
+      ),
+    ).closed.then((_) {
+      // Update last seen month after snackbar is closed (or dismissed)
+      final now = DateTime.now();
+      ref.read(settingsControllerProvider.notifier).updateLastSeenMonth(now.month, now.year);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final homeStateAsync = ref.watch(homeStateProvider);
     final transactionsAsync = ref.watch(transactionControllerProvider);
     final l10n = AppLocalizations.of(context)!;
+
+    ref.listen(homeStateProvider, (previous, next) {
+      next.whenData((state) {
+        if (state.isNewMonthTransition) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _showNewMonthGreeting(context, ref);
+          });
+        }
+      });
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -98,15 +130,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
               if (homeState.signals.isNotEmpty)
                 SliverToBoxAdapter(
-                  child: _AttentionSignals(signals: homeState.signals),
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: _SignalItem(signal: homeState.signals.first),
+                  ),
                 ),
-              if (transactions.isEmpty)
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Center(child: Text(l10n.noTransactions)),
-                )
-              else
-                _TransactionList(transactions: transactions),
+              _TransactionList(transactions: transactions),
             ],
           ),
           loading: () => const SliverFillRemaining(
@@ -173,18 +202,6 @@ class _StateCard extends StatelessWidget {
   }
 }
 
-class _AttentionSignals extends StatelessWidget {
-  final List<AttentionSignal> signals;
-
-  const _AttentionSignals({required this.signals});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: signals.map((signal) => _SignalItem(signal: signal)).toList(),
-    );
-  }
-}
 
 class _SignalItem extends StatelessWidget {
   final AttentionSignal signal;
@@ -244,37 +261,58 @@ class _TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
     // Group transactions by day
     final sorted = List<TransactionEntity>.from(transactions)
       ..sort((a, b) => b.date.compareTo(a.date));
-    
+
     final grouped = <DateTime, List<TransactionEntity>>{};
+    // Ensure "Today" is always present in the map
+    grouped[today] = [];
+
     for (final t in sorted) {
       final date = DateTime(t.date.year, t.date.month, t.date.day);
       grouped.putIfAbsent(date, () => []).add(t);
     }
 
-    final dates = grouped.keys.toList();
+    final dates = grouped.keys.toList()..sort((a, b) => b.compareTo(a));
 
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
           final date = dates[index];
           final dayTransactions = grouped[date]!;
+          final isToday = date.isAtSameMomentAs(today);
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
                 child: Text(
-                  DateFormat.yMMMMd().format(date),
+                  isToday ? l10n.today : DateFormat.yMMMMd().format(date),
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: Theme.of(context).colorScheme.outline,
                         fontWeight: FontWeight.bold,
                       ),
                 ),
               ),
-              ...dayTransactions.map((t) => _TransactionTile(transaction: t)),
+              if (isToday && dayTransactions.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Text(
+                    l10n.noTransactionsToday,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.outline.withOpacity(0.7),
+                          fontStyle: FontStyle.italic,
+                        ),
+                  ),
+                )
+              else
+                ...dayTransactions.map((t) => _TransactionTile(transaction: t)),
             ],
           );
         },

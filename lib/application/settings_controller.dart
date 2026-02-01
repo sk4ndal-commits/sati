@@ -22,18 +22,21 @@ class SettingsController extends _$SettingsController {
   Future<void> toggleIntentPrompt(bool enabled) async {
     final current = state.value;
     if (current == null) return;
-    await updateSettings(SettingsEntity(
-      intentPromptEnabled: enabled,
-      intentPromptThreshold: current.intentPromptThreshold,
-    ));
+    await updateSettings(current.copyWith(intentPromptEnabled: enabled));
   }
 
   Future<void> setThreshold(double threshold) async {
     final current = state.value;
     if (current == null) return;
-    await updateSettings(SettingsEntity(
-      intentPromptEnabled: current.intentPromptEnabled,
-      intentPromptThreshold: threshold,
+    await updateSettings(current.copyWith(intentPromptThreshold: threshold));
+  }
+
+  Future<void> updateLastSeenMonth(int month, int year) async {
+    final current = state.value;
+    if (current == null) return;
+    await updateSettings(current.copyWith(
+      lastSeenMonth: month,
+      lastSeenYear: year,
     ));
   }
 }

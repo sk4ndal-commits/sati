@@ -21,6 +21,8 @@ class DriftSettingsRepository implements SettingsRepository {
     return SettingsEntity(
       intentPromptEnabled: row.intentPromptEnabled,
       intentPromptThreshold: row.intentPromptThreshold,
+      lastSeenMonth: row.lastSeenMonth,
+      lastSeenYear: row.lastSeenYear,
     );
   }
 
@@ -32,6 +34,8 @@ class DriftSettingsRepository implements SettingsRepository {
             SettingsTableCompanion.insert(
               intentPromptEnabled: Value(settings.intentPromptEnabled),
               intentPromptThreshold: Value(settings.intentPromptThreshold),
+              lastSeenMonth: Value(settings.lastSeenMonth),
+              lastSeenYear: Value(settings.lastSeenYear),
             ),
           );
     } else {
@@ -41,6 +45,8 @@ class DriftSettingsRepository implements SettingsRepository {
         SettingsTableCompanion(
           intentPromptEnabled: Value(settings.intentPromptEnabled),
           intentPromptThreshold: Value(settings.intentPromptThreshold),
+          lastSeenMonth: Value(settings.lastSeenMonth),
+          lastSeenYear: Value(settings.lastSeenYear),
         ),
       );
     }

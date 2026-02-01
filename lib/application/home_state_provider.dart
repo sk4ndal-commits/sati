@@ -2,16 +2,19 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../domain/entities/transaction_entity.dart';
 import 'transaction_controller.dart';
 import 'budget_overview_provider.dart';
+import 'settings_controller.dart';
 
 part 'home_state_provider.g.dart';
 
 class HomeState {
   final double remainingTotalBudget;
   final List<AttentionSignal> signals;
+  final bool isNewMonthTransition;
 
   HomeState({
     required this.remainingTotalBudget,
     required this.signals,
+    this.isNewMonthTransition = false,
   });
 }
 
@@ -36,8 +39,22 @@ class AttentionSignal {
 Future<HomeState> homeState(Ref ref) async {
   final budgetOverviewAsync = await ref.watch(budgetOverviewProvider.future);
   final transactions = await ref.watch(transactionControllerProvider.future);
+  final settingsAsync = await ref.watch(settingsControllerProvider.future);
 
-  // 1. Calculate remaining total budget
+  // 1. Check for month transition
+  bool isNewMonthTransition = false;
+  final now = DateTime.now();
+  if (settingsAsync.lastSeenMonth != null && settingsAsync.lastSeenYear != null) {
+    if (settingsAsync.lastSeenMonth != now.month || settingsAsync.lastSeenYear != now.year) {
+      isNewMonthTransition = true;
+    }
+  } else {
+    // If it's the very first time, we don't show the "New month" message
+    // but we record the current month.
+    ref.read(settingsControllerProvider.notifier).updateLastSeenMonth(now.month, now.year);
+  }
+
+  // 2. Calculate remaining total budget
   double totalRemaining = 0;
   for (final status in budgetOverviewAsync) {
     totalRemaining += status.remainingAmount;
@@ -47,42 +64,43 @@ Future<HomeState> homeState(Ref ref) async {
 
   // 2. Attention signals
   // Signal: Budget near limit (>= 80%)
-  // We only show the most critical one or a few? Requirement says max 1-2.
+  // Priority 1: First category that is >= 80%
   for (final status in budgetOverviewAsync) {
     if (status.percentUsed >= 0.8) {
       signals.add(AttentionSignal(
         type: SignalType.budgetNearLimit,
         categoryId: status.categoryId,
       ));
+      break; // Only one signal max, priority order
     }
   }
 
-  // Signal: High unplanned spend this week
-  final now = DateTime.now();
-  final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
-  final startOfRange = DateTime(startOfWeek.year, startOfWeek.month, startOfWeek.day);
+  // Priority 2: High unplanned spend this week (only if no budget signal)
+  if (signals.isEmpty) {
+    final now = DateTime.now();
+    final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
+    final startOfRange = DateTime(startOfWeek.year, startOfWeek.month, startOfWeek.day);
 
-  final weeklyTransactions = transactions.where((t) =>
-      t.type == TransactionType.expense &&
-      t.date.isAfter(startOfRange.subtract(const Duration(seconds: 1)))).toList();
+    final weeklyTransactions = transactions.where((t) =>
+        t.type == TransactionType.expense &&
+        t.date.isAfter(startOfRange.subtract(const Duration(seconds: 1)))).toList();
 
-  final totalWeeklySpend = weeklyTransactions.fold(0.0, (sum, t) => sum + t.amount);
-  final unplannedWeeklySpend = weeklyTransactions
-      .where((t) => t.planned == false)
-      .fold(0.0, (sum, t) => sum + t.amount);
+    final totalWeeklySpend = weeklyTransactions.fold(0.0, (sum, t) => sum + t.amount);
+    final unplannedWeeklySpend = weeklyTransactions
+        .where((t) => t.planned == false)
+        .fold(0.0, (sum, t) => sum + t.amount);
 
-  if (totalWeeklySpend > 0 && (unplannedWeeklySpend / totalWeeklySpend) > 0.3) {
-    signals.add(AttentionSignal(
-      type: SignalType.highUnplannedSpend,
-      amount: unplannedWeeklySpend,
-    ));
+    if (totalWeeklySpend > 0 && (unplannedWeeklySpend / totalWeeklySpend) > 0.3) {
+      signals.add(AttentionSignal(
+        type: SignalType.highUnplannedSpend,
+        amount: unplannedWeeklySpend,
+      ));
+    }
   }
-
-  // Limit to 2 signals as per requirement
-  final limitedSignals = signals.take(2).toList();
 
   return HomeState(
     remainingTotalBudget: totalRemaining,
-    signals: limitedSignals,
+    signals: signals,
+    isNewMonthTransition: isNewMonthTransition,
   );
 }

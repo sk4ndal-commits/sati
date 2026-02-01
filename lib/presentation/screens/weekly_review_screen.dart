@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../application/weekly_review_provider.dart';
 import '../../l10n/app_localizations.dart';
+import 'budget_overview_screen.dart';
 
 class WeeklyReviewScreen extends ConsumerWidget {
   const WeeklyReviewScreen({super.key});
@@ -99,6 +100,9 @@ class WeeklyReviewScreen extends ConsumerWidget {
                 ),
               ),
             ),
+            const SizedBox(height: 32),
+            _ClosureActions(l10n: l10n),
+            const SizedBox(height: 16),
           ],
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -194,6 +198,44 @@ class _FeelingBarChart extends StatelessWidget {
       default:
         return Colors.grey.shade300;
     }
+  }
+}
+
+class _ClosureActions extends StatelessWidget {
+  final AppLocalizations l10n;
+
+  const _ClosureActions({required this.l10n});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const BudgetOverviewScreen()),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            minimumSize: const Size.fromHeight(50),
+          ),
+          child: Text(l10n.adjustBudget),
+        ),
+        const SizedBox(height: 12),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          style: TextButton.styleFrom(
+            minimumSize: const Size.fromHeight(50),
+          ),
+          child: Text(
+            l10n.nothingToChange,
+            style: TextStyle(color: Theme.of(context).colorScheme.outline),
+          ),
+        ),
+      ],
+    );
   }
 }
 

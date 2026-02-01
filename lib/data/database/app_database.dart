@@ -16,7 +16,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -32,6 +32,13 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(settingsTable);
             await m.addColumn(transactionTable, transactionTable.planned);
             await m.addColumn(transactionTable, transactionTable.feeling);
+          }
+          if (from < 5) {
+            // Check if settingsTable exists (it should if from >= 4, but let's be safe)
+            // If from == 4, the table was created but might be missing the new columns 
+            // if they were added to the class without a schema bump.
+            await m.addColumn(settingsTable, settingsTable.lastSeenMonth);
+            await m.addColumn(settingsTable, settingsTable.lastSeenYear);
           }
         },
         beforeOpen: (details) async {

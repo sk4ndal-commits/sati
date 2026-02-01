@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../application/settings_controller.dart';
 import '../../l10n/app_localizations.dart';
 import 'data_backup_screen.dart';
+import 'income_sources_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -19,6 +20,7 @@ class SettingsScreen extends ConsumerWidget {
       body: settingsAsync.when(
         data: (settings) => ListView(
           children: [
+            _SettingsSectionHeader(title: l10n.intentPrompt),
             SwitchListTile(
               title: Text(l10n.intentPrompt),
               subtitle: Text(l10n.intentPromptDescription),
@@ -46,8 +48,18 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ),
             const Divider(),
+            _SettingsSectionHeader(title: l10n.incomeSources),
             ListTile(
-              leading: const Icon(Icons.backup),
+              title: Text(l10n.incomeSources),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const IncomeSourcesScreen()),
+                );
+              },
+            ),
+            const Divider(),
+            _SettingsSectionHeader(title: l10n.dataAndExport),
+            ListTile(
               title: Text(l10n.dataAndBackup),
               onTap: () {
                 Navigator.of(context).push(
@@ -55,10 +67,36 @@ class SettingsScreen extends ConsumerWidget {
                 );
               },
             ),
+            const Divider(),
+            _SettingsSectionHeader(title: l10n.about),
+            ListTile(
+              title: Text(l10n.version),
+              trailing: const Text('1.0.0'),
+            ),
           ],
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(child: Text(err.toString())),
+      ),
+    );
+  }
+}
+
+class _SettingsSectionHeader extends StatelessWidget {
+  final String title;
+
+  const _SettingsSectionHeader({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+      child: Text(
+        title,
+        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+              fontWeight: FontWeight.bold,
+            ),
       ),
     );
   }

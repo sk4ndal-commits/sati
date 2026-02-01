@@ -286,4 +286,33 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get exportDescription =>
       'Export all your transactions, budgets, and income sources to a human-readable format. You keep full control over your data.';
+
+  @override
+  String get adjustBudget => 'Adjust budget';
+
+  @override
+  String get nothingToChange => 'Nothing to change this week';
+
+  @override
+  String get newMonthGreeting => 'New month, fresh start.';
+
+  @override
+  String get about => 'About';
+
+  @override
+  String get version => 'Version';
+
+  @override
+  String get dataAndExport => 'Data & Export';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get noTransactionsToday => 'No entries yet today';
+
+  @override
+  String remainingBudgetInfo(String amount) {
+    return '$amount € left this month';
+  }
 }

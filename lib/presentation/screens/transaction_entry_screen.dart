@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import '../../application/budget_overview_provider.dart';
 import '../../application/budget_threshold_service.dart';
+import '../../application/friction_calibration_provider.dart';
 import '../../application/income_source_controller.dart';
 import '../../application/settings_controller.dart';
 import '../../application/transaction_controller.dart';
@@ -147,6 +149,7 @@ class _TransactionEntryScreenState extends ConsumerState<TransactionEntryScreen>
                 }
               },
             ),
+            _buildBudgetInfo(l10n),
             if (_type == TransactionType.income) ...[
               const SizedBox(height: 16),
               ref.watch(incomeSourceControllerProvider).when(
@@ -209,6 +212,7 @@ class _TransactionEntryScreenState extends ConsumerState<TransactionEntryScreen>
 
     final amount = double.tryParse(_amountController.text.replaceAll(',', '.')) ?? 0.0;
     final settingsAsync = ref.watch(settingsControllerProvider);
+    final frictionAsync = ref.watch(frictionCalibrationProvider(categoryId: _categoryId));
 
     return settingsAsync.when(
       data: (settings) {
@@ -216,55 +220,67 @@ class _TransactionEntryScreenState extends ConsumerState<TransactionEntryScreen>
           return const SizedBox.shrink();
         }
 
-        return Card(
-          color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-          elevation: 0,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(l10n.reflection, style: Theme.of(context).textTheme.titleSmall),
-                const SizedBox(height: 12),
-                Text(l10n.wasPlanned),
-                const SizedBox(height: 8),
-                Row(
+        return frictionAsync.when(
+          data: (friction) {
+            if (!friction.shouldShow) {
+              return const SizedBox.shrink();
+            }
+
+            return Card(
+              color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+              elevation: 0,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ChoiceChip(
-                      label: Text(l10n.yes),
-                      selected: _planned == true,
-                      onSelected: (selected) => setState(() => _planned = selected ? true : null),
+                    Text(l10n.reflection, style: Theme.of(context).textTheme.titleSmall),
+                    const SizedBox(height: 12),
+                    Text(l10n.wasPlanned),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        ChoiceChip(
+                          label: Text(l10n.yes),
+                          selected: _planned == true,
+                          onSelected: (selected) => setState(() => _planned = selected ? true : null),
+                        ),
+                        const SizedBox(width: 8),
+                        ChoiceChip(
+                          label: Text(l10n.no),
+                          selected: _planned == false,
+                          onSelected: (selected) => setState(() => _planned = selected ? false : null),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 8),
-                    ChoiceChip(
-                      label: Text(l10n.no),
-                      selected: _planned == false,
-                      onSelected: (selected) => setState(() => _planned = selected ? false : null),
-                    ),
+                    if (!friction.softenPrompt) ...[
+                      const SizedBox(height: 16),
+                      Text(l10n.howDoYouFeel),
+                      const SizedBox(height: 8),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: List.generate(5, (index) {
+                            final value = index + 1;
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: ChoiceChip(
+                                label: Text(_getFeelingLabel(value, l10n)),
+                                selected: _feeling == value,
+                                onSelected: (selected) => setState(() => _feeling = selected ? value : null),
+                              ),
+                            );
+                          }),
+                        ),
+                      ),
+                    ],
                   ],
                 ),
-                const SizedBox(height: 16),
-                Text(l10n.howDoYouFeel),
-                const SizedBox(height: 8),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: List.generate(5, (index) {
-                      final value = index + 1;
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: ChoiceChip(
-                          label: Text(_getFeelingLabel(value, l10n)),
-                          selected: _feeling == value,
-                          onSelected: (selected) => setState(() => _feeling = selected ? value : null),
-                        ),
-                      );
-                    }),
-                  ),
-                ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
+          loading: () => const SizedBox.shrink(),
+          error: (err, stack) => const SizedBox.shrink(),
         );
       },
       loading: () => const SizedBox.shrink(),
@@ -281,5 +297,28 @@ class _TransactionEntryScreenState extends ConsumerState<TransactionEntryScreen>
       case 5: return l10n.feeling5;
       default: return '';
     }
+  }
+
+  Widget _buildBudgetInfo(AppLocalizations l10n) {
+    if (_type != TransactionType.expense) return const SizedBox.shrink();
+
+    return ref.watch(budgetOverviewProvider).when(
+          data: (budgets) {
+            final budgetStatus = budgets.where((b) => b.categoryId == _categoryId).firstOrNull;
+            if (budgetStatus == null) return const SizedBox.shrink();
+
+            return Padding(
+              padding: const EdgeInsets.only(top: 4.0, left: 12.0),
+              child: Text(
+                l10n.remainingBudgetInfo(budgetStatus.remainingAmount.toStringAsFixed(2)),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.outline,
+                    ),
+              ),
+            );
+          },
+          loading: () => const SizedBox.shrink(),
+          error: (_, __) => const SizedBox.shrink(),
+        );
   }
 }

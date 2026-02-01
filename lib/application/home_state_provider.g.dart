@@ -45,4 +45,4 @@ final class HomeStateProvider
   }
 }
 
-String _$homeStateHash() => r'51702b3c54d0efd30d7e6ead1347606b4ca1ce48';
+String _$homeStateHash() => r'474c7886a26ac206ce749521d2c6e451a49847e9';

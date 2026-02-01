@@ -1630,11 +1630,35 @@ class $SettingsTableTable extends SettingsTable
         requiredDuringInsert: false,
         defaultValue: const Constant(50.0),
       );
+  static const VerificationMeta _lastSeenMonthMeta = const VerificationMeta(
+    'lastSeenMonth',
+  );
+  @override
+  late final GeneratedColumn<int> lastSeenMonth = GeneratedColumn<int>(
+    'last_seen_month',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _lastSeenYearMeta = const VerificationMeta(
+    'lastSeenYear',
+  );
+  @override
+  late final GeneratedColumn<int> lastSeenYear = GeneratedColumn<int>(
+    'last_seen_year',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
     intentPromptEnabled,
     intentPromptThreshold,
+    lastSeenMonth,
+    lastSeenYear,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1669,6 +1693,24 @@ class $SettingsTableTable extends SettingsTable
         ),
       );
     }
+    if (data.containsKey('last_seen_month')) {
+      context.handle(
+        _lastSeenMonthMeta,
+        lastSeenMonth.isAcceptableOrUnknown(
+          data['last_seen_month']!,
+          _lastSeenMonthMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_seen_year')) {
+      context.handle(
+        _lastSeenYearMeta,
+        lastSeenYear.isAcceptableOrUnknown(
+          data['last_seen_year']!,
+          _lastSeenYearMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -1690,6 +1732,14 @@ class $SettingsTableTable extends SettingsTable
         DriftSqlType.double,
         data['${effectivePrefix}intent_prompt_threshold'],
       )!,
+      lastSeenMonth: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}last_seen_month'],
+      ),
+      lastSeenYear: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}last_seen_year'],
+      ),
     );
   }
 
@@ -1704,10 +1754,14 @@ class SettingsTableData extends DataClass
   final int id;
   final bool intentPromptEnabled;
   final double intentPromptThreshold;
+  final int? lastSeenMonth;
+  final int? lastSeenYear;
   const SettingsTableData({
     required this.id,
     required this.intentPromptEnabled,
     required this.intentPromptThreshold,
+    this.lastSeenMonth,
+    this.lastSeenYear,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1715,6 +1769,12 @@ class SettingsTableData extends DataClass
     map['id'] = Variable<int>(id);
     map['intent_prompt_enabled'] = Variable<bool>(intentPromptEnabled);
     map['intent_prompt_threshold'] = Variable<double>(intentPromptThreshold);
+    if (!nullToAbsent || lastSeenMonth != null) {
+      map['last_seen_month'] = Variable<int>(lastSeenMonth);
+    }
+    if (!nullToAbsent || lastSeenYear != null) {
+      map['last_seen_year'] = Variable<int>(lastSeenYear);
+    }
     return map;
   }
 
@@ -1723,6 +1783,12 @@ class SettingsTableData extends DataClass
       id: Value(id),
       intentPromptEnabled: Value(intentPromptEnabled),
       intentPromptThreshold: Value(intentPromptThreshold),
+      lastSeenMonth: lastSeenMonth == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastSeenMonth),
+      lastSeenYear: lastSeenYear == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastSeenYear),
     );
   }
 
@@ -1739,6 +1805,8 @@ class SettingsTableData extends DataClass
       intentPromptThreshold: serializer.fromJson<double>(
         json['intentPromptThreshold'],
       ),
+      lastSeenMonth: serializer.fromJson<int?>(json['lastSeenMonth']),
+      lastSeenYear: serializer.fromJson<int?>(json['lastSeenYear']),
     );
   }
   @override
@@ -1748,6 +1816,8 @@ class SettingsTableData extends DataClass
       'id': serializer.toJson<int>(id),
       'intentPromptEnabled': serializer.toJson<bool>(intentPromptEnabled),
       'intentPromptThreshold': serializer.toJson<double>(intentPromptThreshold),
+      'lastSeenMonth': serializer.toJson<int?>(lastSeenMonth),
+      'lastSeenYear': serializer.toJson<int?>(lastSeenYear),
     };
   }
 
@@ -1755,10 +1825,16 @@ class SettingsTableData extends DataClass
     int? id,
     bool? intentPromptEnabled,
     double? intentPromptThreshold,
+    Value<int?> lastSeenMonth = const Value.absent(),
+    Value<int?> lastSeenYear = const Value.absent(),
   }) => SettingsTableData(
     id: id ?? this.id,
     intentPromptEnabled: intentPromptEnabled ?? this.intentPromptEnabled,
     intentPromptThreshold: intentPromptThreshold ?? this.intentPromptThreshold,
+    lastSeenMonth: lastSeenMonth.present
+        ? lastSeenMonth.value
+        : this.lastSeenMonth,
+    lastSeenYear: lastSeenYear.present ? lastSeenYear.value : this.lastSeenYear,
   );
   SettingsTableData copyWithCompanion(SettingsTableCompanion data) {
     return SettingsTableData(
@@ -1769,6 +1845,12 @@ class SettingsTableData extends DataClass
       intentPromptThreshold: data.intentPromptThreshold.present
           ? data.intentPromptThreshold.value
           : this.intentPromptThreshold,
+      lastSeenMonth: data.lastSeenMonth.present
+          ? data.lastSeenMonth.value
+          : this.lastSeenMonth,
+      lastSeenYear: data.lastSeenYear.present
+          ? data.lastSeenYear.value
+          : this.lastSeenYear,
     );
   }
 
@@ -1777,41 +1859,58 @@ class SettingsTableData extends DataClass
     return (StringBuffer('SettingsTableData(')
           ..write('id: $id, ')
           ..write('intentPromptEnabled: $intentPromptEnabled, ')
-          ..write('intentPromptThreshold: $intentPromptThreshold')
+          ..write('intentPromptThreshold: $intentPromptThreshold, ')
+          ..write('lastSeenMonth: $lastSeenMonth, ')
+          ..write('lastSeenYear: $lastSeenYear')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, intentPromptEnabled, intentPromptThreshold);
+  int get hashCode => Object.hash(
+    id,
+    intentPromptEnabled,
+    intentPromptThreshold,
+    lastSeenMonth,
+    lastSeenYear,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is SettingsTableData &&
           other.id == this.id &&
           other.intentPromptEnabled == this.intentPromptEnabled &&
-          other.intentPromptThreshold == this.intentPromptThreshold);
+          other.intentPromptThreshold == this.intentPromptThreshold &&
+          other.lastSeenMonth == this.lastSeenMonth &&
+          other.lastSeenYear == this.lastSeenYear);
 }
 
 class SettingsTableCompanion extends UpdateCompanion<SettingsTableData> {
   final Value<int> id;
   final Value<bool> intentPromptEnabled;
   final Value<double> intentPromptThreshold;
+  final Value<int?> lastSeenMonth;
+  final Value<int?> lastSeenYear;
   const SettingsTableCompanion({
     this.id = const Value.absent(),
     this.intentPromptEnabled = const Value.absent(),
     this.intentPromptThreshold = const Value.absent(),
+    this.lastSeenMonth = const Value.absent(),
+    this.lastSeenYear = const Value.absent(),
   });
   SettingsTableCompanion.insert({
     this.id = const Value.absent(),
     this.intentPromptEnabled = const Value.absent(),
     this.intentPromptThreshold = const Value.absent(),
+    this.lastSeenMonth = const Value.absent(),
+    this.lastSeenYear = const Value.absent(),
   });
   static Insertable<SettingsTableData> custom({
     Expression<int>? id,
     Expression<bool>? intentPromptEnabled,
     Expression<double>? intentPromptThreshold,
+    Expression<int>? lastSeenMonth,
+    Expression<int>? lastSeenYear,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -1819,6 +1918,8 @@ class SettingsTableCompanion extends UpdateCompanion<SettingsTableData> {
         'intent_prompt_enabled': intentPromptEnabled,
       if (intentPromptThreshold != null)
         'intent_prompt_threshold': intentPromptThreshold,
+      if (lastSeenMonth != null) 'last_seen_month': lastSeenMonth,
+      if (lastSeenYear != null) 'last_seen_year': lastSeenYear,
     });
   }
 
@@ -1826,12 +1927,16 @@ class SettingsTableCompanion extends UpdateCompanion<SettingsTableData> {
     Value<int>? id,
     Value<bool>? intentPromptEnabled,
     Value<double>? intentPromptThreshold,
+    Value<int?>? lastSeenMonth,
+    Value<int?>? lastSeenYear,
   }) {
     return SettingsTableCompanion(
       id: id ?? this.id,
       intentPromptEnabled: intentPromptEnabled ?? this.intentPromptEnabled,
       intentPromptThreshold:
           intentPromptThreshold ?? this.intentPromptThreshold,
+      lastSeenMonth: lastSeenMonth ?? this.lastSeenMonth,
+      lastSeenYear: lastSeenYear ?? this.lastSeenYear,
     );
   }
 
@@ -1849,6 +1954,12 @@ class SettingsTableCompanion extends UpdateCompanion<SettingsTableData> {
         intentPromptThreshold.value,
       );
     }
+    if (lastSeenMonth.present) {
+      map['last_seen_month'] = Variable<int>(lastSeenMonth.value);
+    }
+    if (lastSeenYear.present) {
+      map['last_seen_year'] = Variable<int>(lastSeenYear.value);
+    }
     return map;
   }
 
@@ -1857,7 +1968,9 @@ class SettingsTableCompanion extends UpdateCompanion<SettingsTableData> {
     return (StringBuffer('SettingsTableCompanion(')
           ..write('id: $id, ')
           ..write('intentPromptEnabled: $intentPromptEnabled, ')
-          ..write('intentPromptThreshold: $intentPromptThreshold')
+          ..write('intentPromptThreshold: $intentPromptThreshold, ')
+          ..write('lastSeenMonth: $lastSeenMonth, ')
+          ..write('lastSeenYear: $lastSeenYear')
           ..write(')'))
         .toString();
   }
@@ -2946,12 +3059,16 @@ typedef $$SettingsTableTableCreateCompanionBuilder =
       Value<int> id,
       Value<bool> intentPromptEnabled,
       Value<double> intentPromptThreshold,
+      Value<int?> lastSeenMonth,
+      Value<int?> lastSeenYear,
     });
 typedef $$SettingsTableTableUpdateCompanionBuilder =
     SettingsTableCompanion Function({
       Value<int> id,
       Value<bool> intentPromptEnabled,
       Value<double> intentPromptThreshold,
+      Value<int?> lastSeenMonth,
+      Value<int?> lastSeenYear,
     });
 
 class $$SettingsTableTableFilterComposer
@@ -2975,6 +3092,16 @@ class $$SettingsTableTableFilterComposer
 
   ColumnFilters<double> get intentPromptThreshold => $composableBuilder(
     column: $table.intentPromptThreshold,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get lastSeenMonth => $composableBuilder(
+    column: $table.lastSeenMonth,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get lastSeenYear => $composableBuilder(
+    column: $table.lastSeenYear,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -3002,6 +3129,16 @@ class $$SettingsTableTableOrderingComposer
     column: $table.intentPromptThreshold,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<int> get lastSeenMonth => $composableBuilder(
+    column: $table.lastSeenMonth,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get lastSeenYear => $composableBuilder(
+    column: $table.lastSeenYear,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$SettingsTableTableAnnotationComposer
@@ -3023,6 +3160,16 @@ class $$SettingsTableTableAnnotationComposer
 
   GeneratedColumn<double> get intentPromptThreshold => $composableBuilder(
     column: $table.intentPromptThreshold,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get lastSeenMonth => $composableBuilder(
+    column: $table.lastSeenMonth,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get lastSeenYear => $composableBuilder(
+    column: $table.lastSeenYear,
     builder: (column) => column,
   );
 }
@@ -3065,20 +3212,28 @@ class $$SettingsTableTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<bool> intentPromptEnabled = const Value.absent(),
                 Value<double> intentPromptThreshold = const Value.absent(),
+                Value<int?> lastSeenMonth = const Value.absent(),
+                Value<int?> lastSeenYear = const Value.absent(),
               }) => SettingsTableCompanion(
                 id: id,
                 intentPromptEnabled: intentPromptEnabled,
                 intentPromptThreshold: intentPromptThreshold,
+                lastSeenMonth: lastSeenMonth,
+                lastSeenYear: lastSeenYear,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 Value<bool> intentPromptEnabled = const Value.absent(),
                 Value<double> intentPromptThreshold = const Value.absent(),
+                Value<int?> lastSeenMonth = const Value.absent(),
+                Value<int?> lastSeenYear = const Value.absent(),
               }) => SettingsTableCompanion.insert(
                 id: id,
                 intentPromptEnabled: intentPromptEnabled,
                 intentPromptThreshold: intentPromptThreshold,
+                lastSeenMonth: lastSeenMonth,
+                lastSeenYear: lastSeenYear,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

@@ -88,6 +88,8 @@
     },
     "remainingTotalBudget": "Verbleibendes Gesamtbudget",
     "forThisMonth": "für diesen Monat",
+    "today": "Heute",
+    "noTransactionsToday": "Heute noch keine Einträge",
     "planned": "Geplant",
     "unplanned": "Ungeplant",
     "highUnplannedWeekly": "Hohe ungeplante Ausgaben diese Woche: {amount} €",
@@ -102,6 +104,12 @@
             "category": { "type": "String" }
         }
     },
+    "remainingBudgetInfo": "Noch {amount} € übrig diesen Monat",
+    "@remainingBudgetInfo": {
+        "placeholders": {
+            "amount": { "type": "String" }
+        }
+    },
     "monthlyOverview": "Monatsübersicht",
     "incomeVsExpenses": "Einnahmen vs. Ausgaben",
     "categoryBreakdown": "Kategorien",
@@ -112,5 +120,11 @@
     "dataAndBackup": "Daten & Backup",
     "exportCsv": "Als CSV exportieren",
     "exportJson": "Als JSON exportieren",
-    "exportDescription": "Exportiere alle deine Transaktionen, Budgets und Einkommensquellen in ein menschenlesbares Format. Du behältst die volle Kontrolle über deine Daten."
+    "exportDescription": "Exportiere alle deine Transaktionen, Budgets und Einkommensquellen in ein menschenlesbares Format. Du behältst die volle Kontrolle über deine Daten.",
+    "adjustBudget": "Budget anpassen",
+    "nothingToChange": "Nichts ändern diese Woche",
+    "newMonthGreeting": "Neuer Monat, frischer Start.",
+    "about": "Über",
+    "version": "Version",
+    "dataAndExport": "Daten & Export"
 }
