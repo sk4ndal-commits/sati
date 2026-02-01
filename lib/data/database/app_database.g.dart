@@ -1652,6 +1652,21 @@ class $SettingsTableTable extends SettingsTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _hasSeenOnboardingMeta = const VerificationMeta(
+    'hasSeenOnboarding',
+  );
+  @override
+  late final GeneratedColumn<bool> hasSeenOnboarding = GeneratedColumn<bool>(
+    'has_seen_onboarding',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("has_seen_onboarding" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -1659,6 +1674,7 @@ class $SettingsTableTable extends SettingsTable
     intentPromptThreshold,
     lastSeenMonth,
     lastSeenYear,
+    hasSeenOnboarding,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1711,6 +1727,15 @@ class $SettingsTableTable extends SettingsTable
         ),
       );
     }
+    if (data.containsKey('has_seen_onboarding')) {
+      context.handle(
+        _hasSeenOnboardingMeta,
+        hasSeenOnboarding.isAcceptableOrUnknown(
+          data['has_seen_onboarding']!,
+          _hasSeenOnboardingMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -1740,6 +1765,10 @@ class $SettingsTableTable extends SettingsTable
         DriftSqlType.int,
         data['${effectivePrefix}last_seen_year'],
       ),
+      hasSeenOnboarding: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}has_seen_onboarding'],
+      )!,
     );
   }
 
@@ -1756,12 +1785,14 @@ class SettingsTableData extends DataClass
   final double intentPromptThreshold;
   final int? lastSeenMonth;
   final int? lastSeenYear;
+  final bool hasSeenOnboarding;
   const SettingsTableData({
     required this.id,
     required this.intentPromptEnabled,
     required this.intentPromptThreshold,
     this.lastSeenMonth,
     this.lastSeenYear,
+    required this.hasSeenOnboarding,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1775,6 +1806,7 @@ class SettingsTableData extends DataClass
     if (!nullToAbsent || lastSeenYear != null) {
       map['last_seen_year'] = Variable<int>(lastSeenYear);
     }
+    map['has_seen_onboarding'] = Variable<bool>(hasSeenOnboarding);
     return map;
   }
 
@@ -1789,6 +1821,7 @@ class SettingsTableData extends DataClass
       lastSeenYear: lastSeenYear == null && nullToAbsent
           ? const Value.absent()
           : Value(lastSeenYear),
+      hasSeenOnboarding: Value(hasSeenOnboarding),
     );
   }
 
@@ -1807,6 +1840,7 @@ class SettingsTableData extends DataClass
       ),
       lastSeenMonth: serializer.fromJson<int?>(json['lastSeenMonth']),
       lastSeenYear: serializer.fromJson<int?>(json['lastSeenYear']),
+      hasSeenOnboarding: serializer.fromJson<bool>(json['hasSeenOnboarding']),
     );
   }
   @override
@@ -1818,6 +1852,7 @@ class SettingsTableData extends DataClass
       'intentPromptThreshold': serializer.toJson<double>(intentPromptThreshold),
       'lastSeenMonth': serializer.toJson<int?>(lastSeenMonth),
       'lastSeenYear': serializer.toJson<int?>(lastSeenYear),
+      'hasSeenOnboarding': serializer.toJson<bool>(hasSeenOnboarding),
     };
   }
 
@@ -1827,6 +1862,7 @@ class SettingsTableData extends DataClass
     double? intentPromptThreshold,
     Value<int?> lastSeenMonth = const Value.absent(),
     Value<int?> lastSeenYear = const Value.absent(),
+    bool? hasSeenOnboarding,
   }) => SettingsTableData(
     id: id ?? this.id,
     intentPromptEnabled: intentPromptEnabled ?? this.intentPromptEnabled,
@@ -1835,6 +1871,7 @@ class SettingsTableData extends DataClass
         ? lastSeenMonth.value
         : this.lastSeenMonth,
     lastSeenYear: lastSeenYear.present ? lastSeenYear.value : this.lastSeenYear,
+    hasSeenOnboarding: hasSeenOnboarding ?? this.hasSeenOnboarding,
   );
   SettingsTableData copyWithCompanion(SettingsTableCompanion data) {
     return SettingsTableData(
@@ -1851,6 +1888,9 @@ class SettingsTableData extends DataClass
       lastSeenYear: data.lastSeenYear.present
           ? data.lastSeenYear.value
           : this.lastSeenYear,
+      hasSeenOnboarding: data.hasSeenOnboarding.present
+          ? data.hasSeenOnboarding.value
+          : this.hasSeenOnboarding,
     );
   }
 
@@ -1861,7 +1901,8 @@ class SettingsTableData extends DataClass
           ..write('intentPromptEnabled: $intentPromptEnabled, ')
           ..write('intentPromptThreshold: $intentPromptThreshold, ')
           ..write('lastSeenMonth: $lastSeenMonth, ')
-          ..write('lastSeenYear: $lastSeenYear')
+          ..write('lastSeenYear: $lastSeenYear, ')
+          ..write('hasSeenOnboarding: $hasSeenOnboarding')
           ..write(')'))
         .toString();
   }
@@ -1873,6 +1914,7 @@ class SettingsTableData extends DataClass
     intentPromptThreshold,
     lastSeenMonth,
     lastSeenYear,
+    hasSeenOnboarding,
   );
   @override
   bool operator ==(Object other) =>
@@ -1882,7 +1924,8 @@ class SettingsTableData extends DataClass
           other.intentPromptEnabled == this.intentPromptEnabled &&
           other.intentPromptThreshold == this.intentPromptThreshold &&
           other.lastSeenMonth == this.lastSeenMonth &&
-          other.lastSeenYear == this.lastSeenYear);
+          other.lastSeenYear == this.lastSeenYear &&
+          other.hasSeenOnboarding == this.hasSeenOnboarding);
 }
 
 class SettingsTableCompanion extends UpdateCompanion<SettingsTableData> {
@@ -1891,12 +1934,14 @@ class SettingsTableCompanion extends UpdateCompanion<SettingsTableData> {
   final Value<double> intentPromptThreshold;
   final Value<int?> lastSeenMonth;
   final Value<int?> lastSeenYear;
+  final Value<bool> hasSeenOnboarding;
   const SettingsTableCompanion({
     this.id = const Value.absent(),
     this.intentPromptEnabled = const Value.absent(),
     this.intentPromptThreshold = const Value.absent(),
     this.lastSeenMonth = const Value.absent(),
     this.lastSeenYear = const Value.absent(),
+    this.hasSeenOnboarding = const Value.absent(),
   });
   SettingsTableCompanion.insert({
     this.id = const Value.absent(),
@@ -1904,6 +1949,7 @@ class SettingsTableCompanion extends UpdateCompanion<SettingsTableData> {
     this.intentPromptThreshold = const Value.absent(),
     this.lastSeenMonth = const Value.absent(),
     this.lastSeenYear = const Value.absent(),
+    this.hasSeenOnboarding = const Value.absent(),
   });
   static Insertable<SettingsTableData> custom({
     Expression<int>? id,
@@ -1911,6 +1957,7 @@ class SettingsTableCompanion extends UpdateCompanion<SettingsTableData> {
     Expression<double>? intentPromptThreshold,
     Expression<int>? lastSeenMonth,
     Expression<int>? lastSeenYear,
+    Expression<bool>? hasSeenOnboarding,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -1920,6 +1967,7 @@ class SettingsTableCompanion extends UpdateCompanion<SettingsTableData> {
         'intent_prompt_threshold': intentPromptThreshold,
       if (lastSeenMonth != null) 'last_seen_month': lastSeenMonth,
       if (lastSeenYear != null) 'last_seen_year': lastSeenYear,
+      if (hasSeenOnboarding != null) 'has_seen_onboarding': hasSeenOnboarding,
     });
   }
 
@@ -1929,6 +1977,7 @@ class SettingsTableCompanion extends UpdateCompanion<SettingsTableData> {
     Value<double>? intentPromptThreshold,
     Value<int?>? lastSeenMonth,
     Value<int?>? lastSeenYear,
+    Value<bool>? hasSeenOnboarding,
   }) {
     return SettingsTableCompanion(
       id: id ?? this.id,
@@ -1937,6 +1986,7 @@ class SettingsTableCompanion extends UpdateCompanion<SettingsTableData> {
           intentPromptThreshold ?? this.intentPromptThreshold,
       lastSeenMonth: lastSeenMonth ?? this.lastSeenMonth,
       lastSeenYear: lastSeenYear ?? this.lastSeenYear,
+      hasSeenOnboarding: hasSeenOnboarding ?? this.hasSeenOnboarding,
     );
   }
 
@@ -1960,6 +2010,9 @@ class SettingsTableCompanion extends UpdateCompanion<SettingsTableData> {
     if (lastSeenYear.present) {
       map['last_seen_year'] = Variable<int>(lastSeenYear.value);
     }
+    if (hasSeenOnboarding.present) {
+      map['has_seen_onboarding'] = Variable<bool>(hasSeenOnboarding.value);
+    }
     return map;
   }
 
@@ -1970,7 +2023,497 @@ class SettingsTableCompanion extends UpdateCompanion<SettingsTableData> {
           ..write('intentPromptEnabled: $intentPromptEnabled, ')
           ..write('intentPromptThreshold: $intentPromptThreshold, ')
           ..write('lastSeenMonth: $lastSeenMonth, ')
-          ..write('lastSeenYear: $lastSeenYear')
+          ..write('lastSeenYear: $lastSeenYear, ')
+          ..write('hasSeenOnboarding: $hasSeenOnboarding')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $AllocationBudgetTableTable extends AllocationBudgetTable
+    with TableInfo<$AllocationBudgetTableTable, AllocationBudgetTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AllocationBudgetTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _targetAmountMeta = const VerificationMeta(
+    'targetAmount',
+  );
+  @override
+  late final GeneratedColumn<double> targetAmount = GeneratedColumn<double>(
+    'target_amount',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _monthlyAllocationMeta = const VerificationMeta(
+    'monthlyAllocation',
+  );
+  @override
+  late final GeneratedColumn<double> monthlyAllocation =
+      GeneratedColumn<double>(
+        'monthly_allocation',
+        aliasedName,
+        true,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _totalAllocatedMeta = const VerificationMeta(
+    'totalAllocated',
+  );
+  @override
+  late final GeneratedColumn<double> totalAllocated = GeneratedColumn<double>(
+    'total_allocated',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0.0),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    targetAmount,
+    monthlyAllocation,
+    totalAllocated,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'allocation_budget_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AllocationBudgetTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('target_amount')) {
+      context.handle(
+        _targetAmountMeta,
+        targetAmount.isAcceptableOrUnknown(
+          data['target_amount']!,
+          _targetAmountMeta,
+        ),
+      );
+    }
+    if (data.containsKey('monthly_allocation')) {
+      context.handle(
+        _monthlyAllocationMeta,
+        monthlyAllocation.isAcceptableOrUnknown(
+          data['monthly_allocation']!,
+          _monthlyAllocationMeta,
+        ),
+      );
+    }
+    if (data.containsKey('total_allocated')) {
+      context.handle(
+        _totalAllocatedMeta,
+        totalAllocated.isAcceptableOrUnknown(
+          data['total_allocated']!,
+          _totalAllocatedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AllocationBudgetTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AllocationBudgetTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      targetAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}target_amount'],
+      ),
+      monthlyAllocation: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}monthly_allocation'],
+      ),
+      totalAllocated: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}total_allocated'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $AllocationBudgetTableTable createAlias(String alias) {
+    return $AllocationBudgetTableTable(attachedDatabase, alias);
+  }
+}
+
+class AllocationBudgetTableData extends DataClass
+    implements Insertable<AllocationBudgetTableData> {
+  final String id;
+  final String name;
+  final double? targetAmount;
+  final double? monthlyAllocation;
+  final double totalAllocated;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const AllocationBudgetTableData({
+    required this.id,
+    required this.name,
+    this.targetAmount,
+    this.monthlyAllocation,
+    required this.totalAllocated,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || targetAmount != null) {
+      map['target_amount'] = Variable<double>(targetAmount);
+    }
+    if (!nullToAbsent || monthlyAllocation != null) {
+      map['monthly_allocation'] = Variable<double>(monthlyAllocation);
+    }
+    map['total_allocated'] = Variable<double>(totalAllocated);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  AllocationBudgetTableCompanion toCompanion(bool nullToAbsent) {
+    return AllocationBudgetTableCompanion(
+      id: Value(id),
+      name: Value(name),
+      targetAmount: targetAmount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetAmount),
+      monthlyAllocation: monthlyAllocation == null && nullToAbsent
+          ? const Value.absent()
+          : Value(monthlyAllocation),
+      totalAllocated: Value(totalAllocated),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory AllocationBudgetTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AllocationBudgetTableData(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      targetAmount: serializer.fromJson<double?>(json['targetAmount']),
+      monthlyAllocation: serializer.fromJson<double?>(
+        json['monthlyAllocation'],
+      ),
+      totalAllocated: serializer.fromJson<double>(json['totalAllocated']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'targetAmount': serializer.toJson<double?>(targetAmount),
+      'monthlyAllocation': serializer.toJson<double?>(monthlyAllocation),
+      'totalAllocated': serializer.toJson<double>(totalAllocated),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  AllocationBudgetTableData copyWith({
+    String? id,
+    String? name,
+    Value<double?> targetAmount = const Value.absent(),
+    Value<double?> monthlyAllocation = const Value.absent(),
+    double? totalAllocated,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => AllocationBudgetTableData(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    targetAmount: targetAmount.present ? targetAmount.value : this.targetAmount,
+    monthlyAllocation: monthlyAllocation.present
+        ? monthlyAllocation.value
+        : this.monthlyAllocation,
+    totalAllocated: totalAllocated ?? this.totalAllocated,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  AllocationBudgetTableData copyWithCompanion(
+    AllocationBudgetTableCompanion data,
+  ) {
+    return AllocationBudgetTableData(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      targetAmount: data.targetAmount.present
+          ? data.targetAmount.value
+          : this.targetAmount,
+      monthlyAllocation: data.monthlyAllocation.present
+          ? data.monthlyAllocation.value
+          : this.monthlyAllocation,
+      totalAllocated: data.totalAllocated.present
+          ? data.totalAllocated.value
+          : this.totalAllocated,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AllocationBudgetTableData(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('targetAmount: $targetAmount, ')
+          ..write('monthlyAllocation: $monthlyAllocation, ')
+          ..write('totalAllocated: $totalAllocated, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    name,
+    targetAmount,
+    monthlyAllocation,
+    totalAllocated,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AllocationBudgetTableData &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.targetAmount == this.targetAmount &&
+          other.monthlyAllocation == this.monthlyAllocation &&
+          other.totalAllocated == this.totalAllocated &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class AllocationBudgetTableCompanion
+    extends UpdateCompanion<AllocationBudgetTableData> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<double?> targetAmount;
+  final Value<double?> monthlyAllocation;
+  final Value<double> totalAllocated;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const AllocationBudgetTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.targetAmount = const Value.absent(),
+    this.monthlyAllocation = const Value.absent(),
+    this.totalAllocated = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  AllocationBudgetTableCompanion.insert({
+    required String id,
+    required String name,
+    this.targetAmount = const Value.absent(),
+    this.monthlyAllocation = const Value.absent(),
+    this.totalAllocated = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       name = Value(name),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<AllocationBudgetTableData> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<double>? targetAmount,
+    Expression<double>? monthlyAllocation,
+    Expression<double>? totalAllocated,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (targetAmount != null) 'target_amount': targetAmount,
+      if (monthlyAllocation != null) 'monthly_allocation': monthlyAllocation,
+      if (totalAllocated != null) 'total_allocated': totalAllocated,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  AllocationBudgetTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<double?>? targetAmount,
+    Value<double?>? monthlyAllocation,
+    Value<double>? totalAllocated,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return AllocationBudgetTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      targetAmount: targetAmount ?? this.targetAmount,
+      monthlyAllocation: monthlyAllocation ?? this.monthlyAllocation,
+      totalAllocated: totalAllocated ?? this.totalAllocated,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (targetAmount.present) {
+      map['target_amount'] = Variable<double>(targetAmount.value);
+    }
+    if (monthlyAllocation.present) {
+      map['monthly_allocation'] = Variable<double>(monthlyAllocation.value);
+    }
+    if (totalAllocated.present) {
+      map['total_allocated'] = Variable<double>(totalAllocated.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AllocationBudgetTableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('targetAmount: $targetAmount, ')
+          ..write('monthlyAllocation: $monthlyAllocation, ')
+          ..write('totalAllocated: $totalAllocated, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -1986,6 +2529,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   );
   late final $BudgetTableTable budgetTable = $BudgetTableTable(this);
   late final $SettingsTableTable settingsTable = $SettingsTableTable(this);
+  late final $AllocationBudgetTableTable allocationBudgetTable =
+      $AllocationBudgetTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1995,6 +2540,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     transactionTable,
     budgetTable,
     settingsTable,
+    allocationBudgetTable,
   ];
 }
 
@@ -3061,6 +3607,7 @@ typedef $$SettingsTableTableCreateCompanionBuilder =
       Value<double> intentPromptThreshold,
       Value<int?> lastSeenMonth,
       Value<int?> lastSeenYear,
+      Value<bool> hasSeenOnboarding,
     });
 typedef $$SettingsTableTableUpdateCompanionBuilder =
     SettingsTableCompanion Function({
@@ -3069,6 +3616,7 @@ typedef $$SettingsTableTableUpdateCompanionBuilder =
       Value<double> intentPromptThreshold,
       Value<int?> lastSeenMonth,
       Value<int?> lastSeenYear,
+      Value<bool> hasSeenOnboarding,
     });
 
 class $$SettingsTableTableFilterComposer
@@ -3102,6 +3650,11 @@ class $$SettingsTableTableFilterComposer
 
   ColumnFilters<int> get lastSeenYear => $composableBuilder(
     column: $table.lastSeenYear,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get hasSeenOnboarding => $composableBuilder(
+    column: $table.hasSeenOnboarding,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -3139,6 +3692,11 @@ class $$SettingsTableTableOrderingComposer
     column: $table.lastSeenYear,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<bool> get hasSeenOnboarding => $composableBuilder(
+    column: $table.hasSeenOnboarding,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$SettingsTableTableAnnotationComposer
@@ -3170,6 +3728,11 @@ class $$SettingsTableTableAnnotationComposer
 
   GeneratedColumn<int> get lastSeenYear => $composableBuilder(
     column: $table.lastSeenYear,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get hasSeenOnboarding => $composableBuilder(
+    column: $table.hasSeenOnboarding,
     builder: (column) => column,
   );
 }
@@ -3214,12 +3777,14 @@ class $$SettingsTableTableTableManager
                 Value<double> intentPromptThreshold = const Value.absent(),
                 Value<int?> lastSeenMonth = const Value.absent(),
                 Value<int?> lastSeenYear = const Value.absent(),
+                Value<bool> hasSeenOnboarding = const Value.absent(),
               }) => SettingsTableCompanion(
                 id: id,
                 intentPromptEnabled: intentPromptEnabled,
                 intentPromptThreshold: intentPromptThreshold,
                 lastSeenMonth: lastSeenMonth,
                 lastSeenYear: lastSeenYear,
+                hasSeenOnboarding: hasSeenOnboarding,
               ),
           createCompanionCallback:
               ({
@@ -3228,12 +3793,14 @@ class $$SettingsTableTableTableManager
                 Value<double> intentPromptThreshold = const Value.absent(),
                 Value<int?> lastSeenMonth = const Value.absent(),
                 Value<int?> lastSeenYear = const Value.absent(),
+                Value<bool> hasSeenOnboarding = const Value.absent(),
               }) => SettingsTableCompanion.insert(
                 id: id,
                 intentPromptEnabled: intentPromptEnabled,
                 intentPromptThreshold: intentPromptThreshold,
                 lastSeenMonth: lastSeenMonth,
                 lastSeenYear: lastSeenYear,
+                hasSeenOnboarding: hasSeenOnboarding,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -3260,6 +3827,269 @@ typedef $$SettingsTableTableProcessedTableManager =
       SettingsTableData,
       PrefetchHooks Function()
     >;
+typedef $$AllocationBudgetTableTableCreateCompanionBuilder =
+    AllocationBudgetTableCompanion Function({
+      required String id,
+      required String name,
+      Value<double?> targetAmount,
+      Value<double?> monthlyAllocation,
+      Value<double> totalAllocated,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$AllocationBudgetTableTableUpdateCompanionBuilder =
+    AllocationBudgetTableCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<double?> targetAmount,
+      Value<double?> monthlyAllocation,
+      Value<double> totalAllocated,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+class $$AllocationBudgetTableTableFilterComposer
+    extends Composer<_$AppDatabase, $AllocationBudgetTableTable> {
+  $$AllocationBudgetTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get targetAmount => $composableBuilder(
+    column: $table.targetAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get monthlyAllocation => $composableBuilder(
+    column: $table.monthlyAllocation,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get totalAllocated => $composableBuilder(
+    column: $table.totalAllocated,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$AllocationBudgetTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $AllocationBudgetTableTable> {
+  $$AllocationBudgetTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get targetAmount => $composableBuilder(
+    column: $table.targetAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get monthlyAllocation => $composableBuilder(
+    column: $table.monthlyAllocation,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get totalAllocated => $composableBuilder(
+    column: $table.totalAllocated,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$AllocationBudgetTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $AllocationBudgetTableTable> {
+  $$AllocationBudgetTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<double> get targetAmount => $composableBuilder(
+    column: $table.targetAmount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get monthlyAllocation => $composableBuilder(
+    column: $table.monthlyAllocation,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get totalAllocated => $composableBuilder(
+    column: $table.totalAllocated,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$AllocationBudgetTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $AllocationBudgetTableTable,
+          AllocationBudgetTableData,
+          $$AllocationBudgetTableTableFilterComposer,
+          $$AllocationBudgetTableTableOrderingComposer,
+          $$AllocationBudgetTableTableAnnotationComposer,
+          $$AllocationBudgetTableTableCreateCompanionBuilder,
+          $$AllocationBudgetTableTableUpdateCompanionBuilder,
+          (
+            AllocationBudgetTableData,
+            BaseReferences<
+              _$AppDatabase,
+              $AllocationBudgetTableTable,
+              AllocationBudgetTableData
+            >,
+          ),
+          AllocationBudgetTableData,
+          PrefetchHooks Function()
+        > {
+  $$AllocationBudgetTableTableTableManager(
+    _$AppDatabase db,
+    $AllocationBudgetTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AllocationBudgetTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$AllocationBudgetTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$AllocationBudgetTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<double?> targetAmount = const Value.absent(),
+                Value<double?> monthlyAllocation = const Value.absent(),
+                Value<double> totalAllocated = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => AllocationBudgetTableCompanion(
+                id: id,
+                name: name,
+                targetAmount: targetAmount,
+                monthlyAllocation: monthlyAllocation,
+                totalAllocated: totalAllocated,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                Value<double?> targetAmount = const Value.absent(),
+                Value<double?> monthlyAllocation = const Value.absent(),
+                Value<double> totalAllocated = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => AllocationBudgetTableCompanion.insert(
+                id: id,
+                name: name,
+                targetAmount: targetAmount,
+                monthlyAllocation: monthlyAllocation,
+                totalAllocated: totalAllocated,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$AllocationBudgetTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $AllocationBudgetTableTable,
+      AllocationBudgetTableData,
+      $$AllocationBudgetTableTableFilterComposer,
+      $$AllocationBudgetTableTableOrderingComposer,
+      $$AllocationBudgetTableTableAnnotationComposer,
+      $$AllocationBudgetTableTableCreateCompanionBuilder,
+      $$AllocationBudgetTableTableUpdateCompanionBuilder,
+      (
+        AllocationBudgetTableData,
+        BaseReferences<
+          _$AppDatabase,
+          $AllocationBudgetTableTable,
+          AllocationBudgetTableData
+        >,
+      ),
+      AllocationBudgetTableData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -3272,4 +4102,6 @@ class $AppDatabaseManager {
       $$BudgetTableTableTableManager(_db, _db.budgetTable);
   $$SettingsTableTableTableManager get settingsTable =>
       $$SettingsTableTableTableManager(_db, _db.settingsTable);
+  $$AllocationBudgetTableTableTableManager get allocationBudgetTable =>
+      $$AllocationBudgetTableTableTableManager(_db, _db.allocationBudgetTable);
 }

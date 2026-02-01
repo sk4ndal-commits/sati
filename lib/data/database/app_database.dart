@@ -8,15 +8,16 @@ import 'transaction_table.dart';
 import 'income_source_table.dart';
 import 'budget_table.dart';
 import 'settings_table.dart';
+import 'allocation_budget_table.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [TransactionTable, IncomeSourceTable, BudgetTable, SettingsTable])
+@DriftDatabase(tables: [TransactionTable, IncomeSourceTable, BudgetTable, SettingsTable, AllocationBudgetTable])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 7;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -39,6 +40,12 @@ class AppDatabase extends _$AppDatabase {
             // if they were added to the class without a schema bump.
             await m.addColumn(settingsTable, settingsTable.lastSeenMonth);
             await m.addColumn(settingsTable, settingsTable.lastSeenYear);
+          }
+          if (from < 6) {
+            await m.addColumn(settingsTable, settingsTable.hasSeenOnboarding);
+          }
+          if (from < 7) {
+            await m.createTable(allocationBudgetTable);
           }
         },
         beforeOpen: (details) async {

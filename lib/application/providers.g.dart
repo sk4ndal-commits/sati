@@ -239,3 +239,52 @@ final class SettingsRepositoryProvider
 
 String _$settingsRepositoryHash() =>
     r'260080ef0cca770099d18524a0fe89e0cee0197e';
+
+@ProviderFor(allocationBudgetRepository)
+const allocationBudgetRepositoryProvider =
+    AllocationBudgetRepositoryProvider._();
+
+final class AllocationBudgetRepositoryProvider
+    extends
+        $FunctionalProvider<
+          AllocationBudgetRepository,
+          AllocationBudgetRepository,
+          AllocationBudgetRepository
+        >
+    with $Provider<AllocationBudgetRepository> {
+  const AllocationBudgetRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'allocationBudgetRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$allocationBudgetRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<AllocationBudgetRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  AllocationBudgetRepository create(Ref ref) {
+    return allocationBudgetRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AllocationBudgetRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AllocationBudgetRepository>(value),
+    );
+  }
+}
+
+String _$allocationBudgetRepositoryHash() =>
+    r'c985727115180ee5b042ec4608a9bc1c7caaae57';

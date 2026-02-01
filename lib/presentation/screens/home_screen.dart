@@ -90,7 +90,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           data: (transactions) => CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
-                child: _MoneyLeftLayer(moneyLeft: homeState.moneyLeft),
+                child: _MoneyLeftLayer(
+                  moneyLeft: homeState.moneyLeft,
+                  moneyAllocated: homeState.moneyAllocated,
+                ),
               ),
               if (homeState.categorySnapshots.isNotEmpty)
                 SliverToBoxAdapter(
@@ -136,8 +139,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
 class _MoneyLeftLayer extends StatelessWidget {
   final double moneyLeft;
+  final double moneyAllocated;
 
-  const _MoneyLeftLayer({required this.moneyLeft});
+  const _MoneyLeftLayer({
+    required this.moneyLeft,
+    required this.moneyAllocated,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -164,6 +171,16 @@ class _MoneyLeftLayer extends StatelessWidget {
                   letterSpacing: 0.5,
                 ),
           ),
+          if (moneyAllocated > 0) ...[
+            const SizedBox(height: 8),
+            Text(
+              l10n.moneyAllocatedInfo('${moneyAllocated.toStringAsFixed(0)} €'),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.7),
+                    fontStyle: FontStyle.italic,
+                  ),
+            ),
+          ],
         ],
       ),
     );
@@ -396,67 +413,92 @@ class _TransactionList extends StatelessWidget {
   }
 }
 
-class _TransactionTile extends StatelessWidget {
+class _TransactionTile extends ConsumerWidget {
   final TransactionEntity transaction;
 
   const _TransactionTile({required this.transaction});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final isExpense = transaction.type == TransactionType.expense;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-        leading: CircleAvatar(
-          radius: 18,
-          backgroundColor: isExpense ? const Color(0xFFF2EDED) : const Color(0xFFEAF5EA),
+      child: Dismissible(
+        key: Key(transaction.id),
+        direction: DismissDirection.endToStart,
+        background: Container(
+          alignment: Alignment.centerRight,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.error.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(12),
+          ),
           child: Icon(
-            isExpense ? Icons.remove : Icons.add,
-            size: 18,
-            color: isExpense ? const Color(0xFF965F5F) : const Color(0xFF2E7D32),
+            Icons.delete_outline,
+            color: Theme.of(context).colorScheme.error,
           ),
         ),
-        title: Text(
-          '${transaction.amount.toStringAsFixed(2)} €',
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-        ),
-        subtitle: Row(
-          children: [
-            Text(
-              _getCategoryName(transaction.categoryId, l10n),
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.outline,
-                  ),
+        onDismissed: (_) {
+          ref.read(transactionControllerProvider.notifier).deleteTransaction(transaction.id);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(l10n.transactionDeleted),
+              behavior: SnackBarBehavior.floating,
             ),
-            if (transaction.planned != null) ...[
-              const SizedBox(width: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
-                decoration: BoxDecoration(
-                  color: transaction.planned! ? const Color(0xFFDDE6ED) : const Color(0xFFEBE5C5),
-                  borderRadius: BorderRadius.circular(4),
+          );
+        },
+        child: ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+          leading: CircleAvatar(
+            radius: 18,
+            backgroundColor: isExpense ? const Color(0xFFF2EDED) : const Color(0xFFEAF5EA),
+            child: Icon(
+              isExpense ? Icons.remove : Icons.add,
+              size: 18,
+              color: isExpense ? const Color(0xFF965F5F) : const Color(0xFF2E7D32),
+            ),
+          ),
+          title: Text(
+            '${transaction.amount.toStringAsFixed(2)} €',
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
-                child: Text(
-                  transaction.planned! ? l10n.planned : l10n.unplanned,
-                  style: TextStyle(
-                    fontSize: 9,
-                    color: transaction.planned! ? const Color(0xFF5D7A8C) : const Color(0xFF8A7A5F),
-                    fontWeight: FontWeight.w600,
+          ),
+          subtitle: Row(
+            children: [
+              Text(
+                _getCategoryName(transaction.categoryId, l10n),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.outline,
+                    ),
+              ),
+              if (transaction.planned != null) ...[
+                const SizedBox(width: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+                  decoration: BoxDecoration(
+                    color: transaction.planned! ? const Color(0xFFDDE6ED) : const Color(0xFFEBE5C5),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    transaction.planned! ? l10n.planned : l10n.unplanned,
+                    style: TextStyle(
+                      fontSize: 9,
+                      color: transaction.planned! ? const Color(0xFF5D7A8C) : const Color(0xFF8A7A5F),
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-              ),
+              ],
             ],
-          ],
+          ),
+          trailing: transaction.feeling != null
+              ? _getFeelingIcon(transaction.feeling!)
+              : null,
         ),
-        trailing: transaction.feeling != null
-            ? _getFeelingIcon(transaction.feeling!)
-            : null,
       ),
     );
   }

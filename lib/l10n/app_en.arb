@@ -144,5 +144,32 @@
     "incomeVsExpensesTrend": "Income vs. Expenses Trend",
     "incomeVsExpensesTrendDescription": "Comparison of your monthly income and expenses.",
     "incomeTrend": "Income Trend",
-    "incomeTrendDescription": "Monthly total income for the last few months."
+    "incomeTrendDescription": "Monthly total income for the last few months.",
+    "onboardingTitle1": "Awareness over Automation",
+    "onboardingBody1": "Sati is about mindful spending. We intentionally avoid bank sync to give you full control and awareness over every cent.",
+    "onboardingTitle2": "Friction by Design",
+    "onboardingBody2": "Large expenses trigger a moment of reflection. Was it planned? How do you feel? This 'Intent Prompt' helps you make better decisions.",
+    "onboardingTitle3": "Reflective Insights",
+    "onboardingBody3": "Weekly reviews and clear trends help you understand your behavior patterns without being overwhelmed by data.",
+    "getStarted": "Get Started",
+    "next": "Next",
+    "skip": "Skip",
+    "transactionDeleted": "Transaction deleted",
+    "moneyAllocatedInfo": "{amount} of which allocated",
+    "@moneyAllocatedInfo": {
+        "placeholders": {
+            "amount": { "type": "String" }
+        }
+    },
+    "allocationBudgets": "Saving & Investing",
+    "expenses": "Expenses",
+    "targetAmount": "Target Amount",
+    "monthlyAllocation": "Monthly Allocation",
+    "allocated": "Allocated",
+    "noAllocations": "No piggy banks yet",
+    "addAllocation": "Add Piggy Bank",
+    "editAllocation": "Edit Piggy Bank",
+    "allocate": "Allocate",
+    "amountToAllocate": "Amount to allocate",
+    "name": "Name"
 }

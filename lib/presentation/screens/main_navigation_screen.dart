@@ -34,8 +34,8 @@ class MainNavigationScreen extends ConsumerWidget {
         children: const [
           HomeScreen(),
           BudgetOverviewScreen(),
-          TrendsScreen(),
           ReviewHubScreen(),
+          TrendsScreen(),
           SettingsScreen(),
         ],
       ),
@@ -59,14 +59,14 @@ class MainNavigationScreen extends ConsumerWidget {
             label: l10n.budgets,
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.analytics_outlined),
-            activeIcon: const Icon(Icons.analytics),
-            label: l10n.trends,
-          ),
-          BottomNavigationBarItem(
             icon: const Icon(Icons.visibility_outlined),
             activeIcon: const Icon(Icons.visibility),
             label: l10n.reflect,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.analytics_outlined),
+            activeIcon: const Icon(Icons.analytics),
+            label: l10n.trends,
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.settings_outlined),

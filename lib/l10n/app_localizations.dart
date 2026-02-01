@@ -781,6 +781,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Monthly total income for the last few months.'**
   String get incomeTrendDescription;
+
+  /// No description provided for @onboardingTitle1.
+  ///
+  /// In en, this message translates to:
+  /// **'Awareness over Automation'**
+  String get onboardingTitle1;
+
+  /// No description provided for @onboardingBody1.
+  ///
+  /// In en, this message translates to:
+  /// **'Sati is about mindful spending. We intentionally avoid bank sync to give you full control and awareness over every cent.'**
+  String get onboardingBody1;
+
+  /// No description provided for @onboardingTitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'Friction by Design'**
+  String get onboardingTitle2;
+
+  /// No description provided for @onboardingBody2.
+  ///
+  /// In en, this message translates to:
+  /// **'Large expenses trigger a moment of reflection. Was it planned? How do you feel? This \'Intent Prompt\' helps you make better decisions.'**
+  String get onboardingBody2;
+
+  /// No description provided for @onboardingTitle3.
+  ///
+  /// In en, this message translates to:
+  /// **'Reflective Insights'**
+  String get onboardingTitle3;
+
+  /// No description provided for @onboardingBody3.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly reviews and clear trends help you understand your behavior patterns without being overwhelmed by data.'**
+  String get onboardingBody3;
+
+  /// No description provided for @getStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get getStarted;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skip;
+
+  /// No description provided for @transactionDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction deleted'**
+  String get transactionDeleted;
+
+  /// No description provided for @moneyAllocatedInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} of which allocated'**
+  String moneyAllocatedInfo(String amount);
+
+  /// No description provided for @allocationBudgets.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving & Investing'**
+  String get allocationBudgets;
+
+  /// No description provided for @expenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
+  String get expenses;
+
+  /// No description provided for @targetAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Target Amount'**
+  String get targetAmount;
+
+  /// No description provided for @monthlyAllocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Allocation'**
+  String get monthlyAllocation;
+
+  /// No description provided for @allocated.
+  ///
+  /// In en, this message translates to:
+  /// **'Allocated'**
+  String get allocated;
+
+  /// No description provided for @noAllocations.
+  ///
+  /// In en, this message translates to:
+  /// **'No piggy banks yet'**
+  String get noAllocations;
+
+  /// No description provided for @addAllocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Piggy Bank'**
+  String get addAllocation;
+
+  /// No description provided for @editAllocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Piggy Bank'**
+  String get editAllocation;
+
+  /// No description provided for @allocate.
+  ///
+  /// In en, this message translates to:
+  /// **'Allocate'**
+  String get allocate;
+
+  /// No description provided for @amountToAllocate.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount to allocate'**
+  String get amountToAllocate;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
 }
 
 class _AppLocalizationsDelegate

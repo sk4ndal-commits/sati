@@ -144,5 +144,32 @@
     "incomeVsExpensesTrend": "Einnahmen vs. Ausgaben Trend",
     "incomeVsExpensesTrendDescription": "Vergleich deiner monatlichen Einnahmen und Ausgaben.",
     "incomeTrend": "Einnahmentrend",
-    "incomeTrendDescription": "Monatliche Gesamteinnahmen der letzten Monate."
+    "incomeTrendDescription": "Monatliche Gesamteinnahmen der letzten Monate.",
+    "onboardingTitle1": "Bewusstsein vor Automatisierung",
+    "onboardingBody1": "Bei Sati geht es um achtsame Ausgaben. Wir verzichten bewusst auf Bank-Sync, um dir die volle Kontrolle und Aufmerksamkeit über jeden Cent zu geben.",
+    "onboardingTitle2": "Reibung durch Design",
+    "onboardingBody2": "Große Ausgaben lösen einen Moment der Reflexion aus. War es geplant? Wie fühlst du dich? Dieser 'Intent Prompt' hilft dir, bessere Entscheidungen zu treffen.",
+    "onboardingTitle3": "Reflektierende Einblicke",
+    "onboardingBody3": "Wöchentliche Rückblicke und klare Trends helfen dir, Verhaltensmuster zu verstehen, ohne von Daten überwältigt zu werden.",
+    "getStarted": "Loslegen",
+    "next": "Weiter",
+    "skip": "Überspringen",
+    "transactionDeleted": "Transaktion gelöscht",
+    "moneyAllocatedInfo": "davon zugewiesen: {amount}",
+    "@moneyAllocatedInfo": {
+        "placeholders": {
+            "amount": { "type": "String" }
+        }
+    },
+    "allocationBudgets": "Sparen & Investieren",
+    "expenses": "Ausgaben",
+    "targetAmount": "Zielbetrag",
+    "monthlyAllocation": "Monatliche Zuweisung",
+    "allocated": "Zugewiesen",
+    "noAllocations": "Noch keine Sparschweine",
+    "addAllocation": "Sparschwein hinzufügen",
+    "editAllocation": "Sparschwein bearbeiten",
+    "allocate": "Zuweisen",
+    "amountToAllocate": "Betrag zum Zuweisen",
+    "name": "Name"
 }

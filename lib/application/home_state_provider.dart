@@ -3,17 +3,20 @@ import '../domain/entities/transaction_entity.dart';
 import 'transaction_controller.dart';
 import 'budget_overview_provider.dart';
 import 'settings_controller.dart';
+import 'allocation_budget_controller.dart';
 
 part 'home_state_provider.g.dart';
 
 class HomeState {
   final double moneyLeft;
+  final double moneyAllocated;
   final List<CategoryBudgetStatus> categorySnapshots;
   final List<AttentionSignal> signals;
   final bool isNewMonthTransition;
 
   HomeState({
     required this.moneyLeft,
+    required this.moneyAllocated,
     required this.categorySnapshots,
     required this.signals,
     this.isNewMonthTransition = false,
@@ -42,6 +45,7 @@ Future<HomeState> homeState(Ref ref) async {
   final budgetOverviewAsync = await ref.watch(budgetOverviewProvider.future);
   final transactions = await ref.watch(transactionControllerProvider.future);
   final settingsAsync = await ref.watch(settingsControllerProvider.future);
+  final allocations = await ref.watch(allocationBudgetControllerProvider.future);
 
   // 1. Check for month transition
   bool isNewMonthTransition = false;
@@ -71,7 +75,17 @@ Future<HomeState> homeState(Ref ref) async {
 
   final moneyLeft = totalIncome - totalExpenses;
 
-  // 3. Category snapshot (Limit to 3-5)
+  // 3. Calculate Money Allocated for this month
+  // Since totalAllocated is cumulative, we need a way to track "this month's" allocation 
+  // if we want to show it on Home. The prompt says "Davon zugewiesen: 300 €" 
+  // which likely refers to the sum of 'monthlyAllocation' planned for this month 
+  // or actual allocations made this month.
+  // Requirement: "Home: Optional secondary line below “Money Left”: „Davon zugewiesen: 300 €“"
+  // For simplicity and following the requirement "Allocation aggregation logic (monthly)", 
+  // I'll sum the 'monthlyAllocation' of all allocation budgets as the "planned/assigned" amount.
+  final moneyAllocated = allocations.fold(0.0, (sum, b) => sum + (b.monthlyAllocation ?? 0.0));
+
+  // 4. Category snapshot (Limit to 3-5)
   final categorySnapshots = budgetOverviewAsync.take(5).toList();
 
   final signals = <AttentionSignal>[];
@@ -113,6 +127,7 @@ Future<HomeState> homeState(Ref ref) async {
 
   return HomeState(
     moneyLeft: moneyLeft,
+    moneyAllocated: moneyAllocated,
     categorySnapshots: categorySnapshots,
     signals: signals,
     isNewMonthTransition: isNewMonthTransition,

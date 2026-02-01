@@ -374,4 +374,75 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get incomeTrendDescription =>
       'Monthly total income for the last few months.';
+
+  @override
+  String get onboardingTitle1 => 'Awareness over Automation';
+
+  @override
+  String get onboardingBody1 =>
+      'Sati is about mindful spending. We intentionally avoid bank sync to give you full control and awareness over every cent.';
+
+  @override
+  String get onboardingTitle2 => 'Friction by Design';
+
+  @override
+  String get onboardingBody2 =>
+      'Large expenses trigger a moment of reflection. Was it planned? How do you feel? This \'Intent Prompt\' helps you make better decisions.';
+
+  @override
+  String get onboardingTitle3 => 'Reflective Insights';
+
+  @override
+  String get onboardingBody3 =>
+      'Weekly reviews and clear trends help you understand your behavior patterns without being overwhelmed by data.';
+
+  @override
+  String get getStarted => 'Get Started';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get skip => 'Skip';
+
+  @override
+  String get transactionDeleted => 'Transaction deleted';
+
+  @override
+  String moneyAllocatedInfo(String amount) {
+    return '$amount of which allocated';
+  }
+
+  @override
+  String get allocationBudgets => 'Saving & Investing';
+
+  @override
+  String get expenses => 'Expenses';
+
+  @override
+  String get targetAmount => 'Target Amount';
+
+  @override
+  String get monthlyAllocation => 'Monthly Allocation';
+
+  @override
+  String get allocated => 'Allocated';
+
+  @override
+  String get noAllocations => 'No piggy banks yet';
+
+  @override
+  String get addAllocation => 'Add Piggy Bank';
+
+  @override
+  String get editAllocation => 'Edit Piggy Bank';
+
+  @override
+  String get allocate => 'Allocate';
+
+  @override
+  String get amountToAllocate => 'Amount to allocate';
+
+  @override
+  String get name => 'Name';
 }

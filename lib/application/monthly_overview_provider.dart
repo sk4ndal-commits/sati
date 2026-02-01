@@ -2,6 +2,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../domain/entities/transaction_entity.dart';
 import 'transaction_controller.dart';
 import 'budget_overview_provider.dart';
+import 'allocation_budget_controller.dart';
+import '../domain/entities/allocation_budget_entity.dart';
 
 part 'monthly_overview_provider.g.dart';
 
@@ -9,7 +11,9 @@ class MonthlyOverviewData {
   final double totalIncome;
   final double totalExpenses;
   final double totalBudgeted;
+  final double totalAllocatedThisMonth;
   final List<CategoryBreakdown> categoryBreakdown;
+  final List<AllocationBudgetEntity> allocations;
   final int month;
   final int year;
 
@@ -17,7 +21,9 @@ class MonthlyOverviewData {
     required this.totalIncome,
     required this.totalExpenses,
     required this.totalBudgeted,
+    required this.totalAllocatedThisMonth,
     required this.categoryBreakdown,
+    required this.allocations,
     required this.month,
     required this.year,
   });
@@ -42,6 +48,7 @@ class CategoryBreakdown {
 Future<MonthlyOverviewData> monthlyOverview(Ref ref) async {
   final transactions = await ref.watch(transactionControllerProvider.future);
   final budgetOverview = await ref.watch(budgetOverviewProvider.future);
+  final allocations = await ref.watch(allocationBudgetControllerProvider.future);
 
   final now = DateTime.now();
   final currentMonthTransactions = transactions.where((t) =>
@@ -73,11 +80,16 @@ Future<MonthlyOverviewData> monthlyOverview(Ref ref) async {
   // Sort by amount descending
   breakdown.sort((a, b) => b.amount.compareTo(a.amount));
 
+  // Monthly allocation is the sum of monthlyAllocation targets
+  double totalAllocatedThisMonth = allocations.fold(0, (sum, b) => sum + (b.monthlyAllocation ?? 0));
+
   return MonthlyOverviewData(
     totalIncome: totalIncome,
     totalExpenses: totalExpenses,
     totalBudgeted: totalBudgeted,
+    totalAllocatedThisMonth: totalAllocatedThisMonth,
     categoryBreakdown: breakdown,
+    allocations: allocations,
     month: now.month,
     year: now.year,
   );

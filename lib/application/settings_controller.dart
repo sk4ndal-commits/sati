@@ -39,4 +39,10 @@ class SettingsController extends _$SettingsController {
       lastSeenYear: year,
     ));
   }
+
+  Future<void> completeOnboarding() async {
+    final current = state.value;
+    if (current == null) return;
+    await updateSettings(current.copyWith(hasSeenOnboarding: true));
+  }
 }

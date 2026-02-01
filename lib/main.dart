@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/app_localizations.dart';
 import 'presentation/screens/main_navigation_screen.dart';
+import 'presentation/screens/onboarding_screen.dart';
+import 'application/settings_controller.dart';
 
 void main() {
   runApp(
@@ -12,11 +14,13 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final settingsAsync = ref.watch(settingsControllerProvider);
+
     return MaterialApp(
       onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
       theme: ThemeData(
@@ -73,8 +77,19 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: const [
         Locale('de'),
+        Locale('en'),
       ],
-      home: const MainNavigationScreen(),
+      home: settingsAsync.when(
+        data: (settings) => settings.hasSeenOnboarding
+            ? const MainNavigationScreen()
+            : const OnboardingScreen(),
+        loading: () => const Scaffold(
+          body: Center(child: CircularProgressIndicator()),
+        ),
+        error: (err, stack) => Scaffold(
+          body: Center(child: Text('Error: $err')),
+        ),
+      ),
     );
   }
 }

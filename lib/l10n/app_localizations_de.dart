@@ -375,4 +375,75 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get incomeTrendDescription =>
       'Monatliche Gesamteinnahmen der letzten Monate.';
+
+  @override
+  String get onboardingTitle1 => 'Bewusstsein vor Automatisierung';
+
+  @override
+  String get onboardingBody1 =>
+      'Bei Sati geht es um achtsame Ausgaben. Wir verzichten bewusst auf Bank-Sync, um dir die volle Kontrolle und Aufmerksamkeit über jeden Cent zu geben.';
+
+  @override
+  String get onboardingTitle2 => 'Reibung durch Design';
+
+  @override
+  String get onboardingBody2 =>
+      'Große Ausgaben lösen einen Moment der Reflexion aus. War es geplant? Wie fühlst du dich? Dieser \'Intent Prompt\' hilft dir, bessere Entscheidungen zu treffen.';
+
+  @override
+  String get onboardingTitle3 => 'Reflektierende Einblicke';
+
+  @override
+  String get onboardingBody3 =>
+      'Wöchentliche Rückblicke und klare Trends helfen dir, Verhaltensmuster zu verstehen, ohne von Daten überwältigt zu werden.';
+
+  @override
+  String get getStarted => 'Loslegen';
+
+  @override
+  String get next => 'Weiter';
+
+  @override
+  String get skip => 'Überspringen';
+
+  @override
+  String get transactionDeleted => 'Transaktion gelöscht';
+
+  @override
+  String moneyAllocatedInfo(String amount) {
+    return 'davon zugewiesen: $amount';
+  }
+
+  @override
+  String get allocationBudgets => 'Sparen & Investieren';
+
+  @override
+  String get expenses => 'Ausgaben';
+
+  @override
+  String get targetAmount => 'Zielbetrag';
+
+  @override
+  String get monthlyAllocation => 'Monatliche Zuweisung';
+
+  @override
+  String get allocated => 'Zugewiesen';
+
+  @override
+  String get noAllocations => 'Noch keine Sparschweine';
+
+  @override
+  String get addAllocation => 'Sparschwein hinzufügen';
+
+  @override
+  String get editAllocation => 'Sparschwein bearbeiten';
+
+  @override
+  String get allocate => 'Zuweisen';
+
+  @override
+  String get amountToAllocate => 'Betrag zum Zuweisen';
+
+  @override
+  String get name => 'Name';
 }

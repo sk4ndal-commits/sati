@@ -48,4 +48,4 @@ final class MonthlyOverviewProvider
   }
 }
 
-String _$monthlyOverviewHash() => r'df3a50c7a405128d2e70a358b82fa7106ec96439';
+String _$monthlyOverviewHash() => r'b6c16ed22cdde8cd1c0ad8861b0c7e66725da295';

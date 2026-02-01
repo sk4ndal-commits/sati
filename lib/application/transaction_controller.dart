@@ -44,4 +44,13 @@ class TransactionController extends _$TransactionController {
       return repository.getTransactions();
     });
   }
+
+  Future<void> deleteTransaction(String id) async {
+    state = const AsyncValue.loading();
+    final repository = ref.read(transactionRepositoryProvider);
+    state = await AsyncValue.guard(() async {
+      await repository.deleteTransaction(id);
+      return repository.getTransactions();
+    });
+  }
 }

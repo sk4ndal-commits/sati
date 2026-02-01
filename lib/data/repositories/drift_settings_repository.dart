@@ -16,6 +16,7 @@ class DriftSettingsRepository implements SettingsRepository {
       return SettingsEntity(
         intentPromptEnabled: true,
         intentPromptThreshold: 50.0,
+        hasSeenOnboarding: false,
       );
     }
     return SettingsEntity(
@@ -23,6 +24,7 @@ class DriftSettingsRepository implements SettingsRepository {
       intentPromptThreshold: row.intentPromptThreshold,
       lastSeenMonth: row.lastSeenMonth,
       lastSeenYear: row.lastSeenYear,
+      hasSeenOnboarding: row.hasSeenOnboarding,
     );
   }
 
@@ -36,6 +38,7 @@ class DriftSettingsRepository implements SettingsRepository {
               intentPromptThreshold: Value(settings.intentPromptThreshold),
               lastSeenMonth: Value(settings.lastSeenMonth),
               lastSeenYear: Value(settings.lastSeenYear),
+              hasSeenOnboarding: Value(settings.hasSeenOnboarding),
             ),
           );
     } else {
@@ -47,6 +50,7 @@ class DriftSettingsRepository implements SettingsRepository {
           intentPromptThreshold: Value(settings.intentPromptThreshold),
           lastSeenMonth: Value(settings.lastSeenMonth),
           lastSeenYear: Value(settings.lastSeenYear),
+          hasSeenOnboarding: Value(settings.hasSeenOnboarding),
         ),
       );
     }

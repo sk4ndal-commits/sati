@@ -7,4 +7,5 @@ class SettingsTable extends Table {
   RealColumn get intentPromptThreshold => real().withDefault(const Constant(50.0))();
   IntColumn get lastSeenMonth => integer().nullable()();
   IntColumn get lastSeenYear => integer().nullable()();
+  BoolColumn get hasSeenOnboarding => boolean().withDefault(const Constant(false))();
 }
