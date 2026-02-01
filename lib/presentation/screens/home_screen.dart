@@ -1,16 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../application/notification_service.dart';
 import '../../l10n/app_localizations.dart';
 import '../../application/transaction_controller.dart';
 import 'transaction_entry_screen.dart';
 import 'income_sources_screen.dart';
 import 'budget_overview_screen.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _initNotifications();
+  }
+
+  Future<void> _initNotifications() async {
+    final notifier = ref.read(notificationServiceProvider.notifier);
+    await notifier.init();
+    await notifier.requestPermissions();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final transactionsAsync = ref.watch(transactionControllerProvider);
     final l10n = AppLocalizations.of(context)!;
 

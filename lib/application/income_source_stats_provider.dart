@@ -23,8 +23,11 @@ class IncomeSourceStats {
 
 @riverpod
 Future<List<IncomeSourceStats>> incomeSourceStats(Ref ref) async {
-  final transactions = await ref.watch(transactionControllerProvider.future);
-  final sources = await ref.watch(incomeSourceControllerProvider.future);
+  final transactionsFuture = ref.watch(transactionControllerProvider.future);
+  final sourcesFuture = ref.watch(incomeSourceControllerProvider.future);
+
+  final transactions = await transactionsFuture;
+  final sources = await sourcesFuture;
 
   // For MVP, we filter transactions by current month.
   final now = DateTime.now();

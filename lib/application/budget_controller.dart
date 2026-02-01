@@ -10,11 +10,12 @@ class BudgetController extends _$BudgetController {
   @override
   FutureOr<List<BudgetEntity>> build() async {
     final now = DateTime.now();
-    return _fetchBudgets(now.month, now.year);
+    final repository = ref.watch(budgetRepositoryProvider);
+    return repository.getBudgets(now.month, now.year);
   }
 
   Future<List<BudgetEntity>> _fetchBudgets(int month, int year) async {
-    final repository = ref.watch(budgetRepositoryProvider);
+    final repository = ref.read(budgetRepositoryProvider);
     return repository.getBudgets(month, year);
   }
 

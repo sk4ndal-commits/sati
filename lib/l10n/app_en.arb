@@ -38,5 +38,13 @@
     "remaining": "Remaining",
     "rollover": "Rollover",
     "noBudgets": "No budgets set yet",
-    "editBudget": "Edit Budget"
+    "editBudget": "Edit Budget",
+    "budgetAlertTitle": "Budget Warning",
+    "budgetAlertBody": "You have used {percent}% of your {category} budget.",
+    "@budgetAlertBody": {
+        "placeholders": {
+            "category": { "type": "String" },
+            "percent": { "type": "int" }
+        }
+    }
 }

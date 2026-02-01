@@ -331,6 +331,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit Budget'**
   String get editBudget;
+
+  /// No description provided for @budgetAlertTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Warning'**
+  String get budgetAlertTitle;
+
+  /// No description provided for @budgetAlertBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You have used {percent}% of your {category} budget.'**
+  String budgetAlertBody(String category, int percent);
 }
 
 class _AppLocalizationsDelegate

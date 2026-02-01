@@ -38,5 +38,13 @@
     "remaining": "Verbleibend",
     "rollover": "Rollover",
     "noBudgets": "Noch keine Budgets festgelegt",
-    "editBudget": "Budget bearbeiten"
+    "editBudget": "Budget bearbeiten",
+    "budgetAlertTitle": "Budget-Warnung",
+    "budgetAlertBody": "Du hast {percent}% deines Budgets für {category} verbraucht.",
+    "@budgetAlertBody": {
+        "placeholders": {
+            "category": { "type": "String" },
+            "percent": { "type": "int" }
+        }
+    }
 }

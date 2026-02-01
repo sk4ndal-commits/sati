@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import '../../application/budget_threshold_service.dart';
 import '../../application/income_source_controller.dart';
 import '../../application/transaction_controller.dart';
 import '../../domain/entities/transaction_entity.dart';
@@ -47,6 +48,7 @@ class _TransactionEntryScreenState extends ConsumerState<TransactionEntryScreen>
   void _submit() async {
     if (_formKey.currentState!.validate()) {
       final amount = double.tryParse(_amountController.text.replaceAll(',', '.')) ?? 0.0;
+      final l10n = AppLocalizations.of(context)!;
       
       await ref.read(transactionControllerProvider.notifier).addTransaction(
         amount: amount,
@@ -56,6 +58,12 @@ class _TransactionEntryScreenState extends ConsumerState<TransactionEntryScreen>
         note: _noteController.text.isEmpty ? null : _noteController.text,
         incomeSourceId: _type == TransactionType.income ? _incomeSourceId : null,
       );
+
+      if (_type == TransactionType.expense) {
+        // Use a short delay or await specifically if needed, 
+        // but checking thresholds after transaction is added.
+        await ref.read(budgetThresholdServiceProvider.notifier).checkThresholds(l10n);
+      }
 
       if (mounted) {
         Navigator.of(context).pop();

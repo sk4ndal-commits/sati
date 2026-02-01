@@ -124,4 +124,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editBudget => 'Edit Budget';
+
+  @override
+  String get budgetAlertTitle => 'Budget Warning';
+
+  @override
+  String budgetAlertBody(String category, int percent) {
+    return 'You have used $percent% of your $category budget.';
+  }
 }

@@ -24,8 +24,11 @@ class CategoryBudgetStatus {
 
 @riverpod
 Future<List<CategoryBudgetStatus>> budgetOverview(Ref ref) async {
-  final budgets = await ref.watch(budgetControllerProvider.future);
-  final transactions = await ref.watch(transactionControllerProvider.future);
+  final budgetsFuture = ref.watch(budgetControllerProvider.future);
+  final transactionsFuture = ref.watch(transactionControllerProvider.future);
+
+  final budgets = await budgetsFuture;
+  final transactions = await transactionsFuture;
 
   final now = DateTime.now();
   final currentMonthTransactions = transactions.where((t) =>
