@@ -1,0 +1,22 @@
+{
+    "@@locale": "de",
+    "appTitle": "Sati",
+    "addTransaction": "Eintrag hinzufügen",
+    "expense": "Ausgabe",
+    "income": "Einnahme",
+    "amount": "Betrag",
+    "category": "Kategorie",
+    "date": "Datum",
+    "note": "Notiz (optional)",
+    "save": "Speichern",
+    "requiredField": "Pflichtfeld",
+    "invalidAmount": "Ungültiger Betrag",
+    "transactionSaved": "Transaktion gespeichert",
+    "noTransactions": "Noch keine Transaktionen",
+    "categoryFood": "Essen",
+    "categoryTransport": "Transport",
+    "categoryLeisure": "Freizeit",
+    "categoryHousing": "Wohnen",
+    "categorySalary": "Gehalt",
+    "categoryOther": "Sonstiges"
+}
