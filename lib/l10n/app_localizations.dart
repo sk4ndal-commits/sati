@@ -343,6 +343,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You have used {percent}% of your {category} budget.'**
   String budgetAlertBody(String category, int percent);
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @intentPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Intent Prompt'**
+  String get intentPrompt;
+
+  /// No description provided for @intentPromptDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask for reflection on expenses above a threshold'**
+  String get intentPromptDescription;
+
+  /// No description provided for @threshold.
+  ///
+  /// In en, this message translates to:
+  /// **'Threshold'**
+  String get threshold;
+
+  /// No description provided for @wasPlanned.
+  ///
+  /// In en, this message translates to:
+  /// **'Was this planned?'**
+  String get wasPlanned;
+
+  /// No description provided for @howDoYouFeel.
+  ///
+  /// In en, this message translates to:
+  /// **'How do you feel?'**
+  String get howDoYouFeel;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @feeling1.
+  ///
+  /// In en, this message translates to:
+  /// **'Awful'**
+  String get feeling1;
+
+  /// No description provided for @feeling2.
+  ///
+  /// In en, this message translates to:
+  /// **'Bad'**
+  String get feeling2;
+
+  /// No description provided for @feeling3.
+  ///
+  /// In en, this message translates to:
+  /// **'Neutral'**
+  String get feeling3;
+
+  /// No description provided for @feeling4.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get feeling4;
+
+  /// No description provided for @feeling5.
+  ///
+  /// In en, this message translates to:
+  /// **'Great'**
+  String get feeling5;
+
+  /// No description provided for @reflection.
+  ///
+  /// In en, this message translates to:
+  /// **'Reflection'**
+  String get reflection;
 }
 
 class _AppLocalizationsDelegate

@@ -46,5 +46,19 @@
             "category": { "type": "String" },
             "percent": { "type": "int" }
         }
-    }
+    },
+    "settings": "Einstellungen",
+    "intentPrompt": "Intent Prompt",
+    "intentPromptDescription": "Reflektion bei Ausgaben über einem Schwellenwert anfordern",
+    "threshold": "Schwellenwert",
+    "wasPlanned": "War das geplant?",
+    "howDoYouFeel": "Wie fühlst du dich?",
+    "yes": "Ja",
+    "no": "Nein",
+    "feeling1": "Schrecklich",
+    "feeling2": "Schlecht",
+    "feeling3": "Neutral",
+    "feeling4": "Gut",
+    "feeling5": "Sehr gut",
+    "reflection": "Reflektion"
 }

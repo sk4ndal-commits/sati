@@ -46,5 +46,19 @@
             "category": { "type": "String" },
             "percent": { "type": "int" }
         }
-    }
+    },
+    "settings": "Settings",
+    "intentPrompt": "Intent Prompt",
+    "intentPromptDescription": "Ask for reflection on expenses above a threshold",
+    "threshold": "Threshold",
+    "wasPlanned": "Was this planned?",
+    "howDoYouFeel": "How do you feel?",
+    "yes": "Yes",
+    "no": "No",
+    "feeling1": "Awful",
+    "feeling2": "Bad",
+    "feeling3": "Neutral",
+    "feeling4": "Good",
+    "feeling5": "Great",
+    "reflection": "Reflection"
 }

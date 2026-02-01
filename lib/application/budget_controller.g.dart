@@ -33,7 +33,7 @@ final class BudgetControllerProvider
   BudgetController create() => BudgetController();
 }
 
-String _$budgetControllerHash() => r'771927a18ff10878c531cbafa67582f80c023c1b';
+String _$budgetControllerHash() => r'12e45f34e1892a15ac7c82945c7451d31cb94d25';
 
 abstract class _$BudgetController extends $AsyncNotifier<List<BudgetEntity>> {
   FutureOr<List<BudgetEntity>> build();

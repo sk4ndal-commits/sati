@@ -42,7 +42,7 @@ final class NotificationServiceProvider
 }
 
 String _$notificationServiceHash() =>
-    r'a005ed5de6ca219d3c14ee16f1876ba4f525ce06';
+    r'22322fe40a2eda47ea5bdb455f06a10feb86e965';
 
 abstract class _$NotificationService extends $Notifier<void> {
   void build();

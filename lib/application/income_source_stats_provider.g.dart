@@ -48,4 +48,4 @@ final class IncomeSourceStatsProvider
   }
 }
 
-String _$incomeSourceStatsHash() => r'2c619c95ea8a84356aff5f454211754e296d7948';
+String _$incomeSourceStatsHash() => r'1c0fdd0153da5f2604a7e66c82af43e64b7abefb';

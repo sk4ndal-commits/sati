@@ -7,15 +7,16 @@ import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 import 'transaction_table.dart';
 import 'income_source_table.dart';
 import 'budget_table.dart';
+import 'settings_table.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [TransactionTable, IncomeSourceTable, BudgetTable])
+@DriftDatabase(tables: [TransactionTable, IncomeSourceTable, BudgetTable, SettingsTable])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -26,6 +27,11 @@ class AppDatabase extends _$AppDatabase {
           }
           if (from < 3) {
             await m.createTable(budgetTable);
+          }
+          if (from < 4) {
+            await m.createTable(settingsTable);
+            await m.addColumn(transactionTable, transactionTable.planned);
+            await m.addColumn(transactionTable, transactionTable.feeling);
           }
         },
         beforeOpen: (details) async {

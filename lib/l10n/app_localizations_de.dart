@@ -132,4 +132,47 @@ class AppLocalizationsDe extends AppLocalizations {
   String budgetAlertBody(String category, int percent) {
     return 'Du hast $percent% deines Budgets für $category verbraucht.';
   }
+
+  @override
+  String get settings => 'Einstellungen';
+
+  @override
+  String get intentPrompt => 'Intent Prompt';
+
+  @override
+  String get intentPromptDescription =>
+      'Reflektion bei Ausgaben über einem Schwellenwert anfordern';
+
+  @override
+  String get threshold => 'Schwellenwert';
+
+  @override
+  String get wasPlanned => 'War das geplant?';
+
+  @override
+  String get howDoYouFeel => 'Wie fühlst du dich?';
+
+  @override
+  String get yes => 'Ja';
+
+  @override
+  String get no => 'Nein';
+
+  @override
+  String get feeling1 => 'Schrecklich';
+
+  @override
+  String get feeling2 => 'Schlecht';
+
+  @override
+  String get feeling3 => 'Neutral';
+
+  @override
+  String get feeling4 => 'Gut';
+
+  @override
+  String get feeling5 => 'Sehr gut';
+
+  @override
+  String get reflection => 'Reflektion';
 }

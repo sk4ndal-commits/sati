@@ -6,6 +6,7 @@ import '../../application/transaction_controller.dart';
 import 'transaction_entry_screen.dart';
 import 'income_sources_screen.dart';
 import 'budget_overview_screen.dart';
+import 'settings_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -53,6 +54,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               );
             },
             tooltip: l10n.incomeSources,
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+              );
+            },
+            tooltip: l10n.settings,
           ),
         ],
       ),

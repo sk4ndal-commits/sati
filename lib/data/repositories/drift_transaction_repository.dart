@@ -25,6 +25,8 @@ class DriftTransactionRepository implements TransactionRepository {
             date: transaction.date,
             note: Value(transaction.note),
             incomeSourceId: Value(transaction.incomeSourceId),
+            planned: Value(transaction.planned),
+            feeling: Value(transaction.feeling),
           ),
         );
   }
@@ -43,6 +45,8 @@ class DriftTransactionRepository implements TransactionRepository {
       date: data.date,
       note: data.note,
       incomeSourceId: data.incomeSourceId,
+      planned: data.planned,
+      feeling: data.feeling,
     );
   }
 }

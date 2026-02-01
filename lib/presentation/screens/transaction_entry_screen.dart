@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../application/budget_threshold_service.dart';
 import '../../application/income_source_controller.dart';
+import '../../application/settings_controller.dart';
 import '../../application/transaction_controller.dart';
 import '../../domain/entities/transaction_entity.dart';
 import '../../l10n/app_localizations.dart';
@@ -23,6 +24,8 @@ class _TransactionEntryScreenState extends ConsumerState<TransactionEntryScreen>
   String _categoryId = 'food';
   DateTime _date = DateTime.now();
   String? _incomeSourceId;
+  bool? _planned;
+  int? _feeling;
 
   @override
   void dispose() {
@@ -57,6 +60,8 @@ class _TransactionEntryScreenState extends ConsumerState<TransactionEntryScreen>
         date: _date,
         note: _noteController.text.isEmpty ? null : _noteController.text,
         incomeSourceId: _type == TransactionType.income ? _incomeSourceId : null,
+        planned: _planned,
+        feeling: _feeling,
       );
 
       if (_type == TransactionType.expense) {
@@ -183,6 +188,8 @@ class _TransactionEntryScreenState extends ConsumerState<TransactionEntryScreen>
               ),
               maxLines: 3,
             ),
+            const SizedBox(height: 16),
+            _buildReflectionPrompt(l10n),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: _submit,
@@ -195,5 +202,84 @@ class _TransactionEntryScreenState extends ConsumerState<TransactionEntryScreen>
         ),
       ),
     );
+  }
+
+  Widget _buildReflectionPrompt(AppLocalizations l10n) {
+    if (_type != TransactionType.expense) return const SizedBox.shrink();
+
+    final amount = double.tryParse(_amountController.text.replaceAll(',', '.')) ?? 0.0;
+    final settingsAsync = ref.watch(settingsControllerProvider);
+
+    return settingsAsync.when(
+      data: (settings) {
+        if (!settings.intentPromptEnabled || amount < settings.intentPromptThreshold) {
+          return const SizedBox.shrink();
+        }
+
+        return Card(
+          color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+          elevation: 0,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(l10n.reflection, style: Theme.of(context).textTheme.titleSmall),
+                const SizedBox(height: 12),
+                Text(l10n.wasPlanned),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    ChoiceChip(
+                      label: Text(l10n.yes),
+                      selected: _planned == true,
+                      onSelected: (selected) => setState(() => _planned = selected ? true : null),
+                    ),
+                    const SizedBox(width: 8),
+                    ChoiceChip(
+                      label: Text(l10n.no),
+                      selected: _planned == false,
+                      onSelected: (selected) => setState(() => _planned = selected ? false : null),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Text(l10n.howDoYouFeel),
+                const SizedBox(height: 8),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(5, (index) {
+                      final value = index + 1;
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: ChoiceChip(
+                          label: Text(_getFeelingLabel(value, l10n)),
+                          selected: _feeling == value,
+                          onSelected: (selected) => setState(() => _feeling = selected ? value : null),
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      loading: () => const SizedBox.shrink(),
+      error: (err, stack) => const SizedBox.shrink(),
+    );
+  }
+
+  String _getFeelingLabel(int value, AppLocalizations l10n) {
+    switch (value) {
+      case 1: return l10n.feeling1;
+      case 2: return l10n.feeling2;
+      case 3: return l10n.feeling3;
+      case 4: return l10n.feeling4;
+      case 5: return l10n.feeling5;
+      default: return '';
+    }
   }
 }

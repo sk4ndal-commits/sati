@@ -494,6 +494,31 @@ class $TransactionTableTable extends TransactionTable
       'REFERENCES income_source_table (id)',
     ),
   );
+  static const VerificationMeta _plannedMeta = const VerificationMeta(
+    'planned',
+  );
+  @override
+  late final GeneratedColumn<bool> planned = GeneratedColumn<bool>(
+    'planned',
+    aliasedName,
+    true,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("planned" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _feelingMeta = const VerificationMeta(
+    'feeling',
+  );
+  @override
+  late final GeneratedColumn<int> feeling = GeneratedColumn<int>(
+    'feeling',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -527,6 +552,8 @@ class $TransactionTableTable extends TransactionTable
     date,
     note,
     incomeSourceId,
+    planned,
+    feeling,
     createdAt,
     updatedAt,
   ];
@@ -594,6 +621,18 @@ class $TransactionTableTable extends TransactionTable
         ),
       );
     }
+    if (data.containsKey('planned')) {
+      context.handle(
+        _plannedMeta,
+        planned.isAcceptableOrUnknown(data['planned']!, _plannedMeta),
+      );
+    }
+    if (data.containsKey('feeling')) {
+      context.handle(
+        _feelingMeta,
+        feeling.isAcceptableOrUnknown(data['feeling']!, _feelingMeta),
+      );
+    }
     if (data.containsKey('created_at')) {
       context.handle(
         _createdAtMeta,
@@ -643,6 +682,14 @@ class $TransactionTableTable extends TransactionTable
         DriftSqlType.string,
         data['${effectivePrefix}income_source_id'],
       ),
+      planned: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}planned'],
+      ),
+      feeling: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}feeling'],
+      ),
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
@@ -669,6 +716,8 @@ class TransactionTableData extends DataClass
   final DateTime date;
   final String? note;
   final String? incomeSourceId;
+  final bool? planned;
+  final int? feeling;
   final DateTime createdAt;
   final DateTime updatedAt;
   const TransactionTableData({
@@ -679,6 +728,8 @@ class TransactionTableData extends DataClass
     required this.date,
     this.note,
     this.incomeSourceId,
+    this.planned,
+    this.feeling,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -696,6 +747,12 @@ class TransactionTableData extends DataClass
     if (!nullToAbsent || incomeSourceId != null) {
       map['income_source_id'] = Variable<String>(incomeSourceId);
     }
+    if (!nullToAbsent || planned != null) {
+      map['planned'] = Variable<bool>(planned);
+    }
+    if (!nullToAbsent || feeling != null) {
+      map['feeling'] = Variable<int>(feeling);
+    }
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
@@ -712,6 +769,12 @@ class TransactionTableData extends DataClass
       incomeSourceId: incomeSourceId == null && nullToAbsent
           ? const Value.absent()
           : Value(incomeSourceId),
+      planned: planned == null && nullToAbsent
+          ? const Value.absent()
+          : Value(planned),
+      feeling: feeling == null && nullToAbsent
+          ? const Value.absent()
+          : Value(feeling),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
     );
@@ -730,6 +793,8 @@ class TransactionTableData extends DataClass
       date: serializer.fromJson<DateTime>(json['date']),
       note: serializer.fromJson<String?>(json['note']),
       incomeSourceId: serializer.fromJson<String?>(json['incomeSourceId']),
+      planned: serializer.fromJson<bool?>(json['planned']),
+      feeling: serializer.fromJson<int?>(json['feeling']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
@@ -745,6 +810,8 @@ class TransactionTableData extends DataClass
       'date': serializer.toJson<DateTime>(date),
       'note': serializer.toJson<String?>(note),
       'incomeSourceId': serializer.toJson<String?>(incomeSourceId),
+      'planned': serializer.toJson<bool?>(planned),
+      'feeling': serializer.toJson<int?>(feeling),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
@@ -758,6 +825,8 @@ class TransactionTableData extends DataClass
     DateTime? date,
     Value<String?> note = const Value.absent(),
     Value<String?> incomeSourceId = const Value.absent(),
+    Value<bool?> planned = const Value.absent(),
+    Value<int?> feeling = const Value.absent(),
     DateTime? createdAt,
     DateTime? updatedAt,
   }) => TransactionTableData(
@@ -770,6 +839,8 @@ class TransactionTableData extends DataClass
     incomeSourceId: incomeSourceId.present
         ? incomeSourceId.value
         : this.incomeSourceId,
+    planned: planned.present ? planned.value : this.planned,
+    feeling: feeling.present ? feeling.value : this.feeling,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
   );
@@ -786,6 +857,8 @@ class TransactionTableData extends DataClass
       incomeSourceId: data.incomeSourceId.present
           ? data.incomeSourceId.value
           : this.incomeSourceId,
+      planned: data.planned.present ? data.planned.value : this.planned,
+      feeling: data.feeling.present ? data.feeling.value : this.feeling,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
@@ -801,6 +874,8 @@ class TransactionTableData extends DataClass
           ..write('date: $date, ')
           ..write('note: $note, ')
           ..write('incomeSourceId: $incomeSourceId, ')
+          ..write('planned: $planned, ')
+          ..write('feeling: $feeling, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
           ..write(')'))
@@ -816,6 +891,8 @@ class TransactionTableData extends DataClass
     date,
     note,
     incomeSourceId,
+    planned,
+    feeling,
     createdAt,
     updatedAt,
   );
@@ -830,6 +907,8 @@ class TransactionTableData extends DataClass
           other.date == this.date &&
           other.note == this.note &&
           other.incomeSourceId == this.incomeSourceId &&
+          other.planned == this.planned &&
+          other.feeling == this.feeling &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt);
 }
@@ -842,6 +921,8 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
   final Value<DateTime> date;
   final Value<String?> note;
   final Value<String?> incomeSourceId;
+  final Value<bool?> planned;
+  final Value<int?> feeling;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   final Value<int> rowid;
@@ -853,6 +934,8 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
     this.date = const Value.absent(),
     this.note = const Value.absent(),
     this.incomeSourceId = const Value.absent(),
+    this.planned = const Value.absent(),
+    this.feeling = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -865,6 +948,8 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
     required DateTime date,
     this.note = const Value.absent(),
     this.incomeSourceId = const Value.absent(),
+    this.planned = const Value.absent(),
+    this.feeling = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -881,6 +966,8 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
     Expression<DateTime>? date,
     Expression<String>? note,
     Expression<String>? incomeSourceId,
+    Expression<bool>? planned,
+    Expression<int>? feeling,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
@@ -893,6 +980,8 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
       if (date != null) 'date': date,
       if (note != null) 'note': note,
       if (incomeSourceId != null) 'income_source_id': incomeSourceId,
+      if (planned != null) 'planned': planned,
+      if (feeling != null) 'feeling': feeling,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
@@ -907,6 +996,8 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
     Value<DateTime>? date,
     Value<String?>? note,
     Value<String?>? incomeSourceId,
+    Value<bool?>? planned,
+    Value<int?>? feeling,
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
     Value<int>? rowid,
@@ -919,6 +1010,8 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
       date: date ?? this.date,
       note: note ?? this.note,
       incomeSourceId: incomeSourceId ?? this.incomeSourceId,
+      planned: planned ?? this.planned,
+      feeling: feeling ?? this.feeling,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
@@ -949,6 +1042,12 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
     if (incomeSourceId.present) {
       map['income_source_id'] = Variable<String>(incomeSourceId.value);
     }
+    if (planned.present) {
+      map['planned'] = Variable<bool>(planned.value);
+    }
+    if (feeling.present) {
+      map['feeling'] = Variable<int>(feeling.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -971,6 +1070,8 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
           ..write('date: $date, ')
           ..write('note: $note, ')
           ..write('incomeSourceId: $incomeSourceId, ')
+          ..write('planned: $planned, ')
+          ..write('feeling: $feeling, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
@@ -1484,6 +1585,284 @@ class BudgetTableCompanion extends UpdateCompanion<BudgetTableData> {
   }
 }
 
+class $SettingsTableTable extends SettingsTable
+    with TableInfo<$SettingsTableTable, SettingsTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SettingsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _intentPromptEnabledMeta =
+      const VerificationMeta('intentPromptEnabled');
+  @override
+  late final GeneratedColumn<bool> intentPromptEnabled = GeneratedColumn<bool>(
+    'intent_prompt_enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("intent_prompt_enabled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _intentPromptThresholdMeta =
+      const VerificationMeta('intentPromptThreshold');
+  @override
+  late final GeneratedColumn<double> intentPromptThreshold =
+      GeneratedColumn<double>(
+        'intent_prompt_threshold',
+        aliasedName,
+        false,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+        defaultValue: const Constant(50.0),
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    intentPromptEnabled,
+    intentPromptThreshold,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'settings_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SettingsTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('intent_prompt_enabled')) {
+      context.handle(
+        _intentPromptEnabledMeta,
+        intentPromptEnabled.isAcceptableOrUnknown(
+          data['intent_prompt_enabled']!,
+          _intentPromptEnabledMeta,
+        ),
+      );
+    }
+    if (data.containsKey('intent_prompt_threshold')) {
+      context.handle(
+        _intentPromptThresholdMeta,
+        intentPromptThreshold.isAcceptableOrUnknown(
+          data['intent_prompt_threshold']!,
+          _intentPromptThresholdMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SettingsTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SettingsTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      intentPromptEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}intent_prompt_enabled'],
+      )!,
+      intentPromptThreshold: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}intent_prompt_threshold'],
+      )!,
+    );
+  }
+
+  @override
+  $SettingsTableTable createAlias(String alias) {
+    return $SettingsTableTable(attachedDatabase, alias);
+  }
+}
+
+class SettingsTableData extends DataClass
+    implements Insertable<SettingsTableData> {
+  final int id;
+  final bool intentPromptEnabled;
+  final double intentPromptThreshold;
+  const SettingsTableData({
+    required this.id,
+    required this.intentPromptEnabled,
+    required this.intentPromptThreshold,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['intent_prompt_enabled'] = Variable<bool>(intentPromptEnabled);
+    map['intent_prompt_threshold'] = Variable<double>(intentPromptThreshold);
+    return map;
+  }
+
+  SettingsTableCompanion toCompanion(bool nullToAbsent) {
+    return SettingsTableCompanion(
+      id: Value(id),
+      intentPromptEnabled: Value(intentPromptEnabled),
+      intentPromptThreshold: Value(intentPromptThreshold),
+    );
+  }
+
+  factory SettingsTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SettingsTableData(
+      id: serializer.fromJson<int>(json['id']),
+      intentPromptEnabled: serializer.fromJson<bool>(
+        json['intentPromptEnabled'],
+      ),
+      intentPromptThreshold: serializer.fromJson<double>(
+        json['intentPromptThreshold'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'intentPromptEnabled': serializer.toJson<bool>(intentPromptEnabled),
+      'intentPromptThreshold': serializer.toJson<double>(intentPromptThreshold),
+    };
+  }
+
+  SettingsTableData copyWith({
+    int? id,
+    bool? intentPromptEnabled,
+    double? intentPromptThreshold,
+  }) => SettingsTableData(
+    id: id ?? this.id,
+    intentPromptEnabled: intentPromptEnabled ?? this.intentPromptEnabled,
+    intentPromptThreshold: intentPromptThreshold ?? this.intentPromptThreshold,
+  );
+  SettingsTableData copyWithCompanion(SettingsTableCompanion data) {
+    return SettingsTableData(
+      id: data.id.present ? data.id.value : this.id,
+      intentPromptEnabled: data.intentPromptEnabled.present
+          ? data.intentPromptEnabled.value
+          : this.intentPromptEnabled,
+      intentPromptThreshold: data.intentPromptThreshold.present
+          ? data.intentPromptThreshold.value
+          : this.intentPromptThreshold,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SettingsTableData(')
+          ..write('id: $id, ')
+          ..write('intentPromptEnabled: $intentPromptEnabled, ')
+          ..write('intentPromptThreshold: $intentPromptThreshold')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, intentPromptEnabled, intentPromptThreshold);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SettingsTableData &&
+          other.id == this.id &&
+          other.intentPromptEnabled == this.intentPromptEnabled &&
+          other.intentPromptThreshold == this.intentPromptThreshold);
+}
+
+class SettingsTableCompanion extends UpdateCompanion<SettingsTableData> {
+  final Value<int> id;
+  final Value<bool> intentPromptEnabled;
+  final Value<double> intentPromptThreshold;
+  const SettingsTableCompanion({
+    this.id = const Value.absent(),
+    this.intentPromptEnabled = const Value.absent(),
+    this.intentPromptThreshold = const Value.absent(),
+  });
+  SettingsTableCompanion.insert({
+    this.id = const Value.absent(),
+    this.intentPromptEnabled = const Value.absent(),
+    this.intentPromptThreshold = const Value.absent(),
+  });
+  static Insertable<SettingsTableData> custom({
+    Expression<int>? id,
+    Expression<bool>? intentPromptEnabled,
+    Expression<double>? intentPromptThreshold,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (intentPromptEnabled != null)
+        'intent_prompt_enabled': intentPromptEnabled,
+      if (intentPromptThreshold != null)
+        'intent_prompt_threshold': intentPromptThreshold,
+    });
+  }
+
+  SettingsTableCompanion copyWith({
+    Value<int>? id,
+    Value<bool>? intentPromptEnabled,
+    Value<double>? intentPromptThreshold,
+  }) {
+    return SettingsTableCompanion(
+      id: id ?? this.id,
+      intentPromptEnabled: intentPromptEnabled ?? this.intentPromptEnabled,
+      intentPromptThreshold:
+          intentPromptThreshold ?? this.intentPromptThreshold,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (intentPromptEnabled.present) {
+      map['intent_prompt_enabled'] = Variable<bool>(intentPromptEnabled.value);
+    }
+    if (intentPromptThreshold.present) {
+      map['intent_prompt_threshold'] = Variable<double>(
+        intentPromptThreshold.value,
+      );
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SettingsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('intentPromptEnabled: $intentPromptEnabled, ')
+          ..write('intentPromptThreshold: $intentPromptThreshold')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -1493,6 +1872,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     this,
   );
   late final $BudgetTableTable budgetTable = $BudgetTableTable(this);
+  late final $SettingsTableTable settingsTable = $SettingsTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1501,6 +1881,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     incomeSourceTable,
     transactionTable,
     budgetTable,
+    settingsTable,
   ];
 }
 
@@ -1858,6 +2239,8 @@ typedef $$TransactionTableTableCreateCompanionBuilder =
       required DateTime date,
       Value<String?> note,
       Value<String?> incomeSourceId,
+      Value<bool?> planned,
+      Value<int?> feeling,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
       Value<int> rowid,
@@ -1871,6 +2254,8 @@ typedef $$TransactionTableTableUpdateCompanionBuilder =
       Value<DateTime> date,
       Value<String?> note,
       Value<String?> incomeSourceId,
+      Value<bool?> planned,
+      Value<int?> feeling,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
       Value<int> rowid,
@@ -1951,6 +2336,16 @@ class $$TransactionTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<bool> get planned => $composableBuilder(
+    column: $table.planned,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get feeling => $composableBuilder(
+    column: $table.feeling,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnFilters(column),
@@ -2024,6 +2419,16 @@ class $$TransactionTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<bool> get planned => $composableBuilder(
+    column: $table.planned,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get feeling => $composableBuilder(
+    column: $table.feeling,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
@@ -2086,6 +2491,12 @@ class $$TransactionTableTableAnnotationComposer
 
   GeneratedColumn<String> get note =>
       $composableBuilder(column: $table.note, builder: (column) => column);
+
+  GeneratedColumn<bool> get planned =>
+      $composableBuilder(column: $table.planned, builder: (column) => column);
+
+  GeneratedColumn<int> get feeling =>
+      $composableBuilder(column: $table.feeling, builder: (column) => column);
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
@@ -2155,6 +2566,8 @@ class $$TransactionTableTableTableManager
                 Value<DateTime> date = const Value.absent(),
                 Value<String?> note = const Value.absent(),
                 Value<String?> incomeSourceId = const Value.absent(),
+                Value<bool?> planned = const Value.absent(),
+                Value<int?> feeling = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -2166,6 +2579,8 @@ class $$TransactionTableTableTableManager
                 date: date,
                 note: note,
                 incomeSourceId: incomeSourceId,
+                planned: planned,
+                feeling: feeling,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 rowid: rowid,
@@ -2179,6 +2594,8 @@ class $$TransactionTableTableTableManager
                 required DateTime date,
                 Value<String?> note = const Value.absent(),
                 Value<String?> incomeSourceId = const Value.absent(),
+                Value<bool?> planned = const Value.absent(),
+                Value<int?> feeling = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -2190,6 +2607,8 @@ class $$TransactionTableTableTableManager
                 date: date,
                 note: note,
                 incomeSourceId: incomeSourceId,
+                planned: planned,
+                feeling: feeling,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 rowid: rowid,
@@ -2522,6 +2941,170 @@ typedef $$BudgetTableTableProcessedTableManager =
       BudgetTableData,
       PrefetchHooks Function()
     >;
+typedef $$SettingsTableTableCreateCompanionBuilder =
+    SettingsTableCompanion Function({
+      Value<int> id,
+      Value<bool> intentPromptEnabled,
+      Value<double> intentPromptThreshold,
+    });
+typedef $$SettingsTableTableUpdateCompanionBuilder =
+    SettingsTableCompanion Function({
+      Value<int> id,
+      Value<bool> intentPromptEnabled,
+      Value<double> intentPromptThreshold,
+    });
+
+class $$SettingsTableTableFilterComposer
+    extends Composer<_$AppDatabase, $SettingsTableTable> {
+  $$SettingsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get intentPromptEnabled => $composableBuilder(
+    column: $table.intentPromptEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get intentPromptThreshold => $composableBuilder(
+    column: $table.intentPromptThreshold,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$SettingsTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $SettingsTableTable> {
+  $$SettingsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get intentPromptEnabled => $composableBuilder(
+    column: $table.intentPromptEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get intentPromptThreshold => $composableBuilder(
+    column: $table.intentPromptThreshold,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SettingsTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SettingsTableTable> {
+  $$SettingsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<bool> get intentPromptEnabled => $composableBuilder(
+    column: $table.intentPromptEnabled,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get intentPromptThreshold => $composableBuilder(
+    column: $table.intentPromptThreshold,
+    builder: (column) => column,
+  );
+}
+
+class $$SettingsTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SettingsTableTable,
+          SettingsTableData,
+          $$SettingsTableTableFilterComposer,
+          $$SettingsTableTableOrderingComposer,
+          $$SettingsTableTableAnnotationComposer,
+          $$SettingsTableTableCreateCompanionBuilder,
+          $$SettingsTableTableUpdateCompanionBuilder,
+          (
+            SettingsTableData,
+            BaseReferences<
+              _$AppDatabase,
+              $SettingsTableTable,
+              SettingsTableData
+            >,
+          ),
+          SettingsTableData,
+          PrefetchHooks Function()
+        > {
+  $$SettingsTableTableTableManager(_$AppDatabase db, $SettingsTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SettingsTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SettingsTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SettingsTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<bool> intentPromptEnabled = const Value.absent(),
+                Value<double> intentPromptThreshold = const Value.absent(),
+              }) => SettingsTableCompanion(
+                id: id,
+                intentPromptEnabled: intentPromptEnabled,
+                intentPromptThreshold: intentPromptThreshold,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<bool> intentPromptEnabled = const Value.absent(),
+                Value<double> intentPromptThreshold = const Value.absent(),
+              }) => SettingsTableCompanion.insert(
+                id: id,
+                intentPromptEnabled: intentPromptEnabled,
+                intentPromptThreshold: intentPromptThreshold,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$SettingsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SettingsTableTable,
+      SettingsTableData,
+      $$SettingsTableTableFilterComposer,
+      $$SettingsTableTableOrderingComposer,
+      $$SettingsTableTableAnnotationComposer,
+      $$SettingsTableTableCreateCompanionBuilder,
+      $$SettingsTableTableUpdateCompanionBuilder,
+      (
+        SettingsTableData,
+        BaseReferences<_$AppDatabase, $SettingsTableTable, SettingsTableData>,
+      ),
+      SettingsTableData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -2532,4 +3115,6 @@ class $AppDatabaseManager {
       $$TransactionTableTableTableManager(_db, _db.transactionTable);
   $$BudgetTableTableTableManager get budgetTable =>
       $$BudgetTableTableTableManager(_db, _db.budgetTable);
+  $$SettingsTableTableTableManager get settingsTable =>
+      $$SettingsTableTableTableManager(_db, _db.settingsTable);
 }

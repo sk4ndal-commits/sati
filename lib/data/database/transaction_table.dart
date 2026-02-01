@@ -10,6 +10,8 @@ class TransactionTable extends Table {
   DateTimeColumn get date => dateTime()();
   TextColumn get note => text().nullable()();
   TextColumn get incomeSourceId => text().nullable().references(IncomeSourceTable, #id)();
+  BoolColumn get planned => boolean().nullable()();
+  IntColumn get feeling => integer().nullable()();
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
   DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
 

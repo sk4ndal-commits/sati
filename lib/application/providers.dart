@@ -3,9 +3,11 @@ import '../data/database/app_database.dart';
 import '../data/repositories/drift_transaction_repository.dart';
 import '../data/repositories/drift_income_source_repository.dart';
 import '../data/repositories/drift_budget_repository.dart';
+import '../data/repositories/drift_settings_repository.dart';
 import '../domain/repositories/transaction_repository.dart';
 import '../domain/repositories/income_source_repository.dart';
 import '../domain/repositories/budget_repository.dart';
+import '../domain/repositories/settings_repository.dart';
 
 part 'providers.g.dart';
 
@@ -32,4 +34,10 @@ IncomeSourceRepository incomeSourceRepository(Ref ref) {
 BudgetRepository budgetRepository(Ref ref) {
   final db = ref.watch(appDatabaseProvider);
   return DriftBudgetRepository(db);
+}
+
+@riverpod
+SettingsRepository settingsRepository(Ref ref) {
+  final db = ref.watch(appDatabaseProvider);
+  return DriftSettingsRepository(db);
 }

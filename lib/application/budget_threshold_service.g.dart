@@ -42,7 +42,7 @@ final class BudgetThresholdServiceProvider
 }
 
 String _$budgetThresholdServiceHash() =>
-    r'145aa1655cbb4531aa042b5867c09ce001f56440';
+    r'a2fce80ed8e575b8c1e750a322b1389cb374ab5d';
 
 abstract class _$BudgetThresholdService extends $Notifier<void> {
   void build();

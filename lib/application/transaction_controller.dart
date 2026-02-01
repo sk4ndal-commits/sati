@@ -20,6 +20,8 @@ class TransactionController extends _$TransactionController {
     required DateTime date,
     String? note,
     String? incomeSourceId,
+    bool? planned,
+    int? feeling,
   }) async {
     state = const AsyncValue.loading();
     
@@ -31,6 +33,8 @@ class TransactionController extends _$TransactionController {
       date: date,
       note: note,
       incomeSourceId: incomeSourceId,
+      planned: planned,
+      feeling: feeling,
     );
 
     final repository = ref.read(transactionRepositoryProvider);
