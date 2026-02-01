@@ -18,5 +18,18 @@
     "categoryLeisure": "Leisure",
     "categoryHousing": "Housing",
     "categorySalary": "Salary",
-    "categoryOther": "Other"
+    "categoryOther": "Other",
+    "incomeSources": "Income Sources",
+    "addIncomeSource": "Add Income Source",
+    "sourceName": "Source Name",
+    "expectedAmount": "Expected Amount",
+    "cadence": "Cadence",
+    "monthly": "Monthly",
+    "weekly": "Weekly",
+    "noIncomeSources": "No income sources yet",
+    "actual": "Actual",
+    "expected": "Expected",
+    "missing": "Missing",
+    "incomeSource": "Income Source",
+    "selectSource": "Select Source"
 }

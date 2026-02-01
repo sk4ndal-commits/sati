@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'income_source_table.dart';
 
 @DataClassName('TransactionTableData')
 class TransactionTable extends Table {
@@ -8,6 +9,7 @@ class TransactionTable extends Table {
   TextColumn get categoryId => text()();
   DateTimeColumn get date => dateTime()();
   TextColumn get note => text().nullable()();
+  TextColumn get incomeSourceId => text().nullable().references(IncomeSourceTable, #id)();
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
   DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
 

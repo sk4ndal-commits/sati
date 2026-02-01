@@ -97,3 +97,51 @@ final class TransactionRepositoryProvider
 
 String _$transactionRepositoryHash() =>
     r'44ba2ef22762d5307c1c7e053deba1273e439e93';
+
+@ProviderFor(incomeSourceRepository)
+const incomeSourceRepositoryProvider = IncomeSourceRepositoryProvider._();
+
+final class IncomeSourceRepositoryProvider
+    extends
+        $FunctionalProvider<
+          IncomeSourceRepository,
+          IncomeSourceRepository,
+          IncomeSourceRepository
+        >
+    with $Provider<IncomeSourceRepository> {
+  const IncomeSourceRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'incomeSourceRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$incomeSourceRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<IncomeSourceRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  IncomeSourceRepository create(Ref ref) {
+    return incomeSourceRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(IncomeSourceRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<IncomeSourceRepository>(value),
+    );
+  }
+}
+
+String _$incomeSourceRepositoryHash() =>
+    r'bad34e3cfd55f3df7fdab6db588459d84920f200';

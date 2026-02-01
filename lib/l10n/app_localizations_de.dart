@@ -64,4 +64,43 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get categoryOther => 'Sonstiges';
+
+  @override
+  String get incomeSources => 'Einkommensquellen';
+
+  @override
+  String get addIncomeSource => 'Einkommensquelle hinzufügen';
+
+  @override
+  String get sourceName => 'Name der Quelle';
+
+  @override
+  String get expectedAmount => 'Erwarteter Betrag';
+
+  @override
+  String get cadence => 'Rhythmus';
+
+  @override
+  String get monthly => 'Monatlich';
+
+  @override
+  String get weekly => 'Wöchentlich';
+
+  @override
+  String get noIncomeSources => 'Noch keine Einkommensquellen';
+
+  @override
+  String get actual => 'Ist';
+
+  @override
+  String get expected => 'Soll';
+
+  @override
+  String get missing => 'Fehlend';
+
+  @override
+  String get incomeSource => 'Einkommensquelle';
+
+  @override
+  String get selectSource => 'Quelle wählen';
 }

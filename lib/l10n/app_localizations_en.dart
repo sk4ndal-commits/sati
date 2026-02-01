@@ -64,4 +64,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get categoryOther => 'Other';
+
+  @override
+  String get incomeSources => 'Income Sources';
+
+  @override
+  String get addIncomeSource => 'Add Income Source';
+
+  @override
+  String get sourceName => 'Source Name';
+
+  @override
+  String get expectedAmount => 'Expected Amount';
+
+  @override
+  String get cadence => 'Cadence';
+
+  @override
+  String get monthly => 'Monthly';
+
+  @override
+  String get weekly => 'Weekly';
+
+  @override
+  String get noIncomeSources => 'No income sources yet';
+
+  @override
+  String get actual => 'Actual';
+
+  @override
+  String get expected => 'Expected';
+
+  @override
+  String get missing => 'Missing';
+
+  @override
+  String get incomeSource => 'Income Source';
+
+  @override
+  String get selectSource => 'Select Source';
 }

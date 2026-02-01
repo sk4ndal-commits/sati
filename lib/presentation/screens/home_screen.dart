@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../l10n/app_localizations.dart';
 import '../../application/transaction_controller.dart';
 import 'transaction_entry_screen.dart';
+import 'income_sources_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -15,6 +16,17 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.appTitle),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.wallet),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const IncomeSourcesScreen()),
+              );
+            },
+            tooltip: l10n.incomeSources,
+          ),
+        ],
       ),
       body: transactionsAsync.when(
         data: (transactions) => transactions.isEmpty
@@ -22,13 +34,13 @@ class HomeScreen extends ConsumerWidget {
             : ListView.builder(
                 itemCount: transactions.length,
                 itemBuilder: (context, index) {
-                  final transaction = transactions[index];
-                  return ListTile(
-                    title: Text('${transaction.amount} €'),
-                    subtitle: Text(transaction.categoryId),
-                    trailing: Text(transaction.type.name),
-                  );
-                },
+                final transaction = transactions[index];
+                return ListTile(
+                  title: Text('${transaction.amount.toStringAsFixed(2)} €'),
+                  subtitle: Text(transaction.categoryId),
+                  trailing: Text('${transaction.date.day}.${transaction.date.month}.${transaction.date.year}'),
+                );
+              },
               ),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(child: Text('Error: $err')),

@@ -10,6 +10,7 @@ class TransactionEntity {
   final String categoryId;
   final DateTime date;
   final String? note;
+  final String? incomeSourceId;
 
   TransactionEntity({
     required this.id,
@@ -18,5 +19,6 @@ class TransactionEntity {
     required this.categoryId,
     required this.date,
     this.note,
+    this.incomeSourceId,
   });
 }

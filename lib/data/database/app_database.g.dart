@@ -3,6 +3,421 @@
 part of 'app_database.dart';
 
 // ignore_for_file: type=lint
+class $IncomeSourceTableTable extends IncomeSourceTable
+    with TableInfo<$IncomeSourceTableTable, IncomeSourceTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $IncomeSourceTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _expectedAmountMeta = const VerificationMeta(
+    'expectedAmount',
+  );
+  @override
+  late final GeneratedColumn<double> expectedAmount = GeneratedColumn<double>(
+    'expected_amount',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _cadenceMeta = const VerificationMeta(
+    'cadence',
+  );
+  @override
+  late final GeneratedColumn<String> cadence = GeneratedColumn<String>(
+    'cadence',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    expectedAmount,
+    cadence,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'income_source_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<IncomeSourceTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('expected_amount')) {
+      context.handle(
+        _expectedAmountMeta,
+        expectedAmount.isAcceptableOrUnknown(
+          data['expected_amount']!,
+          _expectedAmountMeta,
+        ),
+      );
+    }
+    if (data.containsKey('cadence')) {
+      context.handle(
+        _cadenceMeta,
+        cadence.isAcceptableOrUnknown(data['cadence']!, _cadenceMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  IncomeSourceTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return IncomeSourceTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      expectedAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}expected_amount'],
+      ),
+      cadence: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}cadence'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $IncomeSourceTableTable createAlias(String alias) {
+    return $IncomeSourceTableTable(attachedDatabase, alias);
+  }
+}
+
+class IncomeSourceTableData extends DataClass
+    implements Insertable<IncomeSourceTableData> {
+  final String id;
+  final String name;
+  final double? expectedAmount;
+  final String? cadence;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const IncomeSourceTableData({
+    required this.id,
+    required this.name,
+    this.expectedAmount,
+    this.cadence,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || expectedAmount != null) {
+      map['expected_amount'] = Variable<double>(expectedAmount);
+    }
+    if (!nullToAbsent || cadence != null) {
+      map['cadence'] = Variable<String>(cadence);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  IncomeSourceTableCompanion toCompanion(bool nullToAbsent) {
+    return IncomeSourceTableCompanion(
+      id: Value(id),
+      name: Value(name),
+      expectedAmount: expectedAmount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(expectedAmount),
+      cadence: cadence == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cadence),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory IncomeSourceTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return IncomeSourceTableData(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      expectedAmount: serializer.fromJson<double?>(json['expectedAmount']),
+      cadence: serializer.fromJson<String?>(json['cadence']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'expectedAmount': serializer.toJson<double?>(expectedAmount),
+      'cadence': serializer.toJson<String?>(cadence),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  IncomeSourceTableData copyWith({
+    String? id,
+    String? name,
+    Value<double?> expectedAmount = const Value.absent(),
+    Value<String?> cadence = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => IncomeSourceTableData(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    expectedAmount: expectedAmount.present
+        ? expectedAmount.value
+        : this.expectedAmount,
+    cadence: cadence.present ? cadence.value : this.cadence,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  IncomeSourceTableData copyWithCompanion(IncomeSourceTableCompanion data) {
+    return IncomeSourceTableData(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      expectedAmount: data.expectedAmount.present
+          ? data.expectedAmount.value
+          : this.expectedAmount,
+      cadence: data.cadence.present ? data.cadence.value : this.cadence,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('IncomeSourceTableData(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('expectedAmount: $expectedAmount, ')
+          ..write('cadence: $cadence, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, name, expectedAmount, cadence, createdAt, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is IncomeSourceTableData &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.expectedAmount == this.expectedAmount &&
+          other.cadence == this.cadence &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class IncomeSourceTableCompanion
+    extends UpdateCompanion<IncomeSourceTableData> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<double?> expectedAmount;
+  final Value<String?> cadence;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const IncomeSourceTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.expectedAmount = const Value.absent(),
+    this.cadence = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  IncomeSourceTableCompanion.insert({
+    required String id,
+    required String name,
+    this.expectedAmount = const Value.absent(),
+    this.cadence = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       name = Value(name);
+  static Insertable<IncomeSourceTableData> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<double>? expectedAmount,
+    Expression<String>? cadence,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (expectedAmount != null) 'expected_amount': expectedAmount,
+      if (cadence != null) 'cadence': cadence,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  IncomeSourceTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<double?>? expectedAmount,
+    Value<String?>? cadence,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return IncomeSourceTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      expectedAmount: expectedAmount ?? this.expectedAmount,
+      cadence: cadence ?? this.cadence,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (expectedAmount.present) {
+      map['expected_amount'] = Variable<double>(expectedAmount.value);
+    }
+    if (cadence.present) {
+      map['cadence'] = Variable<String>(cadence.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('IncomeSourceTableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('expectedAmount: $expectedAmount, ')
+          ..write('cadence: $cadence, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $TransactionTableTable extends TransactionTable
     with TableInfo<$TransactionTableTable, TransactionTableData> {
   @override
@@ -65,6 +480,20 @@ class $TransactionTableTable extends TransactionTable
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _incomeSourceIdMeta = const VerificationMeta(
+    'incomeSourceId',
+  );
+  @override
+  late final GeneratedColumn<String> incomeSourceId = GeneratedColumn<String>(
+    'income_source_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES income_source_table (id)',
+    ),
+  );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -97,6 +526,7 @@ class $TransactionTableTable extends TransactionTable
     categoryId,
     date,
     note,
+    incomeSourceId,
     createdAt,
     updatedAt,
   ];
@@ -155,6 +585,15 @@ class $TransactionTableTable extends TransactionTable
         note.isAcceptableOrUnknown(data['note']!, _noteMeta),
       );
     }
+    if (data.containsKey('income_source_id')) {
+      context.handle(
+        _incomeSourceIdMeta,
+        incomeSourceId.isAcceptableOrUnknown(
+          data['income_source_id']!,
+          _incomeSourceIdMeta,
+        ),
+      );
+    }
     if (data.containsKey('created_at')) {
       context.handle(
         _createdAtMeta,
@@ -200,6 +639,10 @@ class $TransactionTableTable extends TransactionTable
         DriftSqlType.string,
         data['${effectivePrefix}note'],
       ),
+      incomeSourceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}income_source_id'],
+      ),
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
@@ -225,6 +668,7 @@ class TransactionTableData extends DataClass
   final String categoryId;
   final DateTime date;
   final String? note;
+  final String? incomeSourceId;
   final DateTime createdAt;
   final DateTime updatedAt;
   const TransactionTableData({
@@ -234,6 +678,7 @@ class TransactionTableData extends DataClass
     required this.categoryId,
     required this.date,
     this.note,
+    this.incomeSourceId,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -248,6 +693,9 @@ class TransactionTableData extends DataClass
     if (!nullToAbsent || note != null) {
       map['note'] = Variable<String>(note);
     }
+    if (!nullToAbsent || incomeSourceId != null) {
+      map['income_source_id'] = Variable<String>(incomeSourceId);
+    }
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
@@ -261,6 +709,9 @@ class TransactionTableData extends DataClass
       categoryId: Value(categoryId),
       date: Value(date),
       note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+      incomeSourceId: incomeSourceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(incomeSourceId),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
     );
@@ -278,6 +729,7 @@ class TransactionTableData extends DataClass
       categoryId: serializer.fromJson<String>(json['categoryId']),
       date: serializer.fromJson<DateTime>(json['date']),
       note: serializer.fromJson<String?>(json['note']),
+      incomeSourceId: serializer.fromJson<String?>(json['incomeSourceId']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
@@ -292,6 +744,7 @@ class TransactionTableData extends DataClass
       'categoryId': serializer.toJson<String>(categoryId),
       'date': serializer.toJson<DateTime>(date),
       'note': serializer.toJson<String?>(note),
+      'incomeSourceId': serializer.toJson<String?>(incomeSourceId),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
@@ -304,6 +757,7 @@ class TransactionTableData extends DataClass
     String? categoryId,
     DateTime? date,
     Value<String?> note = const Value.absent(),
+    Value<String?> incomeSourceId = const Value.absent(),
     DateTime? createdAt,
     DateTime? updatedAt,
   }) => TransactionTableData(
@@ -313,6 +767,9 @@ class TransactionTableData extends DataClass
     categoryId: categoryId ?? this.categoryId,
     date: date ?? this.date,
     note: note.present ? note.value : this.note,
+    incomeSourceId: incomeSourceId.present
+        ? incomeSourceId.value
+        : this.incomeSourceId,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
   );
@@ -326,6 +783,9 @@ class TransactionTableData extends DataClass
           : this.categoryId,
       date: data.date.present ? data.date.value : this.date,
       note: data.note.present ? data.note.value : this.note,
+      incomeSourceId: data.incomeSourceId.present
+          ? data.incomeSourceId.value
+          : this.incomeSourceId,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
@@ -340,6 +800,7 @@ class TransactionTableData extends DataClass
           ..write('categoryId: $categoryId, ')
           ..write('date: $date, ')
           ..write('note: $note, ')
+          ..write('incomeSourceId: $incomeSourceId, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
           ..write(')'))
@@ -354,6 +815,7 @@ class TransactionTableData extends DataClass
     categoryId,
     date,
     note,
+    incomeSourceId,
     createdAt,
     updatedAt,
   );
@@ -367,6 +829,7 @@ class TransactionTableData extends DataClass
           other.categoryId == this.categoryId &&
           other.date == this.date &&
           other.note == this.note &&
+          other.incomeSourceId == this.incomeSourceId &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt);
 }
@@ -378,6 +841,7 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
   final Value<String> categoryId;
   final Value<DateTime> date;
   final Value<String?> note;
+  final Value<String?> incomeSourceId;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   final Value<int> rowid;
@@ -388,6 +852,7 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
     this.categoryId = const Value.absent(),
     this.date = const Value.absent(),
     this.note = const Value.absent(),
+    this.incomeSourceId = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -399,6 +864,7 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
     required String categoryId,
     required DateTime date,
     this.note = const Value.absent(),
+    this.incomeSourceId = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -414,6 +880,7 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
     Expression<String>? categoryId,
     Expression<DateTime>? date,
     Expression<String>? note,
+    Expression<String>? incomeSourceId,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
@@ -425,6 +892,7 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
       if (categoryId != null) 'category_id': categoryId,
       if (date != null) 'date': date,
       if (note != null) 'note': note,
+      if (incomeSourceId != null) 'income_source_id': incomeSourceId,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
@@ -438,6 +906,7 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
     Value<String>? categoryId,
     Value<DateTime>? date,
     Value<String?>? note,
+    Value<String?>? incomeSourceId,
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
     Value<int>? rowid,
@@ -449,6 +918,7 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
       categoryId: categoryId ?? this.categoryId,
       date: date ?? this.date,
       note: note ?? this.note,
+      incomeSourceId: incomeSourceId ?? this.incomeSourceId,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
@@ -476,6 +946,9 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
     if (note.present) {
       map['note'] = Variable<String>(note.value);
     }
+    if (incomeSourceId.present) {
+      map['income_source_id'] = Variable<String>(incomeSourceId.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -497,6 +970,7 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
           ..write('categoryId: $categoryId, ')
           ..write('date: $date, ')
           ..write('note: $note, ')
+          ..write('incomeSourceId: $incomeSourceId, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
@@ -508,6 +982,8 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
+  late final $IncomeSourceTableTable incomeSourceTable =
+      $IncomeSourceTableTable(this);
   late final $TransactionTableTable transactionTable = $TransactionTableTable(
     this,
   );
@@ -515,9 +991,357 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [transactionTable];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    incomeSourceTable,
+    transactionTable,
+  ];
 }
 
+typedef $$IncomeSourceTableTableCreateCompanionBuilder =
+    IncomeSourceTableCompanion Function({
+      required String id,
+      required String name,
+      Value<double?> expectedAmount,
+      Value<String?> cadence,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+typedef $$IncomeSourceTableTableUpdateCompanionBuilder =
+    IncomeSourceTableCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<double?> expectedAmount,
+      Value<String?> cadence,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+final class $$IncomeSourceTableTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $IncomeSourceTableTable,
+          IncomeSourceTableData
+        > {
+  $$IncomeSourceTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<$TransactionTableTable, List<TransactionTableData>>
+  _transactionTableRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.transactionTable,
+    aliasName: $_aliasNameGenerator(
+      db.incomeSourceTable.id,
+      db.transactionTable.incomeSourceId,
+    ),
+  );
+
+  $$TransactionTableTableProcessedTableManager get transactionTableRefs {
+    final manager = $$TransactionTableTableTableManager(
+      $_db,
+      $_db.transactionTable,
+    ).filter((f) => f.incomeSourceId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _transactionTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$IncomeSourceTableTableFilterComposer
+    extends Composer<_$AppDatabase, $IncomeSourceTableTable> {
+  $$IncomeSourceTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get expectedAmount => $composableBuilder(
+    column: $table.expectedAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get cadence => $composableBuilder(
+    column: $table.cadence,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> transactionTableRefs(
+    Expression<bool> Function($$TransactionTableTableFilterComposer f) f,
+  ) {
+    final $$TransactionTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.transactionTable,
+      getReferencedColumn: (t) => t.incomeSourceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TransactionTableTableFilterComposer(
+            $db: $db,
+            $table: $db.transactionTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$IncomeSourceTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $IncomeSourceTableTable> {
+  $$IncomeSourceTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get expectedAmount => $composableBuilder(
+    column: $table.expectedAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get cadence => $composableBuilder(
+    column: $table.cadence,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$IncomeSourceTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $IncomeSourceTableTable> {
+  $$IncomeSourceTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<double> get expectedAmount => $composableBuilder(
+    column: $table.expectedAmount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get cadence =>
+      $composableBuilder(column: $table.cadence, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  Expression<T> transactionTableRefs<T extends Object>(
+    Expression<T> Function($$TransactionTableTableAnnotationComposer a) f,
+  ) {
+    final $$TransactionTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.transactionTable,
+      getReferencedColumn: (t) => t.incomeSourceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TransactionTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.transactionTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$IncomeSourceTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $IncomeSourceTableTable,
+          IncomeSourceTableData,
+          $$IncomeSourceTableTableFilterComposer,
+          $$IncomeSourceTableTableOrderingComposer,
+          $$IncomeSourceTableTableAnnotationComposer,
+          $$IncomeSourceTableTableCreateCompanionBuilder,
+          $$IncomeSourceTableTableUpdateCompanionBuilder,
+          (IncomeSourceTableData, $$IncomeSourceTableTableReferences),
+          IncomeSourceTableData,
+          PrefetchHooks Function({bool transactionTableRefs})
+        > {
+  $$IncomeSourceTableTableTableManager(
+    _$AppDatabase db,
+    $IncomeSourceTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$IncomeSourceTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$IncomeSourceTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$IncomeSourceTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<double?> expectedAmount = const Value.absent(),
+                Value<String?> cadence = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => IncomeSourceTableCompanion(
+                id: id,
+                name: name,
+                expectedAmount: expectedAmount,
+                cadence: cadence,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                Value<double?> expectedAmount = const Value.absent(),
+                Value<String?> cadence = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => IncomeSourceTableCompanion.insert(
+                id: id,
+                name: name,
+                expectedAmount: expectedAmount,
+                cadence: cadence,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$IncomeSourceTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({transactionTableRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (transactionTableRefs) db.transactionTable,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (transactionTableRefs)
+                    await $_getPrefetchedData<
+                      IncomeSourceTableData,
+                      $IncomeSourceTableTable,
+                      TransactionTableData
+                    >(
+                      currentTable: table,
+                      referencedTable: $$IncomeSourceTableTableReferences
+                          ._transactionTableRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$IncomeSourceTableTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).transactionTableRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where(
+                            (e) => e.incomeSourceId == item.id,
+                          ),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$IncomeSourceTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $IncomeSourceTableTable,
+      IncomeSourceTableData,
+      $$IncomeSourceTableTableFilterComposer,
+      $$IncomeSourceTableTableOrderingComposer,
+      $$IncomeSourceTableTableAnnotationComposer,
+      $$IncomeSourceTableTableCreateCompanionBuilder,
+      $$IncomeSourceTableTableUpdateCompanionBuilder,
+      (IncomeSourceTableData, $$IncomeSourceTableTableReferences),
+      IncomeSourceTableData,
+      PrefetchHooks Function({bool transactionTableRefs})
+    >;
 typedef $$TransactionTableTableCreateCompanionBuilder =
     TransactionTableCompanion Function({
       required String id,
@@ -526,6 +1350,7 @@ typedef $$TransactionTableTableCreateCompanionBuilder =
       required String categoryId,
       required DateTime date,
       Value<String?> note,
+      Value<String?> incomeSourceId,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
       Value<int> rowid,
@@ -538,10 +1363,47 @@ typedef $$TransactionTableTableUpdateCompanionBuilder =
       Value<String> categoryId,
       Value<DateTime> date,
       Value<String?> note,
+      Value<String?> incomeSourceId,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
       Value<int> rowid,
     });
+
+final class $$TransactionTableTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $TransactionTableTable,
+          TransactionTableData
+        > {
+  $$TransactionTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $IncomeSourceTableTable _incomeSourceIdTable(_$AppDatabase db) =>
+      db.incomeSourceTable.createAlias(
+        $_aliasNameGenerator(
+          db.transactionTable.incomeSourceId,
+          db.incomeSourceTable.id,
+        ),
+      );
+
+  $$IncomeSourceTableTableProcessedTableManager? get incomeSourceId {
+    final $_column = $_itemColumn<String>('income_source_id');
+    if ($_column == null) return null;
+    final manager = $$IncomeSourceTableTableTableManager(
+      $_db,
+      $_db.incomeSourceTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_incomeSourceIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
 
 class $$TransactionTableTableFilterComposer
     extends Composer<_$AppDatabase, $TransactionTableTable> {
@@ -591,6 +1453,29 @@ class $$TransactionTableTableFilterComposer
     column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
+
+  $$IncomeSourceTableTableFilterComposer get incomeSourceId {
+    final $$IncomeSourceTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.incomeSourceId,
+      referencedTable: $db.incomeSourceTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$IncomeSourceTableTableFilterComposer(
+            $db: $db,
+            $table: $db.incomeSourceTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$TransactionTableTableOrderingComposer
@@ -641,6 +1526,29 @@ class $$TransactionTableTableOrderingComposer
     column: $table.updatedAt,
     builder: (column) => ColumnOrderings(column),
   );
+
+  $$IncomeSourceTableTableOrderingComposer get incomeSourceId {
+    final $$IncomeSourceTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.incomeSourceId,
+      referencedTable: $db.incomeSourceTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$IncomeSourceTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.incomeSourceTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$TransactionTableTableAnnotationComposer
@@ -677,6 +1585,30 @@ class $$TransactionTableTableAnnotationComposer
 
   GeneratedColumn<DateTime> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$IncomeSourceTableTableAnnotationComposer get incomeSourceId {
+    final $$IncomeSourceTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.incomeSourceId,
+          referencedTable: $db.incomeSourceTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$IncomeSourceTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.incomeSourceTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
 }
 
 class $$TransactionTableTableTableManager
@@ -690,16 +1622,9 @@ class $$TransactionTableTableTableManager
           $$TransactionTableTableAnnotationComposer,
           $$TransactionTableTableCreateCompanionBuilder,
           $$TransactionTableTableUpdateCompanionBuilder,
-          (
-            TransactionTableData,
-            BaseReferences<
-              _$AppDatabase,
-              $TransactionTableTable,
-              TransactionTableData
-            >,
-          ),
+          (TransactionTableData, $$TransactionTableTableReferences),
           TransactionTableData,
-          PrefetchHooks Function()
+          PrefetchHooks Function({bool incomeSourceId})
         > {
   $$TransactionTableTableTableManager(
     _$AppDatabase db,
@@ -722,6 +1647,7 @@ class $$TransactionTableTableTableManager
                 Value<String> categoryId = const Value.absent(),
                 Value<DateTime> date = const Value.absent(),
                 Value<String?> note = const Value.absent(),
+                Value<String?> incomeSourceId = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -732,6 +1658,7 @@ class $$TransactionTableTableTableManager
                 categoryId: categoryId,
                 date: date,
                 note: note,
+                incomeSourceId: incomeSourceId,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 rowid: rowid,
@@ -744,6 +1671,7 @@ class $$TransactionTableTableTableManager
                 required String categoryId,
                 required DateTime date,
                 Value<String?> note = const Value.absent(),
+                Value<String?> incomeSourceId = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -754,14 +1682,62 @@ class $$TransactionTableTableTableManager
                 categoryId: categoryId,
                 date: date,
                 note: note,
+                incomeSourceId: incomeSourceId,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$TransactionTableTableReferences(db, table, e),
+                ),
+              )
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({incomeSourceId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (incomeSourceId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.incomeSourceId,
+                                referencedTable:
+                                    $$TransactionTableTableReferences
+                                        ._incomeSourceIdTable(db),
+                                referencedColumn:
+                                    $$TransactionTableTableReferences
+                                        ._incomeSourceIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
         ),
       );
 }
@@ -776,21 +1752,16 @@ typedef $$TransactionTableTableProcessedTableManager =
       $$TransactionTableTableAnnotationComposer,
       $$TransactionTableTableCreateCompanionBuilder,
       $$TransactionTableTableUpdateCompanionBuilder,
-      (
-        TransactionTableData,
-        BaseReferences<
-          _$AppDatabase,
-          $TransactionTableTable,
-          TransactionTableData
-        >,
-      ),
+      (TransactionTableData, $$TransactionTableTableReferences),
       TransactionTableData,
-      PrefetchHooks Function()
+      PrefetchHooks Function({bool incomeSourceId})
     >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
+  $$IncomeSourceTableTableTableManager get incomeSourceTable =>
+      $$IncomeSourceTableTableTableManager(_db, _db.incomeSourceTable);
   $$TransactionTableTableTableManager get transactionTable =>
       $$TransactionTableTableTableManager(_db, _db.transactionTable);
 }

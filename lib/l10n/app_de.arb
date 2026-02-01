@@ -18,5 +18,18 @@
     "categoryLeisure": "Freizeit",
     "categoryHousing": "Wohnen",
     "categorySalary": "Gehalt",
-    "categoryOther": "Sonstiges"
+    "categoryOther": "Sonstiges",
+    "incomeSources": "Einkommensquellen",
+    "addIncomeSource": "Einkommensquelle hinzufügen",
+    "sourceName": "Name der Quelle",
+    "expectedAmount": "Erwarteter Betrag",
+    "cadence": "Rhythmus",
+    "monthly": "Monatlich",
+    "weekly": "Wöchentlich",
+    "noIncomeSources": "Noch keine Einkommensquellen",
+    "actual": "Ist",
+    "expected": "Soll",
+    "missing": "Fehlend",
+    "incomeSource": "Einkommensquelle",
+    "selectSource": "Quelle wählen"
 }

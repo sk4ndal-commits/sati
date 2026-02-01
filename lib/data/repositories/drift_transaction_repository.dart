@@ -24,6 +24,7 @@ class DriftTransactionRepository implements TransactionRepository {
             categoryId: transaction.categoryId,
             date: transaction.date,
             note: Value(transaction.note),
+            incomeSourceId: Value(transaction.incomeSourceId),
           ),
         );
   }
@@ -41,6 +42,7 @@ class DriftTransactionRepository implements TransactionRepository {
       categoryId: data.categoryId,
       date: data.date,
       note: data.note,
+      incomeSourceId: data.incomeSourceId,
     );
   }
 }

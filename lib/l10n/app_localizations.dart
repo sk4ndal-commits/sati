@@ -211,6 +211,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Other'**
   String get categoryOther;
+
+  /// No description provided for @incomeSources.
+  ///
+  /// In en, this message translates to:
+  /// **'Income Sources'**
+  String get incomeSources;
+
+  /// No description provided for @addIncomeSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Income Source'**
+  String get addIncomeSource;
+
+  /// No description provided for @sourceName.
+  ///
+  /// In en, this message translates to:
+  /// **'Source Name'**
+  String get sourceName;
+
+  /// No description provided for @expectedAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected Amount'**
+  String get expectedAmount;
+
+  /// No description provided for @cadence.
+  ///
+  /// In en, this message translates to:
+  /// **'Cadence'**
+  String get cadence;
+
+  /// No description provided for @monthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get monthly;
+
+  /// No description provided for @weekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get weekly;
+
+  /// No description provided for @noIncomeSources.
+  ///
+  /// In en, this message translates to:
+  /// **'No income sources yet'**
+  String get noIncomeSources;
+
+  /// No description provided for @actual.
+  ///
+  /// In en, this message translates to:
+  /// **'Actual'**
+  String get actual;
+
+  /// No description provided for @expected.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected'**
+  String get expected;
+
+  /// No description provided for @missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing'**
+  String get missing;
+
+  /// No description provided for @incomeSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Income Source'**
+  String get incomeSource;
+
+  /// No description provided for @selectSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Source'**
+  String get selectSource;
 }
 
 class _AppLocalizationsDelegate

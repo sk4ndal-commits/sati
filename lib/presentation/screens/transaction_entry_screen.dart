@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import '../../application/income_source_controller.dart';
 import '../../application/transaction_controller.dart';
 import '../../domain/entities/transaction_entity.dart';
 import '../../l10n/app_localizations.dart';
@@ -20,6 +21,7 @@ class _TransactionEntryScreenState extends ConsumerState<TransactionEntryScreen>
   TransactionType _type = TransactionType.expense;
   String _categoryId = 'food';
   DateTime _date = DateTime.now();
+  String? _incomeSourceId;
 
   @override
   void dispose() {
@@ -52,6 +54,7 @@ class _TransactionEntryScreenState extends ConsumerState<TransactionEntryScreen>
         categoryId: _categoryId,
         date: _date,
         note: _noteController.text.isEmpty ? null : _noteController.text,
+        incomeSourceId: _type == TransactionType.income ? _incomeSourceId : null,
       );
 
       if (mounted) {
@@ -131,6 +134,27 @@ class _TransactionEntryScreenState extends ConsumerState<TransactionEntryScreen>
                 }
               },
             ),
+            if (_type == TransactionType.income) ...[
+              const SizedBox(height: 16),
+              ref.watch(incomeSourceControllerProvider).when(
+                    data: (sources) => DropdownButtonFormField<String>(
+                      initialValue: _incomeSourceId,
+                      decoration: InputDecoration(
+                        labelText: l10n.incomeSource,
+                        border: const OutlineInputBorder(),
+                      ),
+                      items: sources
+                          .map((s) => DropdownMenuItem(value: s.id, child: Text(s.name)))
+                          .toList(),
+                      onChanged: (value) => setState(() => _incomeSourceId = value),
+                      validator: (value) => _type == TransactionType.income && value == null
+                          ? l10n.requiredField
+                          : null,
+                    ),
+                    loading: () => const CircularProgressIndicator(),
+                    error: (_, stack) => const SizedBox.shrink(),
+                  ),
+            ],
             const SizedBox(height: 16),
             ListTile(
               title: Text(l10n.date),
