@@ -242,6 +242,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get forThisMonth => 'for this month';
 
   @override
+  String get today => 'Today';
+
+  @override
+  String get noTransactionsToday => 'No transactions today';
+
+  @override
   String get planned => 'Planned';
 
   @override
@@ -255,6 +261,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String budgetNearLimitSignal(String category) {
     return '$category budget is almost exhausted';
+  }
+
+  @override
+  String remainingBudgetInfo(String amount) {
+    return '$amount remaining this month';
   }
 
   @override
@@ -315,13 +326,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reflect => 'Reflect';
 
   @override
-  String get today => 'Today';
+  String get trends => 'Trends';
 
   @override
-  String get noTransactionsToday => 'No entries yet today';
+  String get trendsDescription => 'Your spending patterns over time.';
 
   @override
-  String remainingBudgetInfo(String amount) {
-    return '$amount € left this month';
-  }
+  String get spendingTrend => 'Spending Trend';
+
+  @override
+  String get spendingTrendDescription =>
+      'Monthly total expenses for the last few months.';
+
+  @override
+  String get categoryTrend => 'Category Trend';
+
+  @override
+  String get categoryTrendDescription =>
+      'Spending distribution by category over time.';
+
+  @override
+  String get noTrendData => 'Not enough data for trends yet.';
+
+  @override
+  String get plannedVsUnplanned => 'Planned vs Unplanned';
+
+  @override
+  String get plannedVsUnplannedDescription =>
+      'Weekly spending by intent (planned vs unplanned).';
+
+  @override
+  String get weeks => 'Weeks';
+
+  @override
+  String get incomeVsExpensesTrend => 'Income vs. Expenses Trend';
+
+  @override
+  String get incomeVsExpensesTrendDescription =>
+      'Comparison of your monthly income and expenses.';
+
+  @override
+  String get incomeTrend => 'Income Trend';
+
+  @override
+  String get incomeTrendDescription =>
+      'Monthly total income for the last few months.';
 }

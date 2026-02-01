@@ -90,6 +90,8 @@
     "moneyLeft": "Money left",
     "viewAllBudgets": "View all budgets",
     "forThisMonth": "for this month",
+    "today": "Today",
+    "noTransactionsToday": "No transactions today",
     "planned": "Planned",
     "unplanned": "Unplanned",
     "highUnplannedWeekly": "High unplanned spending this week: {amount} €",
@@ -102,6 +104,12 @@
     "@budgetNearLimitSignal": {
         "placeholders": {
             "category": { "type": "String" }
+        }
+    },
+    "remainingBudgetInfo": "{amount} remaining this month",
+    "@remainingBudgetInfo": {
+        "placeholders": {
+            "amount": { "type": "String" }
         }
     },
     "monthlyOverview": "Monthly Overview",
@@ -122,12 +130,18 @@
     "version": "Version",
     "dataAndExport": "Data & Export",
     "reflect": "Reflect",
-    "today": "Today",
-    "noTransactionsToday": "No entries yet today",
-    "remainingBudgetInfo": "{amount} € left this month",
-    "@remainingBudgetInfo": {
-        "placeholders": {
-            "amount": { "type": "String" }
-        }
-    }
+    "trends": "Trends",
+    "trendsDescription": "Your spending patterns over time.",
+    "spendingTrend": "Spending Trend",
+    "spendingTrendDescription": "Monthly total expenses for the last few months.",
+    "categoryTrend": "Category Trend",
+    "categoryTrendDescription": "Spending distribution by category over time.",
+    "noTrendData": "Not enough data for trends yet.",
+    "plannedVsUnplanned": "Planned vs Unplanned",
+    "plannedVsUnplannedDescription": "Weekly spending by intent (planned vs unplanned).",
+    "weeks": "Weeks",
+    "incomeVsExpensesTrend": "Income vs. Expenses Trend",
+    "incomeVsExpensesTrendDescription": "Comparison of your monthly income and expenses.",
+    "incomeTrend": "Income Trend",
+    "incomeTrendDescription": "Monthly total income for the last few months."
 }

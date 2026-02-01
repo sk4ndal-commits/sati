@@ -13,6 +13,7 @@ import 'budget_overview_screen.dart';
 import 'settings_screen.dart';
 import 'weekly_review_screen.dart';
 import 'monthly_overview_screen.dart';
+import 'trends_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -100,6 +101,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const MonthlyOverviewScreen()),
                 );
+              } else if (value == 'trends') {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const TrendsScreen()),
+                );
               }
             },
             itemBuilder: (context) => [
@@ -110,6 +115,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               PopupMenuItem(
                 value: 'monthly',
                 child: Text(l10n.monthlyOverview),
+              ),
+              PopupMenuItem(
+                value: 'trends',
+                child: Text(l10n.trends),
               ),
             ],
           ),

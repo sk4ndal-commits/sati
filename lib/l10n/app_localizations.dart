@@ -542,6 +542,18 @@ abstract class AppLocalizations {
   /// **'for this month'**
   String get forThisMonth;
 
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @noTransactionsToday.
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions today'**
+  String get noTransactionsToday;
+
   /// No description provided for @planned.
   ///
   /// In en, this message translates to:
@@ -565,6 +577,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{category} budget is almost exhausted'**
   String budgetNearLimitSignal(String category);
+
+  /// No description provided for @remainingBudgetInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} remaining this month'**
+  String remainingBudgetInfo(String amount);
 
   /// No description provided for @monthlyOverview.
   ///
@@ -674,23 +692,89 @@ abstract class AppLocalizations {
   /// **'Reflect'**
   String get reflect;
 
-  /// No description provided for @today.
+  /// No description provided for @trends.
   ///
   /// In en, this message translates to:
-  /// **'Today'**
-  String get today;
+  /// **'Trends'**
+  String get trends;
 
-  /// No description provided for @noTransactionsToday.
+  /// No description provided for @trendsDescription.
   ///
   /// In en, this message translates to:
-  /// **'No entries yet today'**
-  String get noTransactionsToday;
+  /// **'Your spending patterns over time.'**
+  String get trendsDescription;
 
-  /// No description provided for @remainingBudgetInfo.
+  /// No description provided for @spendingTrend.
   ///
   /// In en, this message translates to:
-  /// **'{amount} € left this month'**
-  String remainingBudgetInfo(String amount);
+  /// **'Spending Trend'**
+  String get spendingTrend;
+
+  /// No description provided for @spendingTrendDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly total expenses for the last few months.'**
+  String get spendingTrendDescription;
+
+  /// No description provided for @categoryTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Category Trend'**
+  String get categoryTrend;
+
+  /// No description provided for @categoryTrendDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Spending distribution by category over time.'**
+  String get categoryTrendDescription;
+
+  /// No description provided for @noTrendData.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough data for trends yet.'**
+  String get noTrendData;
+
+  /// No description provided for @plannedVsUnplanned.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned vs Unplanned'**
+  String get plannedVsUnplanned;
+
+  /// No description provided for @plannedVsUnplannedDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly spending by intent (planned vs unplanned).'**
+  String get plannedVsUnplannedDescription;
+
+  /// No description provided for @weeks.
+  ///
+  /// In en, this message translates to:
+  /// **'Weeks'**
+  String get weeks;
+
+  /// No description provided for @incomeVsExpensesTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Income vs. Expenses Trend'**
+  String get incomeVsExpensesTrend;
+
+  /// No description provided for @incomeVsExpensesTrendDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Comparison of your monthly income and expenses.'**
+  String get incomeVsExpensesTrendDescription;
+
+  /// No description provided for @incomeTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Income Trend'**
+  String get incomeTrend;
+
+  /// No description provided for @incomeTrendDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly total income for the last few months.'**
+  String get incomeTrendDescription;
 }
 
 class _AppLocalizationsDelegate

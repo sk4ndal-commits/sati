@@ -129,5 +129,19 @@
     "about": "Über",
     "version": "Version",
     "dataAndExport": "Daten & Export",
-    "reflect": "Reflektieren"
+    "reflect": "Reflektieren",
+    "trends": "Trends",
+    "trendsDescription": "Dein Ausgabeverhalten über die Zeit.",
+    "spendingTrend": "Ausgabentrend",
+    "spendingTrendDescription": "Monatliche Gesamtausgaben der letzten Monate.",
+    "categoryTrend": "Kategorietrend",
+    "categoryTrendDescription": "Verteilung der Ausgaben nach Kategorien über die Zeit.",
+    "noTrendData": "Nicht genügend Daten für Trends verfügbar.",
+    "plannedVsUnplanned": "Geplant vs. Ungeplant",
+    "plannedVsUnplannedDescription": "Wöchentliche Ausgaben nach Absicht (geplant vs. ungeplant).",
+    "weeks": "Wochen",
+    "incomeVsExpensesTrend": "Einnahmen vs. Ausgaben Trend",
+    "incomeVsExpensesTrendDescription": "Vergleich deiner monatlichen Einnahmen und Ausgaben.",
+    "incomeTrend": "Einnahmentrend",
+    "incomeTrendDescription": "Monatliche Gesamteinnahmen der letzten Monate."
 }

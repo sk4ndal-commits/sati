@@ -243,6 +243,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get forThisMonth => 'für diesen Monat';
 
   @override
+  String get today => 'Heute';
+
+  @override
+  String get noTransactionsToday => 'Heute noch keine Einträge';
+
+  @override
   String get planned => 'Geplant';
 
   @override
@@ -256,6 +262,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String budgetNearLimitSignal(String category) {
     return 'Budget für $category fast aufgebraucht';
+  }
+
+  @override
+  String remainingBudgetInfo(String amount) {
+    return 'Noch $amount € übrig diesen Monat';
   }
 
   @override
@@ -316,13 +327,49 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reflect => 'Reflektieren';
 
   @override
-  String get today => 'Heute';
+  String get trends => 'Trends';
 
   @override
-  String get noTransactionsToday => 'Heute noch keine Einträge';
+  String get trendsDescription => 'Dein Ausgabeverhalten über die Zeit.';
 
   @override
-  String remainingBudgetInfo(String amount) {
-    return 'Noch $amount € übrig diesen Monat';
-  }
+  String get spendingTrend => 'Ausgabentrend';
+
+  @override
+  String get spendingTrendDescription =>
+      'Monatliche Gesamtausgaben der letzten Monate.';
+
+  @override
+  String get categoryTrend => 'Kategorietrend';
+
+  @override
+  String get categoryTrendDescription =>
+      'Verteilung der Ausgaben nach Kategorien über die Zeit.';
+
+  @override
+  String get noTrendData => 'Nicht genügend Daten für Trends verfügbar.';
+
+  @override
+  String get plannedVsUnplanned => 'Geplant vs. Ungeplant';
+
+  @override
+  String get plannedVsUnplannedDescription =>
+      'Wöchentliche Ausgaben nach Absicht (geplant vs. ungeplant).';
+
+  @override
+  String get weeks => 'Wochen';
+
+  @override
+  String get incomeVsExpensesTrend => 'Einnahmen vs. Ausgaben Trend';
+
+  @override
+  String get incomeVsExpensesTrendDescription =>
+      'Vergleich deiner monatlichen Einnahmen und Ausgaben.';
+
+  @override
+  String get incomeTrend => 'Einnahmentrend';
+
+  @override
+  String get incomeTrendDescription =>
+      'Monatliche Gesamteinnahmen der letzten Monate.';
 }
