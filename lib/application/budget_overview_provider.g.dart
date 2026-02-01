@@ -48,4 +48,46 @@ final class BudgetOverviewProvider
   }
 }
 
-String _$budgetOverviewHash() => r'0bda9a16da5937d1df3f1fa4d6aa6f69324e4455';
+String _$budgetOverviewHash() => r'8670c9db6e6806be6f0a1116a41e419e3f217b8b';
+
+@ProviderFor(savingBudgetsOverview)
+const savingBudgetsOverviewProvider = SavingBudgetsOverviewProvider._();
+
+final class SavingBudgetsOverviewProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<SavingBudgetStatus>>,
+          List<SavingBudgetStatus>,
+          FutureOr<List<SavingBudgetStatus>>
+        >
+    with
+        $FutureModifier<List<SavingBudgetStatus>>,
+        $FutureProvider<List<SavingBudgetStatus>> {
+  const SavingBudgetsOverviewProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'savingBudgetsOverviewProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$savingBudgetsOverviewHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<SavingBudgetStatus>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<SavingBudgetStatus>> create(Ref ref) {
+    return savingBudgetsOverview(ref);
+  }
+}
+
+String _$savingBudgetsOverviewHash() =>
+    r'3ad869665dac3751b6f0677984e32570cd0f5aea';

@@ -411,11 +411,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String moneyAllocatedInfo(String amount) {
-    return 'davon zugewiesen: $amount';
+    return 'davon budgetiert: $amount';
   }
 
   @override
-  String get allocationBudgets => 'Sparen & Investieren';
+  String get savingBudgets => 'Sparen & Investieren';
 
   @override
   String get expenses => 'Ausgaben';
@@ -424,25 +424,25 @@ class AppLocalizationsDe extends AppLocalizations {
   String get targetAmount => 'Zielbetrag';
 
   @override
-  String get monthlyAllocation => 'Monatliche Zuweisung';
+  String get monthlyAllocation => 'Monatliches Budget';
 
   @override
-  String get allocated => 'Zugewiesen';
+  String get allocated => 'Budgetiert';
 
   @override
-  String get noAllocations => 'Noch keine Sparschweine';
+  String get noAllocations => 'Noch keine Spar-Budgets';
 
   @override
-  String get addAllocation => 'Sparschwein hinzufügen';
+  String get addAllocation => 'Spar-Budget hinzufügen';
 
   @override
-  String get editAllocation => 'Sparschwein bearbeiten';
+  String get editAllocation => 'Spar-Budget bearbeiten';
 
   @override
-  String get allocate => 'Zuweisen';
+  String get allocate => 'Hinzufügen';
 
   @override
-  String get amountToAllocate => 'Betrag zum Zuweisen';
+  String get amountToAllocate => 'Betrag zum Hinzufügen';
 
   @override
   String get name => 'Name';

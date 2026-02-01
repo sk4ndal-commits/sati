@@ -155,21 +155,21 @@
     "next": "Weiter",
     "skip": "Überspringen",
     "transactionDeleted": "Transaktion gelöscht",
-    "moneyAllocatedInfo": "davon zugewiesen: {amount}",
+    "moneyAllocatedInfo": "davon budgetiert: {amount}",
     "@moneyAllocatedInfo": {
         "placeholders": {
             "amount": { "type": "String" }
         }
     },
-    "allocationBudgets": "Sparen & Investieren",
+    "savingBudgets": "Sparen & Investieren",
     "expenses": "Ausgaben",
     "targetAmount": "Zielbetrag",
-    "monthlyAllocation": "Monatliche Zuweisung",
-    "allocated": "Zugewiesen",
-    "noAllocations": "Noch keine Sparschweine",
-    "addAllocation": "Sparschwein hinzufügen",
-    "editAllocation": "Sparschwein bearbeiten",
-    "allocate": "Zuweisen",
-    "amountToAllocate": "Betrag zum Zuweisen",
+    "monthlyAllocation": "Monatliches Budget",
+    "allocated": "Budgetiert",
+    "noAllocations": "Noch keine Spar-Budgets",
+    "addAllocation": "Spar-Budget hinzufügen",
+    "editAllocation": "Spar-Budget bearbeiten",
+    "allocate": "Hinzufügen",
+    "amountToAllocate": "Betrag zum Hinzufügen",
     "name": "Name"
 }

@@ -155,21 +155,21 @@
     "next": "Next",
     "skip": "Skip",
     "transactionDeleted": "Transaction deleted",
-    "moneyAllocatedInfo": "{amount} of which allocated",
+    "moneyAllocatedInfo": "{amount} of which budgeted",
     "@moneyAllocatedInfo": {
         "placeholders": {
             "amount": { "type": "String" }
         }
     },
-    "allocationBudgets": "Saving & Investing",
+    "savingBudgets": "Saving & Investing",
     "expenses": "Expenses",
     "targetAmount": "Target Amount",
     "monthlyAllocation": "Monthly Allocation",
-    "allocated": "Allocated",
-    "noAllocations": "No piggy banks yet",
-    "addAllocation": "Add Piggy Bank",
-    "editAllocation": "Edit Piggy Bank",
-    "allocate": "Allocate",
-    "amountToAllocate": "Amount to allocate",
+    "allocated": "Budgeted",
+    "noAllocations": "No saving budgets yet",
+    "addAllocation": "Add Saving Budget",
+    "editAllocation": "Edit Saving Budget",
+    "allocate": "Add to Budget",
+    "amountToAllocate": "Amount to add",
     "name": "Name"
 }

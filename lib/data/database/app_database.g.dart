@@ -418,6 +418,495 @@ class IncomeSourceTableCompanion
   }
 }
 
+class $AllocationBudgetTableTable extends AllocationBudgetTable
+    with TableInfo<$AllocationBudgetTableTable, AllocationBudgetTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AllocationBudgetTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _targetAmountMeta = const VerificationMeta(
+    'targetAmount',
+  );
+  @override
+  late final GeneratedColumn<double> targetAmount = GeneratedColumn<double>(
+    'target_amount',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _monthlyAllocationMeta = const VerificationMeta(
+    'monthlyAllocation',
+  );
+  @override
+  late final GeneratedColumn<double> monthlyAllocation =
+      GeneratedColumn<double>(
+        'monthly_allocation',
+        aliasedName,
+        true,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _totalAllocatedMeta = const VerificationMeta(
+    'totalAllocated',
+  );
+  @override
+  late final GeneratedColumn<double> totalAllocated = GeneratedColumn<double>(
+    'total_allocated',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0.0),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    targetAmount,
+    monthlyAllocation,
+    totalAllocated,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'allocation_budget_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AllocationBudgetTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('target_amount')) {
+      context.handle(
+        _targetAmountMeta,
+        targetAmount.isAcceptableOrUnknown(
+          data['target_amount']!,
+          _targetAmountMeta,
+        ),
+      );
+    }
+    if (data.containsKey('monthly_allocation')) {
+      context.handle(
+        _monthlyAllocationMeta,
+        monthlyAllocation.isAcceptableOrUnknown(
+          data['monthly_allocation']!,
+          _monthlyAllocationMeta,
+        ),
+      );
+    }
+    if (data.containsKey('total_allocated')) {
+      context.handle(
+        _totalAllocatedMeta,
+        totalAllocated.isAcceptableOrUnknown(
+          data['total_allocated']!,
+          _totalAllocatedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AllocationBudgetTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AllocationBudgetTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      targetAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}target_amount'],
+      ),
+      monthlyAllocation: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}monthly_allocation'],
+      ),
+      totalAllocated: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}total_allocated'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $AllocationBudgetTableTable createAlias(String alias) {
+    return $AllocationBudgetTableTable(attachedDatabase, alias);
+  }
+}
+
+class AllocationBudgetTableData extends DataClass
+    implements Insertable<AllocationBudgetTableData> {
+  final String id;
+  final String name;
+  final double? targetAmount;
+  final double? monthlyAllocation;
+  final double totalAllocated;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const AllocationBudgetTableData({
+    required this.id,
+    required this.name,
+    this.targetAmount,
+    this.monthlyAllocation,
+    required this.totalAllocated,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || targetAmount != null) {
+      map['target_amount'] = Variable<double>(targetAmount);
+    }
+    if (!nullToAbsent || monthlyAllocation != null) {
+      map['monthly_allocation'] = Variable<double>(monthlyAllocation);
+    }
+    map['total_allocated'] = Variable<double>(totalAllocated);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  AllocationBudgetTableCompanion toCompanion(bool nullToAbsent) {
+    return AllocationBudgetTableCompanion(
+      id: Value(id),
+      name: Value(name),
+      targetAmount: targetAmount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetAmount),
+      monthlyAllocation: monthlyAllocation == null && nullToAbsent
+          ? const Value.absent()
+          : Value(monthlyAllocation),
+      totalAllocated: Value(totalAllocated),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory AllocationBudgetTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AllocationBudgetTableData(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      targetAmount: serializer.fromJson<double?>(json['targetAmount']),
+      monthlyAllocation: serializer.fromJson<double?>(
+        json['monthlyAllocation'],
+      ),
+      totalAllocated: serializer.fromJson<double>(json['totalAllocated']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'targetAmount': serializer.toJson<double?>(targetAmount),
+      'monthlyAllocation': serializer.toJson<double?>(monthlyAllocation),
+      'totalAllocated': serializer.toJson<double>(totalAllocated),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  AllocationBudgetTableData copyWith({
+    String? id,
+    String? name,
+    Value<double?> targetAmount = const Value.absent(),
+    Value<double?> monthlyAllocation = const Value.absent(),
+    double? totalAllocated,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => AllocationBudgetTableData(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    targetAmount: targetAmount.present ? targetAmount.value : this.targetAmount,
+    monthlyAllocation: monthlyAllocation.present
+        ? monthlyAllocation.value
+        : this.monthlyAllocation,
+    totalAllocated: totalAllocated ?? this.totalAllocated,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  AllocationBudgetTableData copyWithCompanion(
+    AllocationBudgetTableCompanion data,
+  ) {
+    return AllocationBudgetTableData(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      targetAmount: data.targetAmount.present
+          ? data.targetAmount.value
+          : this.targetAmount,
+      monthlyAllocation: data.monthlyAllocation.present
+          ? data.monthlyAllocation.value
+          : this.monthlyAllocation,
+      totalAllocated: data.totalAllocated.present
+          ? data.totalAllocated.value
+          : this.totalAllocated,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AllocationBudgetTableData(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('targetAmount: $targetAmount, ')
+          ..write('monthlyAllocation: $monthlyAllocation, ')
+          ..write('totalAllocated: $totalAllocated, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    name,
+    targetAmount,
+    monthlyAllocation,
+    totalAllocated,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AllocationBudgetTableData &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.targetAmount == this.targetAmount &&
+          other.monthlyAllocation == this.monthlyAllocation &&
+          other.totalAllocated == this.totalAllocated &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class AllocationBudgetTableCompanion
+    extends UpdateCompanion<AllocationBudgetTableData> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<double?> targetAmount;
+  final Value<double?> monthlyAllocation;
+  final Value<double> totalAllocated;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const AllocationBudgetTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.targetAmount = const Value.absent(),
+    this.monthlyAllocation = const Value.absent(),
+    this.totalAllocated = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  AllocationBudgetTableCompanion.insert({
+    required String id,
+    required String name,
+    this.targetAmount = const Value.absent(),
+    this.monthlyAllocation = const Value.absent(),
+    this.totalAllocated = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       name = Value(name),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<AllocationBudgetTableData> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<double>? targetAmount,
+    Expression<double>? monthlyAllocation,
+    Expression<double>? totalAllocated,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (targetAmount != null) 'target_amount': targetAmount,
+      if (monthlyAllocation != null) 'monthly_allocation': monthlyAllocation,
+      if (totalAllocated != null) 'total_allocated': totalAllocated,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  AllocationBudgetTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<double?>? targetAmount,
+    Value<double?>? monthlyAllocation,
+    Value<double>? totalAllocated,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return AllocationBudgetTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      targetAmount: targetAmount ?? this.targetAmount,
+      monthlyAllocation: monthlyAllocation ?? this.monthlyAllocation,
+      totalAllocated: totalAllocated ?? this.totalAllocated,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (targetAmount.present) {
+      map['target_amount'] = Variable<double>(targetAmount.value);
+    }
+    if (monthlyAllocation.present) {
+      map['monthly_allocation'] = Variable<double>(monthlyAllocation.value);
+    }
+    if (totalAllocated.present) {
+      map['total_allocated'] = Variable<double>(totalAllocated.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AllocationBudgetTableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('targetAmount: $targetAmount, ')
+          ..write('monthlyAllocation: $monthlyAllocation, ')
+          ..write('totalAllocated: $totalAllocated, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $TransactionTableTable extends TransactionTable
     with TableInfo<$TransactionTableTable, TransactionTableData> {
   @override
@@ -494,6 +983,20 @@ class $TransactionTableTable extends TransactionTable
       'REFERENCES income_source_table (id)',
     ),
   );
+  static const VerificationMeta _allocationBudgetIdMeta =
+      const VerificationMeta('allocationBudgetId');
+  @override
+  late final GeneratedColumn<String> allocationBudgetId =
+      GeneratedColumn<String>(
+        'allocation_budget_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES allocation_budget_table (id)',
+        ),
+      );
   static const VerificationMeta _plannedMeta = const VerificationMeta(
     'planned',
   );
@@ -552,6 +1055,7 @@ class $TransactionTableTable extends TransactionTable
     date,
     note,
     incomeSourceId,
+    allocationBudgetId,
     planned,
     feeling,
     createdAt,
@@ -621,6 +1125,15 @@ class $TransactionTableTable extends TransactionTable
         ),
       );
     }
+    if (data.containsKey('allocation_budget_id')) {
+      context.handle(
+        _allocationBudgetIdMeta,
+        allocationBudgetId.isAcceptableOrUnknown(
+          data['allocation_budget_id']!,
+          _allocationBudgetIdMeta,
+        ),
+      );
+    }
     if (data.containsKey('planned')) {
       context.handle(
         _plannedMeta,
@@ -682,6 +1195,10 @@ class $TransactionTableTable extends TransactionTable
         DriftSqlType.string,
         data['${effectivePrefix}income_source_id'],
       ),
+      allocationBudgetId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}allocation_budget_id'],
+      ),
       planned: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
         data['${effectivePrefix}planned'],
@@ -716,6 +1233,7 @@ class TransactionTableData extends DataClass
   final DateTime date;
   final String? note;
   final String? incomeSourceId;
+  final String? allocationBudgetId;
   final bool? planned;
   final int? feeling;
   final DateTime createdAt;
@@ -728,6 +1246,7 @@ class TransactionTableData extends DataClass
     required this.date,
     this.note,
     this.incomeSourceId,
+    this.allocationBudgetId,
     this.planned,
     this.feeling,
     required this.createdAt,
@@ -746,6 +1265,9 @@ class TransactionTableData extends DataClass
     }
     if (!nullToAbsent || incomeSourceId != null) {
       map['income_source_id'] = Variable<String>(incomeSourceId);
+    }
+    if (!nullToAbsent || allocationBudgetId != null) {
+      map['allocation_budget_id'] = Variable<String>(allocationBudgetId);
     }
     if (!nullToAbsent || planned != null) {
       map['planned'] = Variable<bool>(planned);
@@ -769,6 +1291,9 @@ class TransactionTableData extends DataClass
       incomeSourceId: incomeSourceId == null && nullToAbsent
           ? const Value.absent()
           : Value(incomeSourceId),
+      allocationBudgetId: allocationBudgetId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(allocationBudgetId),
       planned: planned == null && nullToAbsent
           ? const Value.absent()
           : Value(planned),
@@ -793,6 +1318,9 @@ class TransactionTableData extends DataClass
       date: serializer.fromJson<DateTime>(json['date']),
       note: serializer.fromJson<String?>(json['note']),
       incomeSourceId: serializer.fromJson<String?>(json['incomeSourceId']),
+      allocationBudgetId: serializer.fromJson<String?>(
+        json['allocationBudgetId'],
+      ),
       planned: serializer.fromJson<bool?>(json['planned']),
       feeling: serializer.fromJson<int?>(json['feeling']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
@@ -810,6 +1338,7 @@ class TransactionTableData extends DataClass
       'date': serializer.toJson<DateTime>(date),
       'note': serializer.toJson<String?>(note),
       'incomeSourceId': serializer.toJson<String?>(incomeSourceId),
+      'allocationBudgetId': serializer.toJson<String?>(allocationBudgetId),
       'planned': serializer.toJson<bool?>(planned),
       'feeling': serializer.toJson<int?>(feeling),
       'createdAt': serializer.toJson<DateTime>(createdAt),
@@ -825,6 +1354,7 @@ class TransactionTableData extends DataClass
     DateTime? date,
     Value<String?> note = const Value.absent(),
     Value<String?> incomeSourceId = const Value.absent(),
+    Value<String?> allocationBudgetId = const Value.absent(),
     Value<bool?> planned = const Value.absent(),
     Value<int?> feeling = const Value.absent(),
     DateTime? createdAt,
@@ -839,6 +1369,9 @@ class TransactionTableData extends DataClass
     incomeSourceId: incomeSourceId.present
         ? incomeSourceId.value
         : this.incomeSourceId,
+    allocationBudgetId: allocationBudgetId.present
+        ? allocationBudgetId.value
+        : this.allocationBudgetId,
     planned: planned.present ? planned.value : this.planned,
     feeling: feeling.present ? feeling.value : this.feeling,
     createdAt: createdAt ?? this.createdAt,
@@ -857,6 +1390,9 @@ class TransactionTableData extends DataClass
       incomeSourceId: data.incomeSourceId.present
           ? data.incomeSourceId.value
           : this.incomeSourceId,
+      allocationBudgetId: data.allocationBudgetId.present
+          ? data.allocationBudgetId.value
+          : this.allocationBudgetId,
       planned: data.planned.present ? data.planned.value : this.planned,
       feeling: data.feeling.present ? data.feeling.value : this.feeling,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
@@ -874,6 +1410,7 @@ class TransactionTableData extends DataClass
           ..write('date: $date, ')
           ..write('note: $note, ')
           ..write('incomeSourceId: $incomeSourceId, ')
+          ..write('allocationBudgetId: $allocationBudgetId, ')
           ..write('planned: $planned, ')
           ..write('feeling: $feeling, ')
           ..write('createdAt: $createdAt, ')
@@ -891,6 +1428,7 @@ class TransactionTableData extends DataClass
     date,
     note,
     incomeSourceId,
+    allocationBudgetId,
     planned,
     feeling,
     createdAt,
@@ -907,6 +1445,7 @@ class TransactionTableData extends DataClass
           other.date == this.date &&
           other.note == this.note &&
           other.incomeSourceId == this.incomeSourceId &&
+          other.allocationBudgetId == this.allocationBudgetId &&
           other.planned == this.planned &&
           other.feeling == this.feeling &&
           other.createdAt == this.createdAt &&
@@ -921,6 +1460,7 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
   final Value<DateTime> date;
   final Value<String?> note;
   final Value<String?> incomeSourceId;
+  final Value<String?> allocationBudgetId;
   final Value<bool?> planned;
   final Value<int?> feeling;
   final Value<DateTime> createdAt;
@@ -934,6 +1474,7 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
     this.date = const Value.absent(),
     this.note = const Value.absent(),
     this.incomeSourceId = const Value.absent(),
+    this.allocationBudgetId = const Value.absent(),
     this.planned = const Value.absent(),
     this.feeling = const Value.absent(),
     this.createdAt = const Value.absent(),
@@ -948,6 +1489,7 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
     required DateTime date,
     this.note = const Value.absent(),
     this.incomeSourceId = const Value.absent(),
+    this.allocationBudgetId = const Value.absent(),
     this.planned = const Value.absent(),
     this.feeling = const Value.absent(),
     this.createdAt = const Value.absent(),
@@ -966,6 +1508,7 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
     Expression<DateTime>? date,
     Expression<String>? note,
     Expression<String>? incomeSourceId,
+    Expression<String>? allocationBudgetId,
     Expression<bool>? planned,
     Expression<int>? feeling,
     Expression<DateTime>? createdAt,
@@ -980,6 +1523,8 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
       if (date != null) 'date': date,
       if (note != null) 'note': note,
       if (incomeSourceId != null) 'income_source_id': incomeSourceId,
+      if (allocationBudgetId != null)
+        'allocation_budget_id': allocationBudgetId,
       if (planned != null) 'planned': planned,
       if (feeling != null) 'feeling': feeling,
       if (createdAt != null) 'created_at': createdAt,
@@ -996,6 +1541,7 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
     Value<DateTime>? date,
     Value<String?>? note,
     Value<String?>? incomeSourceId,
+    Value<String?>? allocationBudgetId,
     Value<bool?>? planned,
     Value<int?>? feeling,
     Value<DateTime>? createdAt,
@@ -1010,6 +1556,7 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
       date: date ?? this.date,
       note: note ?? this.note,
       incomeSourceId: incomeSourceId ?? this.incomeSourceId,
+      allocationBudgetId: allocationBudgetId ?? this.allocationBudgetId,
       planned: planned ?? this.planned,
       feeling: feeling ?? this.feeling,
       createdAt: createdAt ?? this.createdAt,
@@ -1042,6 +1589,9 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
     if (incomeSourceId.present) {
       map['income_source_id'] = Variable<String>(incomeSourceId.value);
     }
+    if (allocationBudgetId.present) {
+      map['allocation_budget_id'] = Variable<String>(allocationBudgetId.value);
+    }
     if (planned.present) {
       map['planned'] = Variable<bool>(planned.value);
     }
@@ -1070,6 +1620,7 @@ class TransactionTableCompanion extends UpdateCompanion<TransactionTableData> {
           ..write('date: $date, ')
           ..write('note: $note, ')
           ..write('incomeSourceId: $incomeSourceId, ')
+          ..write('allocationBudgetId: $allocationBudgetId, ')
           ..write('planned: $planned, ')
           ..write('feeling: $feeling, ')
           ..write('createdAt: $createdAt, ')
@@ -2030,517 +2581,28 @@ class SettingsTableCompanion extends UpdateCompanion<SettingsTableData> {
   }
 }
 
-class $AllocationBudgetTableTable extends AllocationBudgetTable
-    with TableInfo<$AllocationBudgetTableTable, AllocationBudgetTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $AllocationBudgetTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-    'name',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _targetAmountMeta = const VerificationMeta(
-    'targetAmount',
-  );
-  @override
-  late final GeneratedColumn<double> targetAmount = GeneratedColumn<double>(
-    'target_amount',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _monthlyAllocationMeta = const VerificationMeta(
-    'monthlyAllocation',
-  );
-  @override
-  late final GeneratedColumn<double> monthlyAllocation =
-      GeneratedColumn<double>(
-        'monthly_allocation',
-        aliasedName,
-        true,
-        type: DriftSqlType.double,
-        requiredDuringInsert: false,
-      );
-  static const VerificationMeta _totalAllocatedMeta = const VerificationMeta(
-    'totalAllocated',
-  );
-  @override
-  late final GeneratedColumn<double> totalAllocated = GeneratedColumn<double>(
-    'total_allocated',
-    aliasedName,
-    false,
-    type: DriftSqlType.double,
-    requiredDuringInsert: false,
-    defaultValue: const Constant(0.0),
-  );
-  static const VerificationMeta _createdAtMeta = const VerificationMeta(
-    'createdAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-    'created_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
-    'updatedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-    'updated_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    name,
-    targetAmount,
-    monthlyAllocation,
-    totalAllocated,
-    createdAt,
-    updatedAt,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'allocation_budget_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<AllocationBudgetTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-        _nameMeta,
-        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('target_amount')) {
-      context.handle(
-        _targetAmountMeta,
-        targetAmount.isAcceptableOrUnknown(
-          data['target_amount']!,
-          _targetAmountMeta,
-        ),
-      );
-    }
-    if (data.containsKey('monthly_allocation')) {
-      context.handle(
-        _monthlyAllocationMeta,
-        monthlyAllocation.isAcceptableOrUnknown(
-          data['monthly_allocation']!,
-          _monthlyAllocationMeta,
-        ),
-      );
-    }
-    if (data.containsKey('total_allocated')) {
-      context.handle(
-        _totalAllocatedMeta,
-        totalAllocated.isAcceptableOrUnknown(
-          data['total_allocated']!,
-          _totalAllocatedMeta,
-        ),
-      );
-    }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_createdAtMeta);
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(
-        _updatedAtMeta,
-        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_updatedAtMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  AllocationBudgetTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return AllocationBudgetTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}id'],
-      )!,
-      name: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}name'],
-      )!,
-      targetAmount: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}target_amount'],
-      ),
-      monthlyAllocation: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}monthly_allocation'],
-      ),
-      totalAllocated: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}total_allocated'],
-      )!,
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_at'],
-      )!,
-    );
-  }
-
-  @override
-  $AllocationBudgetTableTable createAlias(String alias) {
-    return $AllocationBudgetTableTable(attachedDatabase, alias);
-  }
-}
-
-class AllocationBudgetTableData extends DataClass
-    implements Insertable<AllocationBudgetTableData> {
-  final String id;
-  final String name;
-  final double? targetAmount;
-  final double? monthlyAllocation;
-  final double totalAllocated;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  const AllocationBudgetTableData({
-    required this.id,
-    required this.name,
-    this.targetAmount,
-    this.monthlyAllocation,
-    required this.totalAllocated,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
-    map['name'] = Variable<String>(name);
-    if (!nullToAbsent || targetAmount != null) {
-      map['target_amount'] = Variable<double>(targetAmount);
-    }
-    if (!nullToAbsent || monthlyAllocation != null) {
-      map['monthly_allocation'] = Variable<double>(monthlyAllocation);
-    }
-    map['total_allocated'] = Variable<double>(totalAllocated);
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
-    return map;
-  }
-
-  AllocationBudgetTableCompanion toCompanion(bool nullToAbsent) {
-    return AllocationBudgetTableCompanion(
-      id: Value(id),
-      name: Value(name),
-      targetAmount: targetAmount == null && nullToAbsent
-          ? const Value.absent()
-          : Value(targetAmount),
-      monthlyAllocation: monthlyAllocation == null && nullToAbsent
-          ? const Value.absent()
-          : Value(monthlyAllocation),
-      totalAllocated: Value(totalAllocated),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-    );
-  }
-
-  factory AllocationBudgetTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return AllocationBudgetTableData(
-      id: serializer.fromJson<String>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
-      targetAmount: serializer.fromJson<double?>(json['targetAmount']),
-      monthlyAllocation: serializer.fromJson<double?>(
-        json['monthlyAllocation'],
-      ),
-      totalAllocated: serializer.fromJson<double>(json['totalAllocated']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
-      'name': serializer.toJson<String>(name),
-      'targetAmount': serializer.toJson<double?>(targetAmount),
-      'monthlyAllocation': serializer.toJson<double?>(monthlyAllocation),
-      'totalAllocated': serializer.toJson<double>(totalAllocated),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
-    };
-  }
-
-  AllocationBudgetTableData copyWith({
-    String? id,
-    String? name,
-    Value<double?> targetAmount = const Value.absent(),
-    Value<double?> monthlyAllocation = const Value.absent(),
-    double? totalAllocated,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) => AllocationBudgetTableData(
-    id: id ?? this.id,
-    name: name ?? this.name,
-    targetAmount: targetAmount.present ? targetAmount.value : this.targetAmount,
-    monthlyAllocation: monthlyAllocation.present
-        ? monthlyAllocation.value
-        : this.monthlyAllocation,
-    totalAllocated: totalAllocated ?? this.totalAllocated,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-  );
-  AllocationBudgetTableData copyWithCompanion(
-    AllocationBudgetTableCompanion data,
-  ) {
-    return AllocationBudgetTableData(
-      id: data.id.present ? data.id.value : this.id,
-      name: data.name.present ? data.name.value : this.name,
-      targetAmount: data.targetAmount.present
-          ? data.targetAmount.value
-          : this.targetAmount,
-      monthlyAllocation: data.monthlyAllocation.present
-          ? data.monthlyAllocation.value
-          : this.monthlyAllocation,
-      totalAllocated: data.totalAllocated.present
-          ? data.totalAllocated.value
-          : this.totalAllocated,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('AllocationBudgetTableData(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('targetAmount: $targetAmount, ')
-          ..write('monthlyAllocation: $monthlyAllocation, ')
-          ..write('totalAllocated: $totalAllocated, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    id,
-    name,
-    targetAmount,
-    monthlyAllocation,
-    totalAllocated,
-    createdAt,
-    updatedAt,
-  );
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is AllocationBudgetTableData &&
-          other.id == this.id &&
-          other.name == this.name &&
-          other.targetAmount == this.targetAmount &&
-          other.monthlyAllocation == this.monthlyAllocation &&
-          other.totalAllocated == this.totalAllocated &&
-          other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt);
-}
-
-class AllocationBudgetTableCompanion
-    extends UpdateCompanion<AllocationBudgetTableData> {
-  final Value<String> id;
-  final Value<String> name;
-  final Value<double?> targetAmount;
-  final Value<double?> monthlyAllocation;
-  final Value<double> totalAllocated;
-  final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
-  final Value<int> rowid;
-  const AllocationBudgetTableCompanion({
-    this.id = const Value.absent(),
-    this.name = const Value.absent(),
-    this.targetAmount = const Value.absent(),
-    this.monthlyAllocation = const Value.absent(),
-    this.totalAllocated = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  AllocationBudgetTableCompanion.insert({
-    required String id,
-    required String name,
-    this.targetAmount = const Value.absent(),
-    this.monthlyAllocation = const Value.absent(),
-    this.totalAllocated = const Value.absent(),
-    required DateTime createdAt,
-    required DateTime updatedAt,
-    this.rowid = const Value.absent(),
-  }) : id = Value(id),
-       name = Value(name),
-       createdAt = Value(createdAt),
-       updatedAt = Value(updatedAt);
-  static Insertable<AllocationBudgetTableData> custom({
-    Expression<String>? id,
-    Expression<String>? name,
-    Expression<double>? targetAmount,
-    Expression<double>? monthlyAllocation,
-    Expression<double>? totalAllocated,
-    Expression<DateTime>? createdAt,
-    Expression<DateTime>? updatedAt,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (name != null) 'name': name,
-      if (targetAmount != null) 'target_amount': targetAmount,
-      if (monthlyAllocation != null) 'monthly_allocation': monthlyAllocation,
-      if (totalAllocated != null) 'total_allocated': totalAllocated,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  AllocationBudgetTableCompanion copyWith({
-    Value<String>? id,
-    Value<String>? name,
-    Value<double?>? targetAmount,
-    Value<double?>? monthlyAllocation,
-    Value<double>? totalAllocated,
-    Value<DateTime>? createdAt,
-    Value<DateTime>? updatedAt,
-    Value<int>? rowid,
-  }) {
-    return AllocationBudgetTableCompanion(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      targetAmount: targetAmount ?? this.targetAmount,
-      monthlyAllocation: monthlyAllocation ?? this.monthlyAllocation,
-      totalAllocated: totalAllocated ?? this.totalAllocated,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<String>(id.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (targetAmount.present) {
-      map['target_amount'] = Variable<double>(targetAmount.value);
-    }
-    if (monthlyAllocation.present) {
-      map['monthly_allocation'] = Variable<double>(monthlyAllocation.value);
-    }
-    if (totalAllocated.present) {
-      map['total_allocated'] = Variable<double>(totalAllocated.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<DateTime>(updatedAt.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('AllocationBudgetTableCompanion(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('targetAmount: $targetAmount, ')
-          ..write('monthlyAllocation: $monthlyAllocation, ')
-          ..write('totalAllocated: $totalAllocated, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $IncomeSourceTableTable incomeSourceTable =
       $IncomeSourceTableTable(this);
+  late final $AllocationBudgetTableTable allocationBudgetTable =
+      $AllocationBudgetTableTable(this);
   late final $TransactionTableTable transactionTable = $TransactionTableTable(
     this,
   );
   late final $BudgetTableTable budgetTable = $BudgetTableTable(this);
   late final $SettingsTableTable settingsTable = $SettingsTableTable(this);
-  late final $AllocationBudgetTableTable allocationBudgetTable =
-      $AllocationBudgetTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
     incomeSourceTable,
+    allocationBudgetTable,
     transactionTable,
     budgetTable,
     settingsTable,
-    allocationBudgetTable,
   ];
 }
 
@@ -2889,6 +2951,380 @@ typedef $$IncomeSourceTableTableProcessedTableManager =
       IncomeSourceTableData,
       PrefetchHooks Function({bool transactionTableRefs})
     >;
+typedef $$AllocationBudgetTableTableCreateCompanionBuilder =
+    AllocationBudgetTableCompanion Function({
+      required String id,
+      required String name,
+      Value<double?> targetAmount,
+      Value<double?> monthlyAllocation,
+      Value<double> totalAllocated,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$AllocationBudgetTableTableUpdateCompanionBuilder =
+    AllocationBudgetTableCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<double?> targetAmount,
+      Value<double?> monthlyAllocation,
+      Value<double> totalAllocated,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+final class $$AllocationBudgetTableTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $AllocationBudgetTableTable,
+          AllocationBudgetTableData
+        > {
+  $$AllocationBudgetTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<$TransactionTableTable, List<TransactionTableData>>
+  _transactionTableRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.transactionTable,
+    aliasName: $_aliasNameGenerator(
+      db.allocationBudgetTable.id,
+      db.transactionTable.allocationBudgetId,
+    ),
+  );
+
+  $$TransactionTableTableProcessedTableManager get transactionTableRefs {
+    final manager =
+        $$TransactionTableTableTableManager($_db, $_db.transactionTable).filter(
+          (f) => f.allocationBudgetId.id.sqlEquals($_itemColumn<String>('id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(
+      _transactionTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$AllocationBudgetTableTableFilterComposer
+    extends Composer<_$AppDatabase, $AllocationBudgetTableTable> {
+  $$AllocationBudgetTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get targetAmount => $composableBuilder(
+    column: $table.targetAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get monthlyAllocation => $composableBuilder(
+    column: $table.monthlyAllocation,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get totalAllocated => $composableBuilder(
+    column: $table.totalAllocated,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> transactionTableRefs(
+    Expression<bool> Function($$TransactionTableTableFilterComposer f) f,
+  ) {
+    final $$TransactionTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.transactionTable,
+      getReferencedColumn: (t) => t.allocationBudgetId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TransactionTableTableFilterComposer(
+            $db: $db,
+            $table: $db.transactionTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$AllocationBudgetTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $AllocationBudgetTableTable> {
+  $$AllocationBudgetTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get targetAmount => $composableBuilder(
+    column: $table.targetAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get monthlyAllocation => $composableBuilder(
+    column: $table.monthlyAllocation,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get totalAllocated => $composableBuilder(
+    column: $table.totalAllocated,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$AllocationBudgetTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $AllocationBudgetTableTable> {
+  $$AllocationBudgetTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<double> get targetAmount => $composableBuilder(
+    column: $table.targetAmount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get monthlyAllocation => $composableBuilder(
+    column: $table.monthlyAllocation,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get totalAllocated => $composableBuilder(
+    column: $table.totalAllocated,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  Expression<T> transactionTableRefs<T extends Object>(
+    Expression<T> Function($$TransactionTableTableAnnotationComposer a) f,
+  ) {
+    final $$TransactionTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.transactionTable,
+      getReferencedColumn: (t) => t.allocationBudgetId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TransactionTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.transactionTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$AllocationBudgetTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $AllocationBudgetTableTable,
+          AllocationBudgetTableData,
+          $$AllocationBudgetTableTableFilterComposer,
+          $$AllocationBudgetTableTableOrderingComposer,
+          $$AllocationBudgetTableTableAnnotationComposer,
+          $$AllocationBudgetTableTableCreateCompanionBuilder,
+          $$AllocationBudgetTableTableUpdateCompanionBuilder,
+          (AllocationBudgetTableData, $$AllocationBudgetTableTableReferences),
+          AllocationBudgetTableData,
+          PrefetchHooks Function({bool transactionTableRefs})
+        > {
+  $$AllocationBudgetTableTableTableManager(
+    _$AppDatabase db,
+    $AllocationBudgetTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AllocationBudgetTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$AllocationBudgetTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$AllocationBudgetTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<double?> targetAmount = const Value.absent(),
+                Value<double?> monthlyAllocation = const Value.absent(),
+                Value<double> totalAllocated = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => AllocationBudgetTableCompanion(
+                id: id,
+                name: name,
+                targetAmount: targetAmount,
+                monthlyAllocation: monthlyAllocation,
+                totalAllocated: totalAllocated,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                Value<double?> targetAmount = const Value.absent(),
+                Value<double?> monthlyAllocation = const Value.absent(),
+                Value<double> totalAllocated = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => AllocationBudgetTableCompanion.insert(
+                id: id,
+                name: name,
+                targetAmount: targetAmount,
+                monthlyAllocation: monthlyAllocation,
+                totalAllocated: totalAllocated,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$AllocationBudgetTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({transactionTableRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (transactionTableRefs) db.transactionTable,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (transactionTableRefs)
+                    await $_getPrefetchedData<
+                      AllocationBudgetTableData,
+                      $AllocationBudgetTableTable,
+                      TransactionTableData
+                    >(
+                      currentTable: table,
+                      referencedTable: $$AllocationBudgetTableTableReferences
+                          ._transactionTableRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$AllocationBudgetTableTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).transactionTableRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where(
+                            (e) => e.allocationBudgetId == item.id,
+                          ),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$AllocationBudgetTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $AllocationBudgetTableTable,
+      AllocationBudgetTableData,
+      $$AllocationBudgetTableTableFilterComposer,
+      $$AllocationBudgetTableTableOrderingComposer,
+      $$AllocationBudgetTableTableAnnotationComposer,
+      $$AllocationBudgetTableTableCreateCompanionBuilder,
+      $$AllocationBudgetTableTableUpdateCompanionBuilder,
+      (AllocationBudgetTableData, $$AllocationBudgetTableTableReferences),
+      AllocationBudgetTableData,
+      PrefetchHooks Function({bool transactionTableRefs})
+    >;
 typedef $$TransactionTableTableCreateCompanionBuilder =
     TransactionTableCompanion Function({
       required String id,
@@ -2898,6 +3334,7 @@ typedef $$TransactionTableTableCreateCompanionBuilder =
       required DateTime date,
       Value<String?> note,
       Value<String?> incomeSourceId,
+      Value<String?> allocationBudgetId,
       Value<bool?> planned,
       Value<int?> feeling,
       Value<DateTime> createdAt,
@@ -2913,6 +3350,7 @@ typedef $$TransactionTableTableUpdateCompanionBuilder =
       Value<DateTime> date,
       Value<String?> note,
       Value<String?> incomeSourceId,
+      Value<String?> allocationBudgetId,
       Value<bool?> planned,
       Value<int?> feeling,
       Value<DateTime> createdAt,
@@ -2949,6 +3387,29 @@ final class $$TransactionTableTableReferences
       $_db.incomeSourceTable,
     ).filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_incomeSourceIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $AllocationBudgetTableTable _allocationBudgetIdTable(
+    _$AppDatabase db,
+  ) => db.allocationBudgetTable.createAlias(
+    $_aliasNameGenerator(
+      db.transactionTable.allocationBudgetId,
+      db.allocationBudgetTable.id,
+    ),
+  );
+
+  $$AllocationBudgetTableTableProcessedTableManager? get allocationBudgetId {
+    final $_column = $_itemColumn<String>('allocation_budget_id');
+    if ($_column == null) return null;
+    final manager = $$AllocationBudgetTableTableTableManager(
+      $_db,
+      $_db.allocationBudgetTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_allocationBudgetIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
@@ -3037,6 +3498,30 @@ class $$TransactionTableTableFilterComposer
     );
     return composer;
   }
+
+  $$AllocationBudgetTableTableFilterComposer get allocationBudgetId {
+    final $$AllocationBudgetTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.allocationBudgetId,
+          referencedTable: $db.allocationBudgetTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$AllocationBudgetTableTableFilterComposer(
+                $db: $db,
+                $table: $db.allocationBudgetTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
 }
 
 class $$TransactionTableTableOrderingComposer
@@ -3120,6 +3605,30 @@ class $$TransactionTableTableOrderingComposer
     );
     return composer;
   }
+
+  $$AllocationBudgetTableTableOrderingComposer get allocationBudgetId {
+    final $$AllocationBudgetTableTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.allocationBudgetId,
+          referencedTable: $db.allocationBudgetTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$AllocationBudgetTableTableOrderingComposer(
+                $db: $db,
+                $table: $db.allocationBudgetTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
 }
 
 class $$TransactionTableTableAnnotationComposer
@@ -3186,6 +3695,30 @@ class $$TransactionTableTableAnnotationComposer
         );
     return composer;
   }
+
+  $$AllocationBudgetTableTableAnnotationComposer get allocationBudgetId {
+    final $$AllocationBudgetTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.allocationBudgetId,
+          referencedTable: $db.allocationBudgetTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$AllocationBudgetTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.allocationBudgetTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
 }
 
 class $$TransactionTableTableTableManager
@@ -3201,7 +3734,7 @@ class $$TransactionTableTableTableManager
           $$TransactionTableTableUpdateCompanionBuilder,
           (TransactionTableData, $$TransactionTableTableReferences),
           TransactionTableData,
-          PrefetchHooks Function({bool incomeSourceId})
+          PrefetchHooks Function({bool incomeSourceId, bool allocationBudgetId})
         > {
   $$TransactionTableTableTableManager(
     _$AppDatabase db,
@@ -3225,6 +3758,7 @@ class $$TransactionTableTableTableManager
                 Value<DateTime> date = const Value.absent(),
                 Value<String?> note = const Value.absent(),
                 Value<String?> incomeSourceId = const Value.absent(),
+                Value<String?> allocationBudgetId = const Value.absent(),
                 Value<bool?> planned = const Value.absent(),
                 Value<int?> feeling = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
@@ -3238,6 +3772,7 @@ class $$TransactionTableTableTableManager
                 date: date,
                 note: note,
                 incomeSourceId: incomeSourceId,
+                allocationBudgetId: allocationBudgetId,
                 planned: planned,
                 feeling: feeling,
                 createdAt: createdAt,
@@ -3253,6 +3788,7 @@ class $$TransactionTableTableTableManager
                 required DateTime date,
                 Value<String?> note = const Value.absent(),
                 Value<String?> incomeSourceId = const Value.absent(),
+                Value<String?> allocationBudgetId = const Value.absent(),
                 Value<bool?> planned = const Value.absent(),
                 Value<int?> feeling = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
@@ -3266,6 +3802,7 @@ class $$TransactionTableTableTableManager
                 date: date,
                 note: note,
                 incomeSourceId: incomeSourceId,
+                allocationBudgetId: allocationBudgetId,
                 planned: planned,
                 feeling: feeling,
                 createdAt: createdAt,
@@ -3280,49 +3817,65 @@ class $$TransactionTableTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({incomeSourceId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (incomeSourceId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.incomeSourceId,
-                                referencedTable:
-                                    $$TransactionTableTableReferences
-                                        ._incomeSourceIdTable(db),
-                                referencedColumn:
-                                    $$TransactionTableTableReferences
-                                        ._incomeSourceIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
+          prefetchHooksCallback:
+              ({incomeSourceId = false, allocationBudgetId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (incomeSourceId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.incomeSourceId,
+                                    referencedTable:
+                                        $$TransactionTableTableReferences
+                                            ._incomeSourceIdTable(db),
+                                    referencedColumn:
+                                        $$TransactionTableTableReferences
+                                            ._incomeSourceIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (allocationBudgetId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.allocationBudgetId,
+                                    referencedTable:
+                                        $$TransactionTableTableReferences
+                                            ._allocationBudgetIdTable(db),
+                                    referencedColumn:
+                                        $$TransactionTableTableReferences
+                                            ._allocationBudgetIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
 
-                    return state;
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
                   },
-              getPrefetchedDataCallback: (items) async {
-                return [];
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -3339,7 +3892,7 @@ typedef $$TransactionTableTableProcessedTableManager =
       $$TransactionTableTableUpdateCompanionBuilder,
       (TransactionTableData, $$TransactionTableTableReferences),
       TransactionTableData,
-      PrefetchHooks Function({bool incomeSourceId})
+      PrefetchHooks Function({bool incomeSourceId, bool allocationBudgetId})
     >;
 typedef $$BudgetTableTableCreateCompanionBuilder =
     BudgetTableCompanion Function({
@@ -3827,281 +4380,18 @@ typedef $$SettingsTableTableProcessedTableManager =
       SettingsTableData,
       PrefetchHooks Function()
     >;
-typedef $$AllocationBudgetTableTableCreateCompanionBuilder =
-    AllocationBudgetTableCompanion Function({
-      required String id,
-      required String name,
-      Value<double?> targetAmount,
-      Value<double?> monthlyAllocation,
-      Value<double> totalAllocated,
-      required DateTime createdAt,
-      required DateTime updatedAt,
-      Value<int> rowid,
-    });
-typedef $$AllocationBudgetTableTableUpdateCompanionBuilder =
-    AllocationBudgetTableCompanion Function({
-      Value<String> id,
-      Value<String> name,
-      Value<double?> targetAmount,
-      Value<double?> monthlyAllocation,
-      Value<double> totalAllocated,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<int> rowid,
-    });
-
-class $$AllocationBudgetTableTableFilterComposer
-    extends Composer<_$AppDatabase, $AllocationBudgetTableTable> {
-  $$AllocationBudgetTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get targetAmount => $composableBuilder(
-    column: $table.targetAmount,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get monthlyAllocation => $composableBuilder(
-    column: $table.monthlyAllocation,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get totalAllocated => $composableBuilder(
-    column: $table.totalAllocated,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnFilters(column),
-  );
-}
-
-class $$AllocationBudgetTableTableOrderingComposer
-    extends Composer<_$AppDatabase, $AllocationBudgetTableTable> {
-  $$AllocationBudgetTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get targetAmount => $composableBuilder(
-    column: $table.targetAmount,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get monthlyAllocation => $composableBuilder(
-    column: $table.monthlyAllocation,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get totalAllocated => $composableBuilder(
-    column: $table.totalAllocated,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$AllocationBudgetTableTableAnnotationComposer
-    extends Composer<_$AppDatabase, $AllocationBudgetTableTable> {
-  $$AllocationBudgetTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
-
-  GeneratedColumn<double> get targetAmount => $composableBuilder(
-    column: $table.targetAmount,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<double> get monthlyAllocation => $composableBuilder(
-    column: $table.monthlyAllocation,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<double> get totalAllocated => $composableBuilder(
-    column: $table.totalAllocated,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
-}
-
-class $$AllocationBudgetTableTableTableManager
-    extends
-        RootTableManager<
-          _$AppDatabase,
-          $AllocationBudgetTableTable,
-          AllocationBudgetTableData,
-          $$AllocationBudgetTableTableFilterComposer,
-          $$AllocationBudgetTableTableOrderingComposer,
-          $$AllocationBudgetTableTableAnnotationComposer,
-          $$AllocationBudgetTableTableCreateCompanionBuilder,
-          $$AllocationBudgetTableTableUpdateCompanionBuilder,
-          (
-            AllocationBudgetTableData,
-            BaseReferences<
-              _$AppDatabase,
-              $AllocationBudgetTableTable,
-              AllocationBudgetTableData
-            >,
-          ),
-          AllocationBudgetTableData,
-          PrefetchHooks Function()
-        > {
-  $$AllocationBudgetTableTableTableManager(
-    _$AppDatabase db,
-    $AllocationBudgetTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$AllocationBudgetTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$AllocationBudgetTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$AllocationBudgetTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<String> id = const Value.absent(),
-                Value<String> name = const Value.absent(),
-                Value<double?> targetAmount = const Value.absent(),
-                Value<double?> monthlyAllocation = const Value.absent(),
-                Value<double> totalAllocated = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => AllocationBudgetTableCompanion(
-                id: id,
-                name: name,
-                targetAmount: targetAmount,
-                monthlyAllocation: monthlyAllocation,
-                totalAllocated: totalAllocated,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String id,
-                required String name,
-                Value<double?> targetAmount = const Value.absent(),
-                Value<double?> monthlyAllocation = const Value.absent(),
-                Value<double> totalAllocated = const Value.absent(),
-                required DateTime createdAt,
-                required DateTime updatedAt,
-                Value<int> rowid = const Value.absent(),
-              }) => AllocationBudgetTableCompanion.insert(
-                id: id,
-                name: name,
-                targetAmount: targetAmount,
-                monthlyAllocation: monthlyAllocation,
-                totalAllocated: totalAllocated,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $$AllocationBudgetTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$AppDatabase,
-      $AllocationBudgetTableTable,
-      AllocationBudgetTableData,
-      $$AllocationBudgetTableTableFilterComposer,
-      $$AllocationBudgetTableTableOrderingComposer,
-      $$AllocationBudgetTableTableAnnotationComposer,
-      $$AllocationBudgetTableTableCreateCompanionBuilder,
-      $$AllocationBudgetTableTableUpdateCompanionBuilder,
-      (
-        AllocationBudgetTableData,
-        BaseReferences<
-          _$AppDatabase,
-          $AllocationBudgetTableTable,
-          AllocationBudgetTableData
-        >,
-      ),
-      AllocationBudgetTableData,
-      PrefetchHooks Function()
-    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
   $$IncomeSourceTableTableTableManager get incomeSourceTable =>
       $$IncomeSourceTableTableTableManager(_db, _db.incomeSourceTable);
+  $$AllocationBudgetTableTableTableManager get allocationBudgetTable =>
+      $$AllocationBudgetTableTableTableManager(_db, _db.allocationBudgetTable);
   $$TransactionTableTableTableManager get transactionTable =>
       $$TransactionTableTableTableManager(_db, _db.transactionTable);
   $$BudgetTableTableTableManager get budgetTable =>
       $$BudgetTableTableTableManager(_db, _db.budgetTable);
   $$SettingsTableTableTableManager get settingsTable =>
       $$SettingsTableTableTableManager(_db, _db.settingsTable);
-  $$AllocationBudgetTableTableTableManager get allocationBudgetTable =>
-      $$AllocationBudgetTableTableTableManager(_db, _db.allocationBudgetTable);
 }

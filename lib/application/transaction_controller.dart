@@ -20,6 +20,7 @@ class TransactionController extends _$TransactionController {
     required DateTime date,
     String? note,
     String? incomeSourceId,
+    String? allocationBudgetId,
     bool? planned,
     int? feeling,
   }) async {
@@ -33,6 +34,7 @@ class TransactionController extends _$TransactionController {
       date: date,
       note: note,
       incomeSourceId: incomeSourceId,
+      allocationBudgetId: allocationBudgetId,
       planned: planned,
       feeling: feeling,
     );

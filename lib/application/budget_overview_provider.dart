@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../domain/entities/transaction_entity.dart';
 import 'transaction_controller.dart';
 import 'budget_controller.dart';
+import 'allocation_budget_controller.dart';
 
 part 'budget_overview_provider.g.dart';
 
@@ -25,6 +26,32 @@ class CategoryBudgetStatus {
   bool get isFrequentlyUnplanned => unplannedPercent > 0.4;
 }
 
+class SavingBudgetStatus {
+  final String id;
+  final String name;
+  final double? targetAmount;
+  final double? monthlyAllocation;
+  final double totalAllocated;
+  final double spentThisMonth;
+  final double allocatedThisMonth;
+
+  SavingBudgetStatus({
+    required this.id,
+    required this.name,
+    this.targetAmount,
+    this.monthlyAllocation,
+    required this.totalAllocated,
+    required this.spentThisMonth,
+    required this.allocatedThisMonth,
+  });
+
+  double get currentBalance => totalAllocated - spentThisMonth;
+  double get progress {
+    if (targetAmount == null || targetAmount == 0) return 0.0;
+    return (totalAllocated - spentThisMonth) / targetAmount!;
+  }
+}
+
 @riverpod
 Future<List<CategoryBudgetStatus>> budgetOverview(Ref ref) async {
   final budgetsFuture = ref.watch(budgetControllerProvider.future);
@@ -36,6 +63,7 @@ Future<List<CategoryBudgetStatus>> budgetOverview(Ref ref) async {
   final now = DateTime.now();
   final currentMonthTransactions = transactions.where((t) =>
       t.type == TransactionType.expense &&
+      t.allocationBudgetId == null && // Only normal expenses
       t.date.month == now.month &&
       t.date.year == now.year).toList();
 
@@ -63,6 +91,43 @@ Future<List<CategoryBudgetStatus>> budgetOverview(Ref ref) async {
       spentAmount: totalSpent,
       rollover: budget.rollover,
       unplannedPercent: unplannedPercent,
+    );
+  }).toList();
+}
+
+@riverpod
+Future<List<SavingBudgetStatus>> savingBudgetsOverview(Ref ref) async {
+  final allocationsFuture = ref.watch(allocationBudgetControllerProvider.future);
+  final transactionsFuture = ref.watch(transactionControllerProvider.future);
+
+  final allocations = await allocationsFuture;
+  final transactions = await transactionsFuture;
+
+  final now = DateTime.now();
+
+  return allocations.map((allocation) {
+    // Cumulative expenses booked against this budget
+    final totalSpent = transactions
+        .where((t) => t.type == TransactionType.expense && t.allocationBudgetId == allocation.id)
+        .fold(0.0, (sum, t) => sum + t.amount);
+
+    // This month's expenses booked against this budget
+    final spentThisMonth = transactions
+        .where((t) =>
+            t.type == TransactionType.expense &&
+            t.allocationBudgetId == allocation.id &&
+            t.date.month == now.month &&
+            t.date.year == now.year)
+        .fold(0.0, (sum, t) => sum + t.amount);
+    
+    return SavingBudgetStatus(
+      id: allocation.id,
+      name: allocation.name,
+      targetAmount: allocation.targetAmount,
+      monthlyAllocation: allocation.monthlyAllocation,
+      totalAllocated: allocation.totalAllocated - totalSpent, 
+      spentThisMonth: spentThisMonth,
+      allocatedThisMonth: 0,
     );
   }).toList();
 }

@@ -64,6 +64,12 @@ class _SummaryCard extends StatelessWidget {
               value: data.totalExpenses,
               color: const Color(0xFF965F5F),
             ),
+            const SizedBox(height: 8),
+            _ValueRow(
+              label: l10n.savingBudgets,
+              value: data.totalAllocatedThisMonth,
+              color: theme.colorScheme.primary,
+            ),
             const Divider(height: 24),
             _ValueRow(
               label: l10n.savings,
@@ -154,7 +160,7 @@ class _AllocationSection extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4),
-          child: Text(l10n.allocationBudgets, style: theme.textTheme.titleMedium),
+          child: Text(l10n.savingBudgets, style: theme.textTheme.titleMedium),
         ),
         const SizedBox(height: 8),
         if (data.allocations.isEmpty)
@@ -174,22 +180,25 @@ class _AllocationSection extends StatelessWidget {
                     color: theme.colorScheme.primary,
                   ),
                   const Divider(height: 24),
-                  ...data.allocations.map((allocation) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(allocation.name),
-                            if (allocation.targetAmount != null)
-                              Text(
-                                '${allocation.totalAllocated.toStringAsFixed(0)} / ${allocation.targetAmount!.toStringAsFixed(0)} €',
-                                style: theme.textTheme.bodySmall,
-                              )
-                            else
-                              Text('${allocation.totalAllocated.toStringAsFixed(0)} €'),
-                          ],
-                        ),
-                      )),
+                  ...data.allocations.map((allocation) {
+                    // We don't have the status here easily, but we can at least show the name and total
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(allocation.name),
+                          if (allocation.targetAmount != null)
+                            Text(
+                              '${allocation.totalAllocated.toStringAsFixed(0)} / ${allocation.targetAmount!.toStringAsFixed(0)} €',
+                              style: theme.textTheme.bodySmall,
+                            )
+                          else
+                            Text('${allocation.totalAllocated.toStringAsFixed(0)} €'),
+                        ],
+                      ),
+                    );
+                  }),
                 ],
               ),
             ),

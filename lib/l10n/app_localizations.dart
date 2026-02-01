@@ -845,14 +845,14 @@ abstract class AppLocalizations {
   /// No description provided for @moneyAllocatedInfo.
   ///
   /// In en, this message translates to:
-  /// **'{amount} of which allocated'**
+  /// **'{amount} of which budgeted'**
   String moneyAllocatedInfo(String amount);
 
-  /// No description provided for @allocationBudgets.
+  /// No description provided for @savingBudgets.
   ///
   /// In en, this message translates to:
   /// **'Saving & Investing'**
-  String get allocationBudgets;
+  String get savingBudgets;
 
   /// No description provided for @expenses.
   ///
@@ -875,37 +875,37 @@ abstract class AppLocalizations {
   /// No description provided for @allocated.
   ///
   /// In en, this message translates to:
-  /// **'Allocated'**
+  /// **'Budgeted'**
   String get allocated;
 
   /// No description provided for @noAllocations.
   ///
   /// In en, this message translates to:
-  /// **'No piggy banks yet'**
+  /// **'No saving budgets yet'**
   String get noAllocations;
 
   /// No description provided for @addAllocation.
   ///
   /// In en, this message translates to:
-  /// **'Add Piggy Bank'**
+  /// **'Add Saving Budget'**
   String get addAllocation;
 
   /// No description provided for @editAllocation.
   ///
   /// In en, this message translates to:
-  /// **'Edit Piggy Bank'**
+  /// **'Edit Saving Budget'**
   String get editAllocation;
 
   /// No description provided for @allocate.
   ///
   /// In en, this message translates to:
-  /// **'Allocate'**
+  /// **'Add to Budget'**
   String get allocate;
 
   /// No description provided for @amountToAllocate.
   ///
   /// In en, this message translates to:
-  /// **'Amount to allocate'**
+  /// **'Amount to add'**
   String get amountToAllocate;
 
   /// No description provided for @name.

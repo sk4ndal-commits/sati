@@ -13,7 +13,7 @@ class BudgetOverviewScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final budgetOverviewAsync = ref.watch(budgetOverviewProvider);
-    final allocationBudgetsAsync = ref.watch(allocationBudgetControllerProvider);
+    final savingBudgetsAsync = ref.watch(savingBudgetsOverviewProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -48,10 +48,10 @@ class BudgetOverviewScreen extends ConsumerWidget {
               error: (err, stack) => Center(child: Text(err.toString())),
             ),
             const SizedBox(height: 24),
-            _buildSectionHeader(context, l10n.allocationBudgets),
-            allocationBudgetsAsync.when(
-              data: (allocations) {
-                if (allocations.isEmpty) {
+            _buildSectionHeader(context, l10n.savingBudgets),
+            savingBudgetsAsync.when(
+              data: (savingBudgets) {
+                if (savingBudgets.isEmpty) {
                   return Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Center(child: Text(l10n.noAllocations)),
@@ -61,10 +61,10 @@ class BudgetOverviewScreen extends ConsumerWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: allocations.length,
+                  itemCount: savingBudgets.length,
                   itemBuilder: (context, index) {
-                    final allocation = allocations[index];
-                    return _AllocationCard(allocation: allocation);
+                    final status = savingBudgets[index];
+                    return _SavingBudgetCard(status: status);
                   },
                 );
               },
@@ -370,10 +370,10 @@ class _BudgetCard extends ConsumerWidget {
   }
 }
 
-class _AllocationCard extends ConsumerWidget {
-  final AllocationBudgetEntity allocation;
+class _SavingBudgetCard extends ConsumerWidget {
+  final SavingBudgetStatus status;
 
-  const _AllocationCard({required this.allocation});
+  const _SavingBudgetCard({required this.status});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -381,6 +381,7 @@ class _AllocationCard extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return Card(
+      margin: const EdgeInsets.only(bottom: 12),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -389,7 +390,7 @@ class _AllocationCard extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(allocation.name, style: theme.textTheme.titleMedium),
+                Text(status.name, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
                 Row(
                   children: [
                     IconButton(
@@ -406,17 +407,17 @@ class _AllocationCard extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 8),
-            if (allocation.targetAmount != null && allocation.targetAmount! > 0) ...[
+            if (status.targetAmount != null && status.targetAmount! > 0) ...[
               TweenAnimationBuilder<double>(
                 duration: const Duration(milliseconds: 250),
                 curve: Curves.easeInOut,
-                tween: Tween<double>(begin: 0, end: allocation.progress.clamp(0.0, 1.0)),
+                tween: Tween<double>(begin: 0, end: status.progress.clamp(0.0, 1.0)),
                 builder: (context, value, child) {
                   return LinearProgressIndicator(
                     value: value,
                     minHeight: 8,
                     borderRadius: BorderRadius.circular(4),
-                    color: theme.colorScheme.primary.withValues(alpha: 0.6),
+                    color: Colors.green.withValues(alpha: 0.6),
                     backgroundColor: theme.colorScheme.surfaceContainerHighest,
                   );
                 },
@@ -427,21 +428,38 @@ class _AllocationCard extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${l10n.allocated}: ${allocation.totalAllocated.toStringAsFixed(2)} €',
+                  '${l10n.allocated}: ${status.currentBalance.toStringAsFixed(2)} €',
                   style: theme.textTheme.bodyMedium,
                 ),
-                if (allocation.targetAmount != null)
+                if (status.targetAmount != null)
                   Text(
-                    '${l10n.targetAmount}: ${allocation.targetAmount!.toStringAsFixed(2)} €',
+                    '${l10n.targetAmount}: ${status.targetAmount!.toStringAsFixed(2)} €',
                     style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.outline),
                   ),
               ],
             ),
-            if (allocation.monthlyAllocation != null)
+            if (status.spentThisMonth > 0)
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      l10n.spent,
+                      style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.outline),
+                    ),
+                    Text(
+                      '-${status.spentThisMonth.toStringAsFixed(2)} €',
+                      style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.error),
+                    ),
+                  ],
+                ),
+              ),
+            if (status.monthlyAllocation != null)
               Padding(
                 padding: const EdgeInsets.only(top: 4.0),
                 child: Text(
-                  '${l10n.monthlyAllocation}: ${allocation.monthlyAllocation!.toStringAsFixed(2)} €',
+                  '${l10n.monthlyAllocation}: ${status.monthlyAllocation!.toStringAsFixed(2)} €',
                   style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.outline),
                 ),
               ),
@@ -474,7 +492,7 @@ class _AllocationCard extends ConsumerWidget {
             onPressed: () {
               final amount = double.tryParse(controller.text);
               if (amount != null && amount > 0) {
-                ref.read(allocationBudgetControllerProvider.notifier).allocateAmount(allocation.id, amount);
+                ref.read(allocationBudgetControllerProvider.notifier).allocateAmount(status.id, amount);
                 Navigator.pop(context);
               }
             },
@@ -486,13 +504,19 @@ class _AllocationCard extends ConsumerWidget {
   }
 
   void _showEditDialog(BuildContext context, WidgetRef ref) {
-    // We can't call _showAddAllocationDialog directly because it's in BudgetOverviewScreen
-    // but we are in _AllocationCard. Since BudgetOverviewScreen is the parent, 
-    // it would be better to pass the callback or use a static method.
-    // For now, let's use a simple way to find the screen's method if possible, 
-    // or just reimplement the dialog here.
-    // Better: Make it static in BudgetOverviewScreen.
-    _BudgetOverviewScreenHelper.showAddAllocationDialog(context, ref, allocation);
+    _BudgetOverviewScreenHelper.showAddAllocationDialog(
+      context,
+      ref,
+      AllocationBudgetEntity(
+        id: status.id,
+        name: status.name,
+        targetAmount: status.targetAmount,
+        monthlyAllocation: status.monthlyAllocation,
+        totalAllocated: status.totalAllocated,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      ),
+    );
   }
 }
 

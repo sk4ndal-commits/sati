@@ -410,11 +410,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String moneyAllocatedInfo(String amount) {
-    return '$amount of which allocated';
+    return '$amount of which budgeted';
   }
 
   @override
-  String get allocationBudgets => 'Saving & Investing';
+  String get savingBudgets => 'Saving & Investing';
 
   @override
   String get expenses => 'Expenses';
@@ -426,22 +426,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get monthlyAllocation => 'Monthly Allocation';
 
   @override
-  String get allocated => 'Allocated';
+  String get allocated => 'Budgeted';
 
   @override
-  String get noAllocations => 'No piggy banks yet';
+  String get noAllocations => 'No saving budgets yet';
 
   @override
-  String get addAllocation => 'Add Piggy Bank';
+  String get addAllocation => 'Add Saving Budget';
 
   @override
-  String get editAllocation => 'Edit Piggy Bank';
+  String get editAllocation => 'Edit Saving Budget';
 
   @override
-  String get allocate => 'Allocate';
+  String get allocate => 'Add to Budget';
 
   @override
-  String get amountToAllocate => 'Amount to allocate';
+  String get amountToAllocate => 'Amount to add';
 
   @override
   String get name => 'Name';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import '../../application/allocation_budget_controller.dart';
 import '../../application/budget_overview_provider.dart';
 import '../../application/budget_threshold_service.dart';
 import '../../application/friction_calibration_provider.dart';
@@ -26,6 +27,7 @@ class _TransactionEntryScreenState extends ConsumerState<TransactionEntryScreen>
   String _categoryId = 'food';
   DateTime _date = DateTime.now();
   String? _incomeSourceId;
+  String? _allocationBudgetId;
   bool? _planned;
   int? _feeling;
 
@@ -62,6 +64,7 @@ class _TransactionEntryScreenState extends ConsumerState<TransactionEntryScreen>
         date: _date,
         note: _noteController.text.isEmpty ? null : _noteController.text,
         incomeSourceId: _type == TransactionType.income ? _incomeSourceId : null,
+        allocationBudgetId: _type == TransactionType.expense ? _allocationBudgetId : null,
         planned: _planned,
         feeling: _feeling,
       );
@@ -150,6 +153,29 @@ class _TransactionEntryScreenState extends ConsumerState<TransactionEntryScreen>
               },
             ),
             _buildBudgetInfo(l10n),
+            if (_type == TransactionType.expense) ...[
+              const SizedBox(height: 16),
+              ref.watch(allocationBudgetControllerProvider).when(
+                    data: (budgets) {
+                      if (budgets.isEmpty) return const SizedBox.shrink();
+                      return DropdownButtonFormField<String>(
+                        initialValue: _allocationBudgetId,
+                        decoration: InputDecoration(
+                          labelText: l10n.savingBudgets,
+                          border: const OutlineInputBorder(),
+                          helperText: "Optional: Book against a saving budget",
+                        ),
+                        items: [
+                          const DropdownMenuItem(value: null, child: Text("None")),
+                          ...budgets.map((b) => DropdownMenuItem(value: b.id, child: Text(b.name))),
+                        ],
+                        onChanged: (value) => setState(() => _allocationBudgetId = value),
+                      );
+                    },
+                    loading: () => const SizedBox.shrink(),
+                    error: (err, stack) => const SizedBox.shrink(),
+                  ),
+            ],
             if (_type == TransactionType.income) ...[
               const SizedBox(height: 16),
               ref.watch(incomeSourceControllerProvider).when(

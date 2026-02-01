@@ -28,7 +28,7 @@ class MonthlyOverviewData {
     required this.year,
   });
 
-  double get savings => totalIncome - totalExpenses;
+  double get savings => totalIncome - totalExpenses - totalAllocatedThisMonth;
   double get remainingBudget => totalBudgeted - totalExpenses;
 }
 

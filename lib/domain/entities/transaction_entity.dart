@@ -11,6 +11,7 @@ class TransactionEntity {
   final DateTime date;
   final String? note;
   final String? incomeSourceId;
+  final String? allocationBudgetId;
   final bool? planned;
   final int? feeling;
 
@@ -22,6 +23,7 @@ class TransactionEntity {
     required this.date,
     this.note,
     this.incomeSourceId,
+    this.allocationBudgetId,
     this.planned,
     this.feeling,
   });

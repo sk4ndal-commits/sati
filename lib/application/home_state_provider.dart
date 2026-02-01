@@ -73,17 +73,11 @@ Future<HomeState> homeState(Ref ref) async {
       .where((t) => t.type == TransactionType.expense)
       .fold(0.0, (sum, t) => sum + t.amount);
 
-  final moneyLeft = totalIncome - totalExpenses;
-
-  // 3. Calculate Money Allocated for this month
-  // Since totalAllocated is cumulative, we need a way to track "this month's" allocation 
-  // if we want to show it on Home. The prompt says "Davon zugewiesen: 300 €" 
-  // which likely refers to the sum of 'monthlyAllocation' planned for this month 
-  // or actual allocations made this month.
-  // Requirement: "Home: Optional secondary line below “Money Left”: „Davon zugewiesen: 300 €“"
-  // For simplicity and following the requirement "Allocation aggregation logic (monthly)", 
-  // I'll sum the 'monthlyAllocation' of all allocation budgets as the "planned/assigned" amount.
+  // 3. Calculate Money Budgeted for this month (from Saving Budgets)
+  // We sum the 'monthlyAllocation' of all saving budgets as the planned amount.
   final moneyAllocated = allocations.fold(0.0, (sum, b) => sum + (b.monthlyAllocation ?? 0.0));
+
+  final moneyLeft = totalIncome - totalExpenses - moneyAllocated;
 
   // 4. Category snapshot (Limit to 3-5)
   final categorySnapshots = budgetOverviewAsync.take(5).toList();
