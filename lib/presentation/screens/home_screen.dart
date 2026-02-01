@@ -4,6 +4,7 @@ import '../../l10n/app_localizations.dart';
 import '../../application/transaction_controller.dart';
 import 'transaction_entry_screen.dart';
 import 'income_sources_screen.dart';
+import 'budget_overview_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -17,6 +18,15 @@ class HomeScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(l10n.appTitle),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.pie_chart),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const BudgetOverviewScreen()),
+              );
+            },
+            tooltip: l10n.budgets,
+          ),
           IconButton(
             icon: const Icon(Icons.wallet),
             onPressed: () {

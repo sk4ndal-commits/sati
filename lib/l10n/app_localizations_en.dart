@@ -103,4 +103,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get selectSource => 'Select Source';
+
+  @override
+  String get budgets => 'Budgets';
+
+  @override
+  String get addBudget => 'Add Budget';
+
+  @override
+  String get spent => 'Spent';
+
+  @override
+  String get remaining => 'Remaining';
+
+  @override
+  String get rollover => 'Rollover';
+
+  @override
+  String get noBudgets => 'No budgets set yet';
+
+  @override
+  String get editBudget => 'Edit Budget';
 }

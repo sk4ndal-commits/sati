@@ -31,5 +31,12 @@
     "expected": "Expected",
     "missing": "Missing",
     "incomeSource": "Income Source",
-    "selectSource": "Select Source"
+    "selectSource": "Select Source",
+    "budgets": "Budgets",
+    "addBudget": "Add Budget",
+    "spent": "Spent",
+    "remaining": "Remaining",
+    "rollover": "Rollover",
+    "noBudgets": "No budgets set yet",
+    "editBudget": "Edit Budget"
 }

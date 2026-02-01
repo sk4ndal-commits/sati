@@ -145,3 +145,49 @@ final class IncomeSourceRepositoryProvider
 
 String _$incomeSourceRepositoryHash() =>
     r'bad34e3cfd55f3df7fdab6db588459d84920f200';
+
+@ProviderFor(budgetRepository)
+const budgetRepositoryProvider = BudgetRepositoryProvider._();
+
+final class BudgetRepositoryProvider
+    extends
+        $FunctionalProvider<
+          BudgetRepository,
+          BudgetRepository,
+          BudgetRepository
+        >
+    with $Provider<BudgetRepository> {
+  const BudgetRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'budgetRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$budgetRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<BudgetRepository> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  BudgetRepository create(Ref ref) {
+    return budgetRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(BudgetRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<BudgetRepository>(value),
+    );
+  }
+}
+
+String _$budgetRepositoryHash() => r'4840410a14b9876ab6ff46bf92673fa6d899aecf';

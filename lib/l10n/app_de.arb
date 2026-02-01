@@ -31,5 +31,12 @@
     "expected": "Soll",
     "missing": "Fehlend",
     "incomeSource": "Einkommensquelle",
-    "selectSource": "Quelle wählen"
+    "selectSource": "Quelle wählen",
+    "budgets": "Budgets",
+    "addBudget": "Budget hinzufügen",
+    "spent": "Ausgegeben",
+    "remaining": "Verbleibend",
+    "rollover": "Rollover",
+    "noBudgets": "Noch keine Budgets festgelegt",
+    "editBudget": "Budget bearbeiten"
 }

@@ -103,4 +103,25 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get selectSource => 'Quelle wählen';
+
+  @override
+  String get budgets => 'Budgets';
+
+  @override
+  String get addBudget => 'Budget hinzufügen';
+
+  @override
+  String get spent => 'Ausgegeben';
+
+  @override
+  String get remaining => 'Verbleibend';
+
+  @override
+  String get rollover => 'Rollover';
+
+  @override
+  String get noBudgets => 'Noch keine Budgets festgelegt';
+
+  @override
+  String get editBudget => 'Budget bearbeiten';
 }
